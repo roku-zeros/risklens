@@ -1,0 +1,5 @@
+?   	risklens/cmd/risklens-mcp	[no test files]
+ok  	risklens/internal/lens	40.547s
+ok  	risklens/internal/mcp	2.012s
+
+go vet: PASS

@@ -20,6 +20,18 @@ async def run(a):
             assert not result.isError and result.structuredContent['items']
             result=await session.call_tool('search_code',{'query':'льготный период обучения','mode':'hybrid','limit':5})
             assert not result.isError
-            print(json.dumps({'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
+            types=await session.call_tool('search_symbols',{'query':'Application','kind':'type','package':'example.com/strategy/state'})
+            owner=types.structuredContent['items'][0]['id']
+            definition=await session.call_tool('get_symbol',{'symbol_id':owner})
+            field=next(f for f in definition.structuredContent['meta']['fields'] if f['name']=='Limit')
+            assert field['promoted'] and field['definition_indexed']
+            found=await session.call_tool('search_symbols',{'owner_id':owner,'kind':'field','query':'Limit'})
+            assert found.structuredContent['items'][0]['id']==field['symbol_id']
+            accesses=await session.call_tool('find_field_accesses',{'symbol_id':field['symbol_id']})
+            assert not accesses.isError and accesses.structuredContent['items']
+            wrong=await session.call_tool('find_field_accesses',{'symbol_id':'example.com/strategy/state#field::Application.Limit'})
+            assert wrong.isError and wrong.structuredContent['details']['code']=='unknown_symbol_id'
+            assert any(v['id']==field['symbol_id'] for v in wrong.structuredContent['details']['candidates'])
+            print(json.dumps({'canonical_field_navigation':True,'structured_recovery':True,'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--binary',required=True);p.add_argument('--config',required=True);asyncio.run(run(p.parse_args()))

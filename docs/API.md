@@ -69,3 +69,12 @@ Status: index_snapshot, state (unloaded/loading/ready/failed), fresh, loading, v
 ```
 
 Передайте каждый объект одной строкой. После `search_symbols` используйте настоящий возвращённый id, не конструируйте его по имени. Для контекста сохраняйте index_snapshot; после изменения снимка повторите поиск.
+
+
+## Дополнения 0.2.0
+
+- `search_symbols.owner_id`: ID типа для получения его прямых/встроенных полей. Ответ использует ID объявления, а `access_path` показывает путь от внешнего типа. Get_symbol типа возвращает эти сведения в `meta.fields`, `field_count`, `fields_truncated`; `get_symbol.limit` ограничивает список, а `search_symbols` обеспечивает пагинацию. Для `definition_indexed=false` позиция не выдаётся.
+- `search_code.paths` (OR), `exclude_paths`, `distinct_symbols` (по умолчанию true). Дополнительные поля Hit: `evidence=semantic_only|lexical_supported`, `requires_source_verification=true`, `other_matching_chunks`. Группировка не объединяет независимые символы и не доказывает продуктовую принадлежность.
+- Ошибка неизвестного ID: `isError=true`, `structuredContent.error/index_snapshot/fresh/details`; details содержит `code`, `requested_symbol_id`, `hint`, `candidates`. Text content содержит тот же JSON. Автоматического разрешения по похожему имени нет.
+- При нуле результатов search_symbols: `meta.exact_match=false`, `suggestions`, `hint`; suggestions не являются проверенной заменой устаревшего имени.
+- Status: `version`, `freshness_scope`, `go_heap_reserved_bytes`, `go_total_alloc_bytes`, `go_gc_cycles`. Freshness не проверяет документы и бизнес-утверждения.

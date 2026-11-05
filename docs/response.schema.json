@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:risklens:response:0.1.0",
+  "$id": "urn:risklens:response:0.2.0",
   "title": "RiskLens tool structuredContent",
   "anyOf": [
     {
@@ -11,6 +11,9 @@
     },
     {
       "$ref": "#/$defs/Refresh"
+    },
+    {
+      "$ref": "#/$defs/ToolError"
     }
   ],
   "$defs": {
@@ -70,6 +73,12 @@
         },
         "comment": {
           "type": "string"
+        },
+        "access_path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -199,6 +208,18 @@
           "additionalProperties": {
             "type": "integer"
           }
+        },
+        "evidence": {
+          "enum": [
+            "semantic_only",
+            "lexical_supported"
+          ]
+        },
+        "requires_source_verification": {
+          "type": "boolean"
+        },
+        "other_matching_chunks": {
+          "type": "integer"
         }
       },
       "required": [
@@ -417,6 +438,21 @@
         },
         "module": {
           "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "freshness_scope": {
+          "type": "string"
+        },
+        "go_heap_reserved_bytes": {
+          "type": "integer"
+        },
+        "go_total_alloc_bytes": {
+          "type": "integer"
+        },
+        "go_gc_cycles": {
+          "type": "integer"
         }
       },
       "required": [
@@ -452,6 +488,51 @@
         "index_snapshot",
         "next"
       ]
+    },
+    "ToolError": {
+      "type": "object",
+      "required": [
+        "error",
+        "index_snapshot",
+        "fresh"
+      ],
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "index_snapshot": {
+          "type": "string"
+        },
+        "fresh": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object",
+          "required": [
+            "code",
+            "requested_symbol_id",
+            "hint",
+            "candidates"
+          ],
+          "properties": {
+            "code": {
+              "const": "unknown_symbol_id"
+            },
+            "requested_symbol_id": {
+              "type": "string"
+            },
+            "hint": {
+              "type": "string"
+            },
+            "candidates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Symbol"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

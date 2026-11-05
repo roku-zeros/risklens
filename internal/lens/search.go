@@ -27,6 +27,9 @@ func makeChunks(s *Snapshot, max int, model string) {
 		if a.start != b.start {
 			return a.start < b.start
 		}
+		if a.end != b.end {
+			return a.end > b.end
+		}
 		return a.ID < b.ID
 	})
 	seen := map[string]bool{}
@@ -55,17 +58,18 @@ func makeChunks(s *Snapshot, max int, model string) {
 		})
 		sort.Ints(fileBoundaries[name])
 	}
+	fileChunks := map[string][]*Chunk{}
+	parentFile := ""
+	parentStart, parentEnd := -1, -1
 	for _, sym := range syms {
-		// Local declarations already occur inside their containing function chunk.
-		nested := false
-		for _, parent := range syms {
-			if (parent.Kind == "function" || parent.Kind == "method" || parent.Kind == "type") && parent.Position.File == sym.Position.File && parent.start < sym.start && parent.end >= sym.end {
-				nested = true
-				break
-			}
-		}
-		if nested {
+		// Sorted ranges make nested-declaration detection linear rather than quadratic.
+		if sym.Position.File == parentFile && sym.start > parentStart && sym.end <= parentEnd {
 			continue
+		}
+		if sym.Kind == "function" || sym.Kind == "method" || sym.Kind == "type" {
+			parentFile = sym.Position.File
+			parentStart = sym.start
+			parentEnd = sym.end
 		}
 		file := sym.Position.File
 		b := s.Files[file]
@@ -111,6 +115,7 @@ func makeChunks(s *Snapshot, max int, model string) {
 			c := &Chunk{Symbol: sym.ID, Package: sym.Package, File: file, Start: line, End: last, Hash: hash([]byte(input)), Snapshot: s.ID, Model: model, Code: code, Input: input, Test: sym.Test, start: start, end: end}
 			c.ID = hash([]byte(fmt.Sprintf("%s:%d:%d:%s", file, start, end, c.Hash)))[:24]
 			s.Chunks = append(s.Chunks, c)
+			fileChunks[file] = append(fileChunks[file], c)
 			start = end
 		}
 	}
@@ -126,10 +131,8 @@ func makeChunks(s *Snapshot, max int, model string) {
 	for _, sym := range fileSyms {
 		b := s.Files[sym.Position.File]
 		ranges := [][2]int{}
-		for _, c := range s.Chunks {
-			if c.File == sym.Position.File {
-				ranges = append(ranges, [2]int{c.start, c.end})
-			}
+		for _, c := range fileChunks[sym.Position.File] {
+			ranges = append(ranges, [2]int{c.start, c.end})
 		}
 		sort.Slice(ranges, func(i, j int) bool { return ranges[i][0] < ranges[j][0] })
 		gaps := [][2]int{}
@@ -241,7 +244,7 @@ func sortedRanks(m map[int]float64) []rank {
 }
 func (t *TextIndex) Search(q string) []rank {
 	scores := map[int]float64{}
-	for _, w := range terms(q) {
+	for _, w := range queryTerms(q) {
 		p := t.Postings[w]
 		idf := math.Log(1 + (float64(len(t.Length)-len(p))+.5)/(float64(len(p))+.5))
 		for i, tf := range p {
@@ -258,7 +261,7 @@ func symbolRanks(s *Snapshot, q string) []rank {
 	if q == "" {
 		return nil
 	}
-	ts := terms(q)
+	ts := queryTerms(q)
 	for i, c := range s.Chunks {
 		sym := s.Symbols[c.Symbol]
 		score := 0.
@@ -281,13 +284,63 @@ func symbolRanks(s *Snapshot, q string) []rank {
 	return sortedRanks(m)
 }
 func match(s *Symbol, a Args) bool {
+	if s == nil {
+		return false
+	}
+	if !matchPath(s.Position.File, a) {
+		return false
+	}
 	if a.IncludeTests != nil && !*a.IncludeTests && s.Test {
 		return false
 	}
-	return (a.Path == "" || strings.HasPrefix(s.Position.File, a.Path)) && (a.Package == "" || s.Package == a.Package) && (a.Kind == "" || s.Kind == a.Kind)
+	return (a.Package == "" || s.Package == a.Package) && (a.Kind == "" || s.Kind == a.Kind)
+}
+
+func matchPath(file string, a Args) bool {
+	if a.Path != "" && !strings.HasPrefix(file, a.Path) {
+		return false
+	}
+	if len(a.Paths) > 0 {
+		found := false
+		for _, prefix := range a.Paths {
+			if strings.HasPrefix(file, prefix) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	for _, prefix := range a.ExcludePaths {
+		if strings.HasPrefix(file, prefix) {
+			return false
+		}
+	}
+	return true
+}
+
+var stopWords = map[string]bool{"и": true, "в": true, "на": true, "по": true, "для": true, "из": true, "как": true, "что": true, "это": true, "к": true, "от": true, "с": true, "у": true, "не": true, "за": true, "при": true, "the": true, "and": true, "of": true, "for": true, "in": true, "to": true, "a": true, "an": true, "is": true, "on": true}
+
+func queryTerms(q string) []string {
+	raw := terms(q)
+	filtered := []string{}
+	for _, w := range raw {
+		if !stopWords[w] {
+			filtered = append(filtered, w)
+		}
+	}
+	if len(filtered) == 0 {
+		return raw
+	}
+	return filtered
 }
 
 type Hit struct {
+	Evidence     string `json:"evidence"`
+	VerifySource bool   `json:"requires_source_verification"`
+	OtherChunks  int    `json:"other_matching_chunks,omitempty"`
+
 	Chunk    *Chunk         `json:"chunk"`
 	Score    float64        `json:"rrf_score"`
 	Channels []string       `json:"channels"`
@@ -328,5 +381,25 @@ func fuse(s *Snapshot, a Args, lists map[string][]rank) []Hit {
 		}
 		return out[i].Score > out[j].Score
 	})
+	if a.DistinctSymbols == nil || *a.DistinctSymbols {
+		grouped := []Hit{}
+		seen := map[string]int{}
+		for _, h := range out {
+			if i, ok := seen[h.Chunk.Symbol]; ok {
+				grouped[i].OtherChunks++
+				continue
+			}
+			seen[h.Chunk.Symbol] = len(grouped)
+			grouped = append(grouped, h)
+		}
+		out = grouped
+	}
+	for i := range out {
+		out[i].VerifySource = true
+		out[i].Evidence = "lexical_supported"
+		if len(out[i].Channels) == 1 && out[i].Channels[0] == "vector" {
+			out[i].Evidence = "semantic_only"
+		}
+	}
 	return out
 }

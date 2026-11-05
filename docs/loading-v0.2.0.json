@@ -1,0 +1,269 @@
+{
+  "hardware": "macOS-14.1.1-arm64-i386-64bit",
+  "corpus": {
+    "go_files": 321,
+    "lines": 10563
+  },
+  "summary": {
+    "baseline": {
+      "median_seconds": 4.8218529999721795,
+      "median_go_heap_bytes": 307923688,
+      "max_child_rss_bytes": 545996800
+    },
+    "current": {
+      "median_seconds": 1.086135750170797,
+      "median_go_heap_bytes": 26163024,
+      "max_child_rss_bytes": 274432000
+    }
+  },
+  "samples": {
+    "baseline": [
+      {
+        "seconds": 5.450500916922465,
+        "max_child_rss_bytes": 533987328,
+        "status": {
+          "go_heap_bytes": 318951664,
+          "index_snapshot": "eebbea523678543803bce6f5",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      },
+      {
+        "seconds": 4.719641541130841,
+        "max_child_rss_bytes": 505085952,
+        "status": {
+          "go_heap_bytes": 191128736,
+          "index_snapshot": "eebbea523678543803bce6f5",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      },
+      {
+        "seconds": 4.8218529999721795,
+        "max_child_rss_bytes": 545996800,
+        "status": {
+          "go_heap_bytes": 307923688,
+          "index_snapshot": "eebbea523678543803bce6f5",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      }
+    ],
+    "current": [
+      {
+        "seconds": 1.086135750170797,
+        "max_child_rss_bytes": 266321920,
+        "status": {
+          "version": "0.2.0",
+          "go_heap_reserved_bytes": 263094272,
+          "go_total_alloc_bytes": 442478304,
+          "go_gc_cycles": 13,
+          "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+          "go_heap_bytes": 26204064,
+          "index_snapshot": "6044ebcea1301d22e0298402",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      },
+      {
+        "seconds": 1.1444011251442134,
+        "max_child_rss_bytes": 274432000,
+        "status": {
+          "version": "0.2.0",
+          "go_heap_reserved_bytes": 271712256,
+          "go_total_alloc_bytes": 442467968,
+          "go_gc_cycles": 12,
+          "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+          "go_heap_bytes": 26142608,
+          "index_snapshot": "6044ebcea1301d22e0298402",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      },
+      {
+        "seconds": 1.0797164579853415,
+        "max_child_rss_bytes": 263323648,
+        "status": {
+          "version": "0.2.0",
+          "go_heap_reserved_bytes": 258703360,
+          "go_total_alloc_bytes": 442226752,
+          "go_gc_cycles": 16,
+          "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+          "go_heap_bytes": 26163024,
+          "index_snapshot": "6044ebcea1301d22e0298402",
+          "state": "ready",
+          "fresh": true,
+          "loading": false,
+          "vectors": "building",
+          "vector_done": 0,
+          "vector_total": 1282,
+          "cache_hits": 0,
+          "symbols": 1924,
+          "chunks": 1282,
+          "files": 322,
+          "complete": true,
+          "diagnostics": null,
+          "environment": {
+            "CGO_ENABLED": "1",
+            "GOARCH": "arm64",
+            "GOEXPERIMENT": "",
+            "GOFLAGS": "-mod=readonly",
+            "GONOPROXY": "none",
+            "GOOS": "darwin",
+            "GOPROXY": "off",
+            "GOSUMDB": "off",
+            "GOTOOLCHAIN": "local",
+            "GOVCS": "*:off",
+            "GOVERSION": "go1.26.6",
+            "GOWORK": "off",
+            "build_flags": "",
+            "toolchain": "go1.26.6"
+          },
+          "module": "example.org/scale"
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Technical-index loading only; embeddings are not configured.",
+    "New process/empty RiskLens cache; OS/Go build caches are warm.",
+    "max_child_rss is the OS child maximum, not summed process-tree RSS.",
+    "heap is status-time Go heap; current version collects the disposable loader graph before publication.",
+    "Synthetic module, not the user production repository."
+  ]
+}

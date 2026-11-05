@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
+	"strings"
 )
 
 type ContextItem struct {
@@ -37,7 +38,7 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 	queue := []node{}
 	for _, id := range a.Symbols {
 		if s.Symbols[id] == nil {
-			return r, fmt.Errorf("unknown symbol_id: %s", id)
+			return r, unknownSymbol(s, id, "")
 		}
 		queue = append(queue, node{id, "selected symbol", 0, nil})
 	}
@@ -64,7 +65,7 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 		r.Limitations = append(r.Limitations, warnings...)
 		for _, h := range hits[:min(5, len(hits))] {
 			selectedChunks[h.Chunk.ID] = true
-			queue = append(queue, node{h.Chunk.Symbol, "search result", 0, nil})
+			queue = append(queue, node{h.Chunk.Symbol, "search result via " + strings.Join(h.Channels, ","), 0, nil})
 		}
 	}
 	if len(queue) == 0 {
@@ -119,6 +120,7 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 				continue
 			}
 			if n.depth == 0 && len(selectedChunks) > 0 && n.reason != "selected symbol" && !selectedChunks[c.ID] {
+				omitted = append(omitted, c.ID)
 				continue
 			}
 			if !match(sym, a) {

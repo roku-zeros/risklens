@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const Version = "0.1.0"
+const Version = "0.2.0"
 const ModelRevision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
 const ModelKey = "intfloat/multilingual-e5-small@" + ModelRevision + ":fp32:384:mask-mean:l2:e5-prefix:window510:v2"
 
@@ -95,6 +95,7 @@ type Position struct {
 	Column int    `json:"column"`
 }
 type Symbol struct {
+	AccessPath []string `json:"access_path,omitempty"`
 	ID         string   `json:"id"`
 	Name       string   `json:"name"`
 	Kind       string   `json:"kind"`
@@ -133,57 +134,67 @@ type Chunk struct {
 	start, end int
 }
 type Snapshot struct {
-	ID          string             `json:"index_snapshot"`
-	Fingerprint string             `json:"-"`
-	Symbols     map[string]*Symbol `json:"-"`
-	Relations   []Relation         `json:"-"`
-	Chunks      []*Chunk           `json:"-"`
-	Files       map[string][]byte  `json:"-"`
-	Diagnostics []string           `json:"diagnostics"`
-	Complete    bool               `json:"complete"`
-	Environment map[string]string  `json:"environment"`
-	Module      string             `json:"module"`
-	Created     string             `json:"created"`
-	Text        *TextIndex         `json:"-"`
+	TypeFields  map[string][]FieldInfo `json:"-"`
+	ID          string                 `json:"index_snapshot"`
+	Fingerprint string                 `json:"-"`
+	Symbols     map[string]*Symbol     `json:"-"`
+	Relations   []Relation             `json:"-"`
+	Chunks      []*Chunk               `json:"-"`
+	Files       map[string][]byte      `json:"-"`
+	Diagnostics []string               `json:"diagnostics"`
+	Complete    bool                   `json:"complete"`
+	Environment map[string]string      `json:"environment"`
+	Module      string                 `json:"module"`
+	Created     string                 `json:"created"`
+	Text        *TextIndex             `json:"-"`
 }
 type Status struct {
-	GoHeapBytes    uint64            `json:"go_heap_bytes"`
-	Snapshot       string            `json:"index_snapshot"`
-	State          string            `json:"state"`
-	Fresh          bool              `json:"fresh"`
-	Loading        bool              `json:"loading"`
-	Vectors        string            `json:"vectors"`
-	VectorDone     int               `json:"vector_done"`
-	VectorTotal    int               `json:"vector_total"`
-	CacheHits      int               `json:"cache_hits"`
-	LastError      string            `json:"last_error,omitempty"`
-	EmbeddingError string            `json:"embedding_error,omitempty"`
-	Symbols        int               `json:"symbols"`
-	Chunks         int               `json:"chunks"`
-	Files          int               `json:"files"`
-	Complete       bool              `json:"complete"`
-	Diagnostics    []string          `json:"diagnostics"`
-	Environment    map[string]string `json:"environment"`
-	Module         string            `json:"module"`
+	Version             string            `json:"version"`
+	GoHeapReservedBytes uint64            `json:"go_heap_reserved_bytes"`
+	GoTotalAllocBytes   uint64            `json:"go_total_alloc_bytes"`
+	GoGCCycles          uint32            `json:"go_gc_cycles"`
+	FreshnessScope      string            `json:"freshness_scope"`
+	GoHeapBytes         uint64            `json:"go_heap_bytes"`
+	Snapshot            string            `json:"index_snapshot"`
+	State               string            `json:"state"`
+	Fresh               bool              `json:"fresh"`
+	Loading             bool              `json:"loading"`
+	Vectors             string            `json:"vectors"`
+	VectorDone          int               `json:"vector_done"`
+	VectorTotal         int               `json:"vector_total"`
+	CacheHits           int               `json:"cache_hits"`
+	LastError           string            `json:"last_error,omitempty"`
+	EmbeddingError      string            `json:"embedding_error,omitempty"`
+	Symbols             int               `json:"symbols"`
+	Chunks              int               `json:"chunks"`
+	Files               int               `json:"files"`
+	Complete            bool              `json:"complete"`
+	Diagnostics         []string          `json:"diagnostics"`
+	Environment         map[string]string `json:"environment"`
+	Module              string            `json:"module"`
 }
 type Args struct {
-	Query        string   `json:"query"`
-	Symbol       string   `json:"symbol_id"`
-	Symbols      []string `json:"symbol_ids"`
-	Chunks       []string `json:"chunk_ids"`
-	File         string   `json:"file"`
-	Start        int      `json:"start_line"`
-	End          int      `json:"end_line"`
-	Path         string   `json:"path"`
-	Package      string   `json:"package"`
-	Kind         string   `json:"kind"`
-	IncludeTests *bool    `json:"include_tests"`
-	Limit        int      `json:"limit"`
-	Cursor       string   `json:"cursor"`
-	Mode         string   `json:"mode"`
-	Depth        int      `json:"depth"`
-	Budget       int      `json:"budget_bytes"`
-	Snapshot     string   `json:"index_snapshot"`
+	OwnerID         string   `json:"owner_id"`
+	Paths           []string `json:"paths"`
+	ExcludePaths    []string `json:"exclude_paths"`
+	DistinctSymbols *bool    `json:"distinct_symbols"`
+	Query           string   `json:"query"`
+	Symbol          string   `json:"symbol_id"`
+	Symbols         []string `json:"symbol_ids"`
+	Chunks          []string `json:"chunk_ids"`
+	File            string   `json:"file"`
+	Start           int      `json:"start_line"`
+	End             int      `json:"end_line"`
+	Path            string   `json:"path"`
+	Package         string   `json:"package"`
+	Kind            string   `json:"kind"`
+	IncludeTests    *bool    `json:"include_tests"`
+	Limit           int      `json:"limit"`
+	Cursor          string   `json:"cursor"`
+	Mode            string   `json:"mode"`
+	Depth           int      `json:"depth"`
+	Budget          int      `json:"budget_bytes"`
+	Snapshot        string   `json:"index_snapshot"`
 }
 type Response struct {
 	Snapshot    string         `json:"index_snapshot"`
@@ -197,7 +208,7 @@ type Response struct {
 	Meta        map[string]any `json:"meta,omitempty"`
 }
 
-var Limitations = []string{"Static relationships are not execution order or proof of business correctness.", "Interface/function-variable targets are unresolved or candidates; graph is incomplete.", "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.", "Embedding similarity is retrieval relevance, not confidence in behavior."}
+var Limitations = []string{"Static relationships are not execution order or proof of business correctness.", "Interface/function-variable targets are unresolved or candidates; graph is incomplete.", "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.", "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."}
 
 func hash(b []byte) string { s := sha256.Sum256(b); return hex.EncodeToString(s[:]) }
 func digest(v any) string  { b, _ := json.Marshal(v); return hash(b) }

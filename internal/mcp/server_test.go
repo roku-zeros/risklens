@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -88,8 +89,28 @@ func TestStdioLifecycleAndResponsiveStatus(t *testing.T) {
 	if len(data["items"].([]any)) != 1 {
 		t.Fatal(data)
 	}
+	bad := call(301, "tools/call", map[string]any{"name": "find_field_accesses", "arguments": map[string]any{"symbol_id": "demo#field::Params.Limit"}})
+	if bad["isError"] != true {
+		t.Fatal("unknown ID was silently accepted", bad)
+	}
+	details := bad["structuredContent"].(map[string]any)["details"].(map[string]any)
+	if details["code"] != "unknown_symbol_id" {
+		t.Fatal(details)
+	}
 	inw.Close()
 	if err = <-done; err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestNavigationArgumentsAndStructuredLookupError(t *testing.T) {
+	for _, raw := range []string{`{"owner_id":"p#type::Params","query":"Limit","kind":"field"}`, `{"paths":["product/","common/"],"exclude_paths":["other/"],"query":"limiting","distinct_symbols":true}`} {
+		name := "search_symbols"
+		if strings.Contains(raw, "distinct_symbols") {
+			name = "search_code"
+		}
+		if _, err := Validate(name, json.RawMessage(raw)); err != nil {
+			t.Fatal(err)
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package lens
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -18,16 +19,17 @@ import (
 )
 
 type analyzer struct {
-	s        *Snapshot
-	fs       *token.FileSet
-	objects  map[types.Object]string
-	owner    map[*types.Var]string
-	ownerPos map[string]string
-	root     string
-	funcs    map[*ast.FuncDecl]string
-	literals map[*ast.FuncLit]string
-	pkg      *packages.Package
-	file     *ast.File
+	s          *Snapshot
+	fs         *token.FileSet
+	objects    map[types.Object]string
+	owner      map[*types.Var]string
+	ownerPos   map[Position]string
+	lineStarts map[string][]int
+	root       string
+	funcs      map[*ast.FuncDecl]string
+	literals   map[*ast.FuncLit]string
+	pkg        *packages.Package
+	file       *ast.File
 }
 
 func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) (*Snapshot, error) {
@@ -40,7 +42,7 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 	}
 	env := append([]string{}, os.Environ()...)
 	env = append(env, "GOPROXY=off", "GOSUMDB=off", "GOTOOLCHAIN=local", "GOWORK=off", "GOFLAGS=-mod=readonly", "GOPACKAGESDRIVER=off", "GONOPROXY=none", "GONOSUMDB=*", "GOPRIVATE=", "GOVCS=*:off")
-	ps, err := packages.Load(&packages.Config{Context: ctx, Dir: c.Root, Env: env, Fset: fs, Tests: true, Overlay: overlay, BuildFlags: c.BuildFlags, Mode: packages.NeedName | packages.NeedFiles | packages.NeedCompiledGoFiles | packages.NeedImports | packages.NeedDeps | packages.NeedSyntax | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedModule}, "./...")
+	ps, err := packages.Load(&packages.Config{Context: ctx, Dir: c.Root, Env: env, Fset: fs, Tests: true, Overlay: overlay, BuildFlags: c.BuildFlags, Mode: packages.NeedName | packages.NeedFiles | packages.NeedCompiledGoFiles | packages.NeedImports | packages.NeedSyntax | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedModule}, "./...")
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +81,7 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 	var units []unit
 	seen := map[string]bool{}
 	diags := map[string]bool{}
-	a := &analyzer{s: s, fs: fs, root: c.Root, ownerPos: map[string]string{}, objects: map[types.Object]string{}, owner: map[*types.Var]string{}, funcs: map[*ast.FuncDecl]string{}, literals: map[*ast.FuncLit]string{}}
+	a := &analyzer{s: s, fs: fs, root: c.Root, ownerPos: map[Position]string{}, lineStarts: map[string][]int{}, objects: map[types.Object]string{}, owner: map[*types.Var]string{}, funcs: map[*ast.FuncDecl]string{}, literals: map[*ast.FuncLit]string{}}
 	for _, p := range ps {
 		for _, e := range p.Errors {
 			diags[e.Error()] = true
@@ -112,6 +114,15 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 		s.Complete = false
 		s.Diagnostics = append(s.Diagnostics, "No buildable Go sources; prepare dependencies with go mod download online, then retry offline.")
 	}
+	for name, b := range files {
+		starts := []int{0}
+		for i, v := range b {
+			if v == '\n' {
+				starts = append(starts, i+1)
+			}
+		}
+		a.lineStarts[name] = starts
+	}
 	// Synthetic file containers cover package/import text and otherwise unattached comments.
 	for _, u := range units {
 		a.pkg = u.p
@@ -137,7 +148,7 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 						own = a.objectID(obj)
 					}
 					a.owner[st.Field(i)] = own
-					a.ownerPos[digest(a.position(st.Field(i).Pos()))] = own
+					a.ownerPos[a.position(st.Field(i).Pos())] = own
 				}
 			}
 			return true
@@ -247,18 +258,48 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 		a.file = u.f
 		a.relations(parentMap(u.f))
 	}
-	// Deduplicate variants/imported uses and stabilize output.
-	unique := map[string]bool{}
+	// Stable source order without repeatedly serializing relations inside a sort comparator.
+	type key struct {
+		symbol, from, kind, resolution, file, candidates string
+		line, column                                     int
+	}
+	unique := map[key]bool{}
 	out := s.Relations[:0]
 	for _, r := range s.Relations {
-		k := digest(r)
+		k := key{r.Symbol, r.From, r.Kind, r.Resolution, r.Position.File, strings.Join(r.Candidates, "\x00"), r.Position.Line, r.Position.Column}
 		if !unique[k] {
 			unique[k] = true
 			out = append(out, r)
 		}
 	}
 	s.Relations = out
-	sort.Slice(s.Relations, func(i, j int) bool { return digest(s.Relations[i]) < digest(s.Relations[j]) })
+	sort.Slice(s.Relations, func(i, j int) bool {
+		a, b := s.Relations[i], s.Relations[j]
+		if a.Position.File != b.Position.File {
+			return a.Position.File < b.Position.File
+		}
+		if a.Position.Line != b.Position.Line {
+			return a.Position.Line < b.Position.Line
+		}
+		if a.Position.Column != b.Position.Column {
+			return a.Position.Column < b.Position.Column
+		}
+		if a.Kind != b.Kind {
+			return a.Kind < b.Kind
+		}
+		if a.Symbol != b.Symbol {
+			return a.Symbol < b.Symbol
+		}
+		if a.From != b.From {
+			return a.From < b.From
+		}
+		if a.Resolution != b.Resolution {
+			return a.Resolution < b.Resolution
+		}
+		return strings.Join(a.Candidates, "\x00") < strings.Join(b.Candidates, "\x00")
+	})
+	a.collectTypeFields()
+
 	makeChunks(s, c.ChunkBytes, c.ModelKey)
 	s.Text = NewTextIndex(s.Chunks)
 	return s, nil
@@ -345,7 +386,7 @@ func (a *analyzer) objectID(o types.Object) string {
 	if v, ok := o.(*types.Var); ok && v.IsField() {
 		own := a.owner[v]
 		if own == "" {
-			own = a.ownerPos[digest(a.position(o.Pos()))]
+			own = a.ownerPos[a.position(o.Pos())]
 		}
 		if own != "" {
 			return own + "#field:" + o.Name()
@@ -376,16 +417,19 @@ func (a *analyzer) from(n ast.Node, parents map[ast.Node]ast.Node) string {
 	return ""
 }
 func (a *analyzer) line(p Position) string {
-	ls := strings.Split(string(a.s.Files[p.File]), "\n")
-	if p.Line > 0 && p.Line <= len(ls) {
-		v := ls[p.Line-1]
-		if len(v) > 300 {
-			v = v[:300]
-		}
-		return v
+	starts := a.lineStarts[p.File]
+	b := a.s.Files[p.File]
+	if p.Line < 1 || p.Line > len(starts) {
+		return ""
 	}
-	return ""
+	start := starts[p.Line-1]
+	end := len(b)
+	if p.Line < len(starts) {
+		end = starts[p.Line] - 1
+	}
+	return clip(string(bytes.TrimSuffix(b[start:min(end, start+304)], []byte{'\r'})), 300)
 }
+
 func (a *analyzer) relations(parents map[ast.Node]ast.Node) {
 	ast.Inspect(a.file, func(n ast.Node) bool {
 		if n == nil {

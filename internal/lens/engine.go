@@ -98,6 +98,10 @@ func (e *Engine) Refresh(ctx context.Context) error {
 		s = nil
 		err = fmt.Errorf("source files changed during analysis; retry refresh_index")
 	}
+	// The loader/type-checker graph is not retained by Snapshot. Collect it once before vectorization, never per query.
+	if err == nil && s != nil {
+		runtime.GC()
+	}
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	e.status.Loading = false
@@ -151,9 +155,14 @@ func (e *Engine) StartRefresh() bool {
 func (e *Engine) Status(ctx context.Context) Status {
 	e.mu.RLock()
 	st := e.status
+	st.Version = Version
 	var mem runtime.MemStats
 	runtime.ReadMemStats(&mem)
 	st.GoHeapBytes = mem.HeapAlloc
+	st.GoHeapReservedBytes = mem.HeapSys
+	st.GoTotalAllocBytes = mem.TotalAlloc
+	st.GoGCCycles = mem.NumGC
+	st.FreshnessScope = "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness."
 	s := e.snap
 	e.mu.RUnlock()
 	if s != nil {
@@ -285,6 +294,7 @@ func (e *Engine) WaitVectors(ctx context.Context) error {
 	for {
 		e.mu.RLock()
 		st := e.status
+		st.Version = Version
 		e.mu.RUnlock()
 		if st.Vectors == "ready" {
 			return nil
@@ -375,7 +385,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 	}
 	r := Response{Snapshot: s.ID, Fresh: true, Complete: s.Complete, Limitations: append([]string{}, Limitations...), Diagnostics: s.Diagnostics}
 	if a.Snapshot != "" && a.Snapshot != s.ID {
-		return r, fmt.Errorf("snapshot changed; repeat search")
+		return r, fmt.Errorf("snapshot changed: requested %s, current %s; repeat discovery and use returned IDs", a.Snapshot, s.ID)
 	}
 	pageName := name
 	if name == "search_code" && a.Mode != "lexical" {
@@ -387,7 +397,27 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 	switch name {
 	case "search_symbols":
 		syms := []*Symbol{}
+		scoped := map[string][]string{}
+		if a.OwnerID != "" {
+			owner := s.Symbols[a.OwnerID]
+			if owner == nil {
+				return r, unknownSymbol(s, a.OwnerID, "type")
+			}
+			if owner.Kind != "type" {
+				return r, fmt.Errorf("owner_id must identify a type")
+			}
+			for _, f := range s.TypeFields[a.OwnerID] {
+				if f.Available {
+					scoped[f.Symbol] = f.AccessPath
+				}
+			}
+		}
 		for _, sym := range s.Symbols {
+			if a.OwnerID != "" {
+				if _, ok := scoped[sym.ID]; !ok {
+					continue
+				}
+			}
 			if match(sym, a) && (a.Query == "" || strings.Contains(strings.ToLower(sym.Name+" "+sym.Signature), strings.ToLower(a.Query))) {
 				syms = append(syms, sym)
 			}
@@ -401,14 +431,18 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 		})
 		for _, v := range syms {
 			x := *v
+			x.AccessPath = scoped[v.ID]
 			x.Code = ""
 			x.Comment = ""
 			list = append(list, x)
 		}
+		if len(syms) == 0 && a.Query != "" {
+			r.Meta = map[string]any{"exact_match": false, "suggestions": suggestSymbols(s, a, 8), "hint": "No declaration matched. Suggestions are real symbols, not verified replacements. Validate documentation references against get_symbol/get_source in this snapshot."}
+		}
 	case "get_symbol":
 		sym := s.Symbols[a.Symbol]
 		if sym == nil {
-			return r, fmt.Errorf("unknown symbol_id")
+			return r, unknownSymbol(s, a.Symbol, "")
 		}
 		x := *sym
 		if len(x.Code) > e.C.MaxSourceBytes {
@@ -416,13 +450,22 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			r.Truncated = true
 			r.Meta = map[string]any{"continuation": "get_source using position.file, position.line and end_line"}
 		}
+		if fields, ok := s.TypeFields[a.Symbol]; ok {
+			if r.Meta == nil {
+				r.Meta = map[string]any{}
+			}
+			r.Meta["fields"] = fields[:min(a.Limit, len(fields))]
+			r.Meta["field_count"] = len(fields)
+			r.Meta["fields_truncated"] = len(fields) > a.Limit
+			r.Meta["field_continuation"] = "search_symbols with owner_id equal to this returned type ID, kind=field, and optional query/cursor"
+		}
 		r.Items = x
 	case "find_references", "get_callers", "get_callees", "find_field_accesses":
 		if name == "find_field_accesses" && s.Symbols[a.Symbol] != nil && s.Symbols[a.Symbol].Kind != "field" {
 			return r, fmt.Errorf("symbol_id must identify a field")
 		}
 		if s.Symbols[a.Symbol] == nil {
-			return r, fmt.Errorf("unknown symbol_id")
+			return r, unknownSymbol(s, a.Symbol, "")
 		}
 		for _, rel := range s.Relations {
 			yes := false
@@ -517,7 +560,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 	return r, nil
 }
 func relMatch(r Relation, a Args, s *Snapshot) bool {
-	if a.Path != "" && !strings.HasPrefix(r.Position.File, a.Path) {
+	if !matchPath(r.Position.File, a) {
 		return false
 	}
 	if a.IncludeTests != nil && !*a.IncludeTests && strings.HasSuffix(r.Position.File, "_test.go") {
