@@ -1,0 +1,14 @@
+{
+  "model_key": "onnx-community/Qwen3-Embedding-0.6B-ONNX@c25a394dd583836952667c12f008335071b3f43d:q8:1024:last:l2:go-instruct:windows2048:batch1:v2",
+  "requested_batches": [
+    1,
+    4
+  ],
+  "effective_batch": 1,
+  "cosines": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "reason": "Fixed batch1 avoids batch-dependent quantized export vectors"
+}

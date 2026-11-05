@@ -7,3 +7,5 @@ Runtime dependencies are installed separately: ONNX Runtime (MIT), Hugging Face 
 intfloat/multilingual-e5-small uses the MIT license according to its official model card. Weights/tokenizer are downloaded separately at a pinned revision and are not included in the source archive. Model card: https://huggingface.co/intfloat/multilingual-e5-small
 
 The optional official MCP Python SDK integration test uses mcp==1.26.0 (MIT); it is not a production dependency.
+
+Optional 0.3.0 profiles: Qwen3-Embedding-0.6B and BGE-reranker-v2-m3 use Apache-2.0 according to their upstream model cards. Pinned ONNX-community conversions and artifact SHA256 values are documented in runtime/*-model-lock.json and docs/SOURCES.md. Weights are installed separately and are not included in Git or source archives. SSA/VTA reuses golang.org/x/tools under the already included BSD-3-Clause license.

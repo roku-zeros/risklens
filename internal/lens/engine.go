@@ -17,6 +17,9 @@ import (
 )
 
 type Engine struct {
+	rerankCache  map[string]float64
+	rerankOrder  []string
+	rerank       Reranker
 	C            Config
 	mu           sync.RWMutex
 	refreshMu    sync.Mutex
@@ -52,6 +55,9 @@ func New(c Config, provider Embedder) (*Engine, error) {
 		provider = NewProcessEmbedder(c)
 	}
 	eng.embed = provider
+	if len(c.RerankCommand) > 0 {
+		eng.rerank = newReranker(c)
+	}
 	eng.vectors, e = loadVectors(c)
 	eng.status.State = "unloaded"
 	eng.status.Vectors = "not_ready"
@@ -60,7 +66,15 @@ func New(c Config, provider Embedder) (*Engine, error) {
 	}
 	return eng, nil
 }
-func (e *Engine) Close() { e.cancel(); e.wg.Wait(); e.embed.Close(); os.Remove(e.lockfile) }
+func (e *Engine) Close() {
+	e.cancel()
+	e.wg.Wait()
+	e.embed.Close()
+	if e.rerank != nil {
+		e.rerank.Close()
+	}
+	os.Remove(e.lockfile)
+}
 func (e *Engine) Refresh(ctx context.Context) error {
 	e.refreshMu.Lock()
 	defer e.refreshMu.Unlock()
@@ -125,6 +139,7 @@ func (e *Engine) Refresh(ctx context.Context) error {
 	e.status.Diagnostics = s.Diagnostics
 	e.status.Environment = s.Environment
 	e.status.Module = s.Module
+	e.status.Calls = s.Calls
 	e.status.VectorTotal = len(s.Chunks)
 	e.status.VectorDone = 0
 	e.status.CacheHits = 0
@@ -370,7 +385,12 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 	if a.Mode == "vector" && lists["vector"] == nil {
 		return nil, warnings, fmt.Errorf("vector search unavailable: %s", strings.Join(warnings, "; "))
 	}
-	return fuse(s, a, lists), warnings, nil
+	hits := fuse(s, a, lists)
+	hits, warning := e.rerankHits(ctx, a, hits)
+	if warning != "" {
+		warnings = append(warnings, warning)
+	}
+	return hits, warnings, nil
 }
 func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error) {
 	if a.Limit < 0 || a.Limit > e.C.MaxResults {
@@ -459,6 +479,10 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			r.Meta["fields_truncated"] = len(fields) > a.Limit
 			r.Meta["field_continuation"] = "search_symbols with owner_id equal to this returned type ID, kind=field, and optional query/cursor"
 		}
+		if r.Meta == nil {
+			r.Meta = map[string]any{}
+		}
+		r.Meta["source_hash"] = hash(s.Files[x.Position.File])
 		r.Items = x
 	case "find_references", "get_callers", "get_callees", "find_field_accesses":
 		if name == "find_field_accesses" && s.Symbols[a.Symbol] != nil && s.Symbols[a.Symbol].Kind != "field" {
@@ -473,7 +497,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			case "find_references":
 				yes = rel.Symbol == a.Symbol && rel.Kind == "reference"
 			case "get_callers":
-				yes = rel.Kind == "call" && (rel.Symbol == a.Symbol || contains(rel.Candidates, a.Symbol))
+				yes = rel.Kind == "call" && (rel.Symbol == a.Symbol || contains(rel.Candidates, a.Symbol) || contains(rel.FlowCandidates, a.Symbol))
 			case "get_callees":
 				yes = rel.Kind == "call" && rel.From == a.Symbol
 			case "find_field_accesses":
@@ -516,7 +540,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			r.Truncated = true
 			r.Meta = map[string]any{"next_line": last + 1, "requested_end": end, "continuation": "get_source; a line exceeding max_source_bytes needs a larger server limit"}
 		}
-		r.Items = map[string]any{"file": file, "start_line": start, "end_line": last, "code": strings.Join(out, "\n")}
+		r.Items = map[string]any{"file": file, "start_line": start, "end_line": last, "code": strings.Join(out, "\n"), "source_hash": hash(b)}
 	case "search_code":
 		hits, warnings, e2 := e.Search(ctx, s, a)
 		if e2 != nil {
@@ -527,6 +551,12 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 		for _, v := range hits {
 			list = append(list, v)
 		}
+	case "audit_document":
+		return e.auditDocument(ctx, s, a, r)
+	case "verify_evidence":
+		return e.verifyEvidence(ctx, s, a, r)
+	case "trace_field":
+		return e.traceField(ctx, s, a, r)
 	case "build_context":
 		return e.buildContext(ctx, s, a, r)
 	default:

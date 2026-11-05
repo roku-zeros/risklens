@@ -1,0 +1,17 @@
+{
+  "model": "onnx-community/bge-reranker-v2-m3-ONNX",
+  "base_model": "BAAI/bge-reranker-v2-m3",
+  "revision": "6f5ff65298512715a1e669753bc754d2bc8f367b",
+  "dimension": 1,
+  "max_tokens": 2048,
+  "pooling": "pair-logit",
+  "role": "reranker",
+  "model_file": "model_quantized.onnx",
+  "model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+  "profile": "bge-reranker",
+  "files": {
+    "model_quantized.onnx": "912fc1215c2dbff6499700534bd8d31253af01573861abbfc43afd1fab6cce5d",
+    "tokenizer.json": "8bf8afbfd11306bd872018c53bfdf2e160a56f8edbcf49933324404791c148d3",
+    "config.json": "122e922dcfed6503c8721e6fe1daf090340c3d95ca7f3aa3a72730b321a51cfd"
+  }
+}

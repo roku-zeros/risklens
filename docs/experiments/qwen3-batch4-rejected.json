@@ -1,0 +1,1134 @@
+{
+  "hardware": {
+    "platform": "macOS-14.1.1-arm64-i386-64bit",
+    "machine": "arm64",
+    "python": "3.11.2"
+  },
+  "corpus": {
+    "go_files": 9,
+    "lines": 488,
+    "source_bytes": 8700
+  },
+  "model_key": "onnx-community/Qwen3-Embedding-0.6B-ONNX@c25a394dd583836952667c12f008335071b3f43d:q8:1024:last:l2:go-instruct:windows2048:v1",
+  "threads": 2,
+  "batch_size": 8,
+  "first_index_seconds": 36.992031458066776,
+  "cached_start_seconds": 0.3623681250028312,
+  "update_one_function_seconds": 1.1566377910785377,
+  "runtime_cold_vector_query_ms": 1922.099499963224,
+  "sampled_process_tree_peak_rss_bytes": null,
+  "vector_index_bytes": 556829,
+  "initial_status": {
+    "call_analysis": {
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 137658368,
+    "go_total_alloc_bytes": 240737640,
+    "go_gc_cycles": 45,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 3127184,
+    "index_snapshot": "31fbb1f812296307debd191e",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 0,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "updated_status": {
+    "call_analysis": {
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 137428992,
+    "go_total_alloc_bytes": 438092264,
+    "go_gc_cycles": 77,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 3457256,
+    "index_snapshot": "e279d86e568f13530f60fbb6",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 42,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "cached_status": {
+    "call_analysis": {
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 129269760,
+    "go_total_alloc_bytes": 171107664,
+    "go_gc_cycles": 13,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2842312,
+    "index_snapshot": "e279d86e568f13530f60fbb6",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 43,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "summary": {
+    "lexical": {
+      "queries": 12,
+      "hit5": 8,
+      "hit10": 8,
+      "median_warm_ms": 0.9668125421740115,
+      "median_first_ms": 1.017666538245976
+    },
+    "vector": {
+      "queries": 12,
+      "hit5": 7,
+      "hit10": 10,
+      "median_warm_ms": 106.27569793723524,
+      "median_first_ms": 109.48783287312835
+    },
+    "hybrid": {
+      "queries": 12,
+      "hit5": 9,
+      "hit10": 11,
+      "median_warm_ms": 105.54040654096752,
+      "median_first_ms": 104.44112552795559
+    }
+  },
+  "rows": [
+    {
+      "mode": "lexical",
+      "query": "\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0438\u0442\u044c \u0441\u0443\u043c\u043c\u0443 \u0432\u044b\u0434\u0430\u0447\u0438 \u0438\u0441\u0445\u043e\u0434\u044f \u0438\u0437 \u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u0437\u0430\u0451\u043c\u0449\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.314207911491394,
+      "warm_median_ms": 1.081978902220726,
+      "durations_ms": [
+        1.314207911491394,
+        1.1205410119146109,
+        1.0434167925268412
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0434\u0435\u043d\u0435\u0433 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u0433\u0430\u0448\u0435\u043d\u0438\u044f \u0441\u0442\u0430\u0440\u043e\u0433\u043e \u043a\u0440\u0435\u0434\u0438\u0442\u0430",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.0172079782932997,
+      "warm_median_ms": 0.9753125486895442,
+      "durations_ms": [
+        1.0172079782932997,
+        1.0164999403059483,
+        0.9341251570731401
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "\u043b\u044c\u0433\u043e\u0442\u043d\u044b\u0439 \u043f\u0435\u0440\u0438\u043e\u0434 \u043f\u043e\u043a\u0430 \u043a\u043b\u0438\u0435\u043d\u0442 \u0443\u0447\u0438\u0442\u0441\u044f",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.0181250981986523,
+      "warm_median_ms": 0.9395000524818897,
+      "durations_ms": [
+        1.0181250981986523,
+        0.9469171054661274,
+        0.932082999497652
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "\u043e\u0442\u043a\u0430\u0437 \u043f\u0440\u0438 \u0432\u044b\u0441\u043e\u043a\u043e\u0439 \u0434\u043e\u043b\u0433\u043e\u0432\u043e\u0439 \u043d\u0430\u0433\u0440\u0443\u0437\u043a\u0435",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.329375198110938,
+      "warm_median_ms": 0.9583125356584787,
+      "durations_ms": [
+        1.329375198110938,
+        0.9761250112205744,
+        0.9405000600963831
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "\u043e\u0431\u0449\u0430\u044f \u043f\u043e\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0440\u0430\u0441\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043a\u043b\u044e\u0447\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u0443\u043c\u0435\u043d\u044c\u0448\u0435\u043d\u0438\u0435 \u0441\u0443\u043c\u043c\u044b",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 0.8873750921338797,
+      "warm_median_ms": 0.8885830175131559,
+      "durations_ms": [
+        0.8873750921338797,
+        0.8849999867379665,
+        0.8921660482883453
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 0.9036248084157705,
+      "warm_median_ms": 0.8941665291786194,
+      "durations_ms": [
+        0.9036248084157705,
+        0.891250092536211,
+        0.8970829658210278
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.426332863047719,
+      "warm_median_ms": 1.0977500351145864,
+      "durations_ms": [
+        1.426332863047719,
+        1.1122499126940966,
+        1.0832501575350761
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 0.9045829065144062,
+      "warm_median_ms": 0.911833019927144,
+      "durations_ms": [
+        0.9045829065144062,
+        0.9075410198420286,
+        0.9161250200122595
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 0.8977081160992384,
+      "warm_median_ms": 0.892833573743701,
+      "durations_ms": [
+        0.8977081160992384,
+        0.8813750464469194,
+        0.9042921010404825
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.3888748362660408,
+      "warm_median_ms": 1.1216665152460337,
+      "durations_ms": [
+        1.3888748362660408,
+        1.1149579659104347,
+        1.1283750645816326
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.1119998525828123,
+      "warm_median_ms": 1.1625414481386542,
+      "durations_ms": [
+        1.1119998525828123,
+        1.1967499740421772,
+        1.1283329222351313
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044f \u0447\u0435\u0440\u0435\u0437 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0438 \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 0.909958966076374,
+      "warm_median_ms": 1.0194998467341065,
+      "durations_ms": [
+        0.909958966076374,
+        0.9940408635884523,
+        1.0449588298797607
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0438\u0442\u044c \u0441\u0443\u043c\u043c\u0443 \u0432\u044b\u0434\u0430\u0447\u0438 \u0438\u0441\u0445\u043e\u0434\u044f \u0438\u0437 \u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u0437\u0430\u0451\u043c\u0449\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 110.84912484511733,
+      "warm_median_ms": 124.59293741267174,
+      "durations_ms": [
+        110.84912484511733,
+        113.22320788167417,
+        135.96266694366932
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0434\u0435\u043d\u0435\u0433 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u0433\u0430\u0448\u0435\u043d\u0438\u044f \u0441\u0442\u0430\u0440\u043e\u0433\u043e \u043a\u0440\u0435\u0434\u0438\u0442\u0430",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 247.88199993781745,
+      "warm_median_ms": 154.74089607596397,
+      "durations_ms": [
+        247.88199993781745,
+        187.015000032261,
+        122.46679211966693
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u043b\u044c\u0433\u043e\u0442\u043d\u044b\u0439 \u043f\u0435\u0440\u0438\u043e\u0434 \u043f\u043e\u043a\u0430 \u043a\u043b\u0438\u0435\u043d\u0442 \u0443\u0447\u0438\u0442\u0441\u044f",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 101.37175000272691,
+      "warm_median_ms": 94.17197888251394,
+      "durations_ms": [
+        101.37175000272691,
+        91.01962484419346,
+        97.32433292083442
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u043e\u0442\u043a\u0430\u0437 \u043f\u0440\u0438 \u0432\u044b\u0441\u043e\u043a\u043e\u0439 \u0434\u043e\u043b\u0433\u043e\u0432\u043e\u0439 \u043d\u0430\u0433\u0440\u0443\u0437\u043a\u0435",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 101.99650004506111,
+      "warm_median_ms": 101.6911460319534,
+      "durations_ms": [
+        101.99650004506111,
+        101.44337499514222,
+        101.93891706876457
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u043e\u0431\u0449\u0430\u044f \u043f\u043e\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0440\u0430\u0441\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043a\u043b\u044e\u0447\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u0443\u043c\u0435\u043d\u044c\u0448\u0435\u043d\u0438\u0435 \u0441\u0443\u043c\u043c\u044b",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 136.59087498672307,
+      "warm_median_ms": 142.16827042400837,
+      "durations_ms": [
+        136.59087498672307,
+        136.19662495329976,
+        148.13991589471698
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 108.12654090113938,
+      "warm_median_ms": 102.7651249896735,
+      "durations_ms": [
+        108.12654090113938,
+        101.90504207275808,
+        103.62520790658891
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 86.1430000513792,
+      "warm_median_ms": 99.04920845292509,
+      "durations_ms": [
+        86.1430000513792,
+        91.72091702930629,
+        106.37749987654388
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 121.7407500371337,
+      "warm_median_ms": 118.82593750488013,
+      "durations_ms": [
+        121.7407500371337,
+        119.4587501231581,
+        118.19312488660216
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 94.99233309179544,
+      "warm_median_ms": 85.97918704617769,
+      "durations_ms": [
+        94.99233309179544,
+        89.29808298125863,
+        82.66029111109674
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::TestCalculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 90.20841703750193,
+      "warm_median_ms": 107.67916648183018,
+      "durations_ms": [
+        90.20841703750193,
+        104.00400008074939,
+        111.35433288291097
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 118.26224997639656,
+      "warm_median_ms": 104.87222939264029,
+      "durations_ms": [
+        118.26224997639656,
+        106.96641681715846,
+        102.77804196812212
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044f \u0447\u0435\u0440\u0435\u0437 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0438 \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#file:state/large.go"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 129.47691697627306,
+      "warm_median_ms": 115.70768745150417,
+      "durations_ms": [
+        129.47691697627306,
+        118.33370802924037,
+        113.08166687376797
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0438\u0442\u044c \u0441\u0443\u043c\u043c\u0443 \u0432\u044b\u0434\u0430\u0447\u0438 \u0438\u0441\u0445\u043e\u0434\u044f \u0438\u0437 \u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u0437\u0430\u0451\u043c\u0449\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 125.65945903770626,
+      "warm_median_ms": 137.2439789120108,
+      "durations_ms": [
+        125.65945903770626,
+        139.32983297854662,
+        135.15812484547496
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0434\u0435\u043d\u0435\u0433 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u0433\u0430\u0448\u0435\u043d\u0438\u044f \u0441\u0442\u0430\u0440\u043e\u0433\u043e \u043a\u0440\u0435\u0434\u0438\u0442\u0430",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 122.02058406546712,
+      "warm_median_ms": 126.47708354052156,
+      "durations_ms": [
+        122.02058406546712,
+        122.02233308926225,
+        130.93183399178088
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u043b\u044c\u0433\u043e\u0442\u043d\u044b\u0439 \u043f\u0435\u0440\u0438\u043e\u0434 \u043f\u043e\u043a\u0430 \u043a\u043b\u0438\u0435\u043d\u0442 \u0443\u0447\u0438\u0442\u0441\u044f",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 105.15933413989842,
+      "warm_median_ms": 105.27220857329667,
+      "durations_ms": [
+        105.15933413989842,
+        105.25254206731915,
+        105.29187507927418
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u043e\u0442\u043a\u0430\u0437 \u043f\u0440\u0438 \u0432\u044b\u0441\u043e\u043a\u043e\u0439 \u0434\u043e\u043b\u0433\u043e\u0432\u043e\u0439 \u043d\u0430\u0433\u0440\u0443\u0437\u043a\u0435",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 108.03916701115668,
+      "warm_median_ms": 105.80860450863838,
+      "durations_ms": [
+        108.03916701115668,
+        106.35400004684925,
+        105.26320897042751
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u043e\u0431\u0449\u0430\u044f \u043f\u043e\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0440\u0430\u0441\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043a\u043b\u044e\u0447\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u0443\u043c\u0435\u043d\u044c\u0448\u0435\u043d\u0438\u0435 \u0441\u0443\u043c\u043c\u044b",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 137.60791602544487,
+      "warm_median_ms": 139.6828331053257,
+      "durations_ms": [
+        137.60791602544487,
+        141.29683305509388,
+        138.0688331555575
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 100.79845786094666,
+      "warm_median_ms": 99.97891692910343,
+      "durations_ms": [
+        100.79845786094666,
+        98.7808748614043,
+        101.17695899680257
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#function::TestCalculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 84.12183308973908,
+      "warm_median_ms": 85.97185357939452,
+      "durations_ms": [
+        84.12183308973908,
+        86.78779122419655,
+        85.15591593459249
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 90.98724997602403,
+      "warm_median_ms": 89.99862452037632,
+      "durations_ms": [
+        90.98724997602403,
+        88.84395798668265,
+        91.15329105407
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 83.3850831259042,
+      "warm_median_ms": 82.78070855885744,
+      "durations_ms": [
+        83.3850831259042,
+        81.81250002235174,
+        83.74891709536314
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 93.74874993227422,
+      "warm_median_ms": 97.73591684643179,
+      "durations_ms": [
+        93.74874993227422,
+        93.13462488353252,
+        102.33720880933106
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 103.72291691601276,
+      "warm_median_ms": 118.87002096045762,
+      "durations_ms": [
+        103.72291691601276,
+        116.6743750218302,
+        121.06566689908504
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044f \u0447\u0435\u0440\u0435\u0437 \u0443\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c \u0438 \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0430",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#file:state/large.go"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 140.51391696557403,
+      "warm_median_ms": 119.74441655911505,
+      "durations_ms": [
+        140.51391696557403,
+        126.92870805040002,
+        112.56012506783009
+      ]
+    }
+  ],
+  "limitations": [
+    "Small bilingual synthetic corpus; not evidence of performance on production strategy.",
+    "Top-k counts distinct parent symbols by default in 0.2.0; raw chunk mode requires distinct_symbols=false. Hit@k is at least one expected symbol.",
+    "First query per case may be warm in OS/model cache; runtime cold startup is reported separately.",
+    "RSS samples process tree at 100ms intervals; not a precise allocator maximum.",
+    "Update includes full Go reload and changed-chunk inference."
+  ],
+  "validity": "rejected_batch_profile",
+  "reason": "batch1-vs-batch4 document-vector cosine below .995; profile now forced to batch1 with a new model_key"
+}

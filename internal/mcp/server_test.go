@@ -65,7 +65,7 @@ func TestStdioLifecycleAndResponsiveStatus(t *testing.T) {
 	}
 	fmt.Fprintln(inw, `{"jsonrpc":"2.0","method":"notifications/initialized"}`)
 	ls := call(2, "tools/list", map[string]any{})
-	if len(ls["tools"].([]any)) != 12 {
+	if len(ls["tools"].([]any)) != 15 {
 		t.Fatal(ls)
 	}
 	call(3, "tools/call", map[string]any{"name": "refresh_index", "arguments": map[string]any{}})

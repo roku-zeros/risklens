@@ -1,0 +1,1135 @@
+{
+  "hardware": {
+    "platform": "macOS-14.1.1-arm64-i386-64bit",
+    "machine": "arm64",
+    "python": "3.11.2"
+  },
+  "corpus": {
+    "go_files": 9,
+    "lines": 488,
+    "source_bytes": 8700
+  },
+  "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+  "threads": 2,
+  "batch_size": 8,
+  "first_index_seconds": 10.923691707896069,
+  "cached_start_seconds": 0.4623125421348959,
+  "update_one_function_seconds": 0.7927249998319894,
+  "runtime_cold_vector_query_ms": 1546.4691249653697,
+  "sampled_process_tree_peak_rss_bytes": null,
+  "vector_index_bytes": 209237,
+  "initial_status": {
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 125075456,
+    "go_total_alloc_bytes": 190303104,
+    "go_gc_cycles": 22,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2154520,
+    "index_snapshot": "f76efb4d9bb491d5189fc3c6",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 0,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "updated_status": {
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 124977152,
+    "go_total_alloc_bytes": 386318072,
+    "go_gc_cycles": 55,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 3286704,
+    "index_snapshot": "eec283e1fb4facbac4c3e145",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 42,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "cached_status": {
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.3.0",
+    "go_heap_reserved_bytes": 133398528,
+    "go_total_alloc_bytes": 169670912,
+    "go_gc_cycles": 8,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2337048,
+    "index_snapshot": "eec283e1fb4facbac4c3e145",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 43,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "summary": {
+    "lexical": {
+      "queries": 12,
+      "hit5": 8,
+      "hit10": 8,
+      "median_warm_ms": 1.1535517405718565,
+      "median_first_ms": 1.1496040970087051
+    },
+    "vector": {
+      "queries": 12,
+      "hit5": 10,
+      "hit10": 11,
+      "median_warm_ms": 12.02557299984619,
+      "median_first_ms": 11.720562586560845
+    },
+    "hybrid": {
+      "queries": 12,
+      "hit5": 10,
+      "hit10": 11,
+      "median_warm_ms": 14.917343447450548,
+      "median_first_ms": 15.078771044500172
+    }
+  },
+  "rows": [
+    {
+      "mode": "lexical",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.256749965250492,
+      "warm_median_ms": 1.0842290939763188,
+      "durations_ms": [
+        1.256749965250492,
+        1.0817921720445156,
+        1.086666015908122
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.1563331354409456,
+      "warm_median_ms": 1.0886660311371088,
+      "durations_ms": [
+        1.1563331354409456,
+        1.0687911417335272,
+        1.1085409205406904
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.2226670514792204,
+      "warm_median_ms": 1.2994376011192799,
+      "durations_ms": [
+        1.2226670514792204,
+        1.1845841072499752,
+        1.4142910949885845
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.1428750585764647,
+      "warm_median_ms": 1.1045830324292183,
+      "durations_ms": [
+        1.1428750585764647,
+        1.0996249038726091,
+        1.1095411609858274
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.0221670381724834,
+      "warm_median_ms": 1.0545835830271244,
+      "durations_ms": [
+        1.0221670381724834,
+        1.0534580796957016,
+        1.0557090863585472
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.094333129003644,
+      "warm_median_ms": 1.0341244051232934,
+      "durations_ms": [
+        1.094333129003644,
+        1.029832987114787,
+        1.0384158231317997
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.5309578739106655,
+      "warm_median_ms": 1.3048960827291012,
+      "durations_ms": [
+        1.5309578739106655,
+        1.2940000742673874,
+        1.315792091190815
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.1255410499870777,
+      "warm_median_ms": 1.0935214813798666,
+      "durations_ms": [
+        1.1255410499870777,
+        1.0839591268450022,
+        1.103083835914731
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.112041063606739,
+      "warm_median_ms": 1.2025204487144947,
+      "durations_ms": [
+        1.112041063606739,
+        1.1294579599052668,
+        1.2755829375237226
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.2973330449312925,
+      "warm_median_ms": 1.3064374215900898,
+      "durations_ms": [
+        1.2973330449312925,
+        1.3342909514904022,
+        1.2785838916897774
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.2692499440163374,
+      "warm_median_ms": 1.363687333650887,
+      "durations_ms": [
+        1.2692499440163374,
+        1.3449578545987606,
+        1.3824168127030134
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.1378750205039978,
+      "warm_median_ms": 1.2040204601362348,
+      "durations_ms": [
+        1.1378750205039978,
+        1.3186249416321516,
+        1.089415978640318
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 15.565291978418827,
+      "warm_median_ms": 15.496145351789892,
+      "durations_ms": [
+        15.565291978418827,
+        14.901999849826097,
+        16.090290853753686
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.995041044428945,
+      "warm_median_ms": 11.903312522917986,
+      "durations_ms": [
+        11.995041044428945,
+        11.960959061980247,
+        11.845665983855724
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.120291193947196,
+      "warm_median_ms": 11.37702097184956,
+      "durations_ms": [
+        11.120291193947196,
+        11.555833974853158,
+        11.198207968845963
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.446084128692746,
+      "warm_median_ms": 12.147833476774395,
+      "durations_ms": [
+        11.446084128692746,
+        12.539291987195611,
+        11.756374966353178
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 15.979415969923139,
+      "warm_median_ms": 14.993061893619597,
+      "durations_ms": [
+        15.979415969923139,
+        15.043583000078797,
+        14.942540787160397
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/other#type::Decision"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 9.783375076949596,
+      "warm_median_ms": 9.388520964421332,
+      "durations_ms": [
+        9.783375076949596,
+        9.612832916900516,
+        9.164209011942148
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 10.852540843188763,
+      "warm_median_ms": 11.251979507505894,
+      "durations_ms": [
+        10.852540843188763,
+        10.962708853185177,
+        11.54125016182661
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 9.6841249614954,
+      "warm_median_ms": 10.234395856969059,
+      "durations_ms": [
+        9.6841249614954,
+        10.363041888922453,
+        10.105749825015664
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/state#type::Adjuster",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/state#file:state/large.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 10.461624944582582,
+      "warm_median_ms": 10.001478949561715,
+      "durations_ms": [
+        10.461624944582582,
+        9.791499935090542,
+        10.211457964032888
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy#file:main.go"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.665083028376102,
+      "warm_median_ms": 15.30652109067887,
+      "durations_ms": [
+        14.665083028376102,
+        15.199292218312621,
+        15.41374996304512
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#file:consumer/consumer_test.go",
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#type::Application"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.270999934524298,
+      "warm_median_ms": 14.860167051665485,
+      "durations_ms": [
+        14.270999934524298,
+        14.394625090062618,
+        15.325709013268352
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 18.49287492223084,
+      "warm_median_ms": 18.445645458996296,
+      "durations_ms": [
+        18.49287492223084,
+        18.446957925334573,
+        18.44433299265802
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 24.498332990333438,
+      "warm_median_ms": 22.480249986983836,
+      "durations_ms": [
+        24.498332990333438,
+        21.275124978274107,
+        23.685374995693564
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 16.343666007742286,
+      "warm_median_ms": 16.684832982718945,
+      "durations_ms": [
+        16.343666007742286,
+        15.773708000779152,
+        17.595957964658737
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.859500108286738,
+      "warm_median_ms": 14.738478930667043,
+      "durations_ms": [
+        14.859500108286738,
+        14.863874996080995,
+        14.61308286525309
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.963124878704548,
+      "warm_median_ms": 15.096207964234054,
+      "durations_ms": [
+        14.963124878704548,
+        15.337124932557344,
+        14.855290995910764
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 20.246374886482954,
+      "warm_median_ms": 20.06706257816404,
+      "durations_ms": [
+        20.246374886482954,
+        20.041875075548887,
+        20.092250080779195
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/other#type::Decision"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 12.374290963634849,
+      "warm_median_ms": 12.580249924212694,
+      "durations_ms": [
+        12.374290963634849,
+        12.184957973659039,
+        12.97554187476635
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 15.194417210295796,
+      "warm_median_ms": 14.644040958955884,
+      "durations_ms": [
+        15.194417210295796,
+        14.751540962606668,
+        14.5365409553051
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.138916973024607,
+      "warm_median_ms": 11.820270447060466,
+      "durations_ms": [
+        14.138916973024607,
+        12.215707916766405,
+        11.424832977354527
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/state#type::Adjuster",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/state#file:state/large.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 12.257541064172983,
+      "warm_median_ms": 10.28852048330009,
+      "durations_ms": [
+        12.257541064172983,
+        9.827540954574943,
+        10.749500012025237
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 16.648042015731335,
+      "warm_median_ms": 15.465916600078344,
+      "durations_ms": [
+        16.648042015731335,
+        16.15379098802805,
+        14.77804221212864
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#file:consumer/consumer_test.go",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 14.587499899789691,
+      "warm_median_ms": 14.520270866341889,
+      "durations_ms": [
+        14.587499899789691,
+        14.354749815538526,
+        14.685791917145252
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 16.37258310802281,
+      "warm_median_ms": 17.52529153600335,
+      "durations_ms": [
+        16.37258310802281,
+        17.32295798137784,
+        17.727625090628862
+      ]
+    }
+  ],
+  "limitations": [
+    "Small bilingual synthetic corpus; not evidence of performance on production strategy.",
+    "Top-k counts distinct parent symbols by default in 0.2.0; raw chunk mode requires distinct_symbols=false. Hit@k is at least one expected symbol.",
+    "First query per case may be warm in OS/model cache; runtime cold startup is reported separately.",
+    "RSS samples process tree at 100ms intervals; not a precise allocator maximum.",
+    "Update includes full Go reload and changed-chunk inference."
+  ]
+}

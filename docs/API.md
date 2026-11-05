@@ -78,3 +78,19 @@ Status: index_snapshot, state (unloaded/loading/ready/failed), fresh, loading, v
 - Ошибка неизвестного ID: `isError=true`, `structuredContent.error/index_snapshot/fresh/details`; details содержит `code`, `requested_symbol_id`, `hint`, `candidates`. Text content содержит тот же JSON. Автоматического разрешения по похожему имени нет.
 - При нуле результатов search_symbols: `meta.exact_match=false`, `suggestions`, `hint`; suggestions не являются проверенной заменой устаревшего имени.
 - Status: `version`, `freshness_scope`, `go_heap_reserved_bytes`, `go_total_alloc_bytes`, `go_gc_cycles`. Freshness не проверяет документы и бизнес-утверждения.
+
+## Дополнения 0.3.0
+
+Всего 15 tools. Новые аргументы/ответы опубликованы в mcp-tools.json.
+
+| Tool | Аргументы | Результат |
+|---|---|---|
+| audit_document | document, limit?, cursor?, index_snapshot? | EvidenceCheck[], document_hash, status_counts, parser_scope, semantic_verification=false |
+| verify_evidence | claims[1..100], limit?, cursor?, index_snapshot? | EvidenceCheck[], status_counts, semantic_verification=false |
+| trace_field | symbol_id поля, entry_symbol_id функции, depth?, include_candidates?, budget_bytes?, path?, package?, include_tests?, limit?, index_snapshot? | FieldTraceItem[], unresolved_or_external_calls, frontier, call_analysis |
+
+EvidenceClaim: symbol_id?, file?, start_line?, end_line?, expected_text? (до 4096 bytes), source_hash?. EvidenceCheck: claim, status, actual?, source_excerpt?, candidates?, reference?, document_line?, note. Actual — предложение на основе существующего ID/уникального текстового якоря, не разрешение применить бизнес-правку автоматически.
+
+Relation дополнена analysis (ssa_static/vta_module/ssa_alias), flow_candidates, unknown_targets_possible и conditions. Conditions — исходные лексические guards, не вычисленные условия достижимости. У SSA alias доступа resolution=candidates: это возможная привязка к объявлению поля, не доказательство объекта.
+
+Status.call_analysis описывает готовность и бюджеты. Search_code/build_context принимают rerank?; Hit содержит rerank_score/reranker_model_key, если стадия включена. Static_facts в Chunk — извлечённые факты синтаксиса/типов. Они не являются LLM-резюме или доказательством поведения.

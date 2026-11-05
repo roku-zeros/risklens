@@ -65,7 +65,7 @@ func readFiles(ctx context.Context, c Config) (map[string][]byte, string, error)
 		names = append(names, n)
 	}
 	sort.Strings(names)
-	parts := []string{Version, "snapshot-v1", digest([]any{c.ChunkBytes, c.ModelKey, c.Dimension}), digest(c.BuildFlags), digest(baseEnvironment()), os.Getenv("GOOS"), os.Getenv("GOARCH"), os.Getenv("CGO_ENABLED"), os.Getenv("GOEXPERIMENT")}
+	parts := []string{Version, "snapshot-v1", digest([]any{c.ChunkBytes, c.ModelKey, c.Dimension, c.CallAnalysis, c.MaxSSAFunctions, c.MaxSSAInstructions, c.RerankModelKey, c.RerankCandidates}), digest(c.BuildFlags), digest(baseEnvironment()), os.Getenv("GOOS"), os.Getenv("GOARCH"), os.Getenv("CGO_ENABLED"), os.Getenv("GOEXPERIMENT")}
 	for _, n := range names {
 		parts = append(parts, n, hash(files[n]))
 	}

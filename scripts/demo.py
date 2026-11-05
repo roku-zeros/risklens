@@ -16,6 +16,12 @@ try:
     call('find_field_accesses',symbol_id=field,limit=8);call('get_source',file='main.go',start_line=1,end_line=10)
     call('search_code',query='льготный период пока клиент учится',mode='hybrid',limit=5)
     call('build_context',symbol_ids=[field],depth=1,budget_bytes=6000,limit=6)
+    entry=call('search_symbols',query='Evaluate',kind='function',package='example.com/strategy')['items'][0]['id']
+    definition=call('get_symbol',symbol_id=entry)
+    symbol=definition['items']
+    call('trace_field',symbol_id=field,entry_symbol_id=entry,include_candidates=True,depth=5,budget_bytes=12000,limit=8)
+    call('verify_evidence',claims=[{'symbol_id':entry,'file':symbol['position']['file'],'start_line':symbol['position']['line'],'end_line':symbol['end_line'],'expected_text':'func Evaluate','source_hash':definition['meta']['source_hash']}])
+    call('audit_document',document='notes.md',limit=20)
     call('refresh_index');c.ready();call('index_status')
 finally:c.close()
 assert before==hashes(),'demonstration must not change Go sources or module files'

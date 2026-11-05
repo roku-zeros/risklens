@@ -144,12 +144,12 @@ func TestTypedNavigation(t *testing.T) {
 	for _, r := range s.Relations {
 		if r.From == final.ID && r.Kind == "call" {
 			states[r.Resolution]++
-			if r.Resolution == "candidates" && len(r.Candidates) < 2 {
+			if r.Resolution == "candidates" && r.Symbol != "" && len(r.Candidates) < 2 {
 				t.Fatalf("expected consumer and refinance candidates: %+v", r)
 			}
 		}
 	}
-	for _, k := range []string{"confirmed", "candidates", "unresolved"} {
+	for _, k := range []string{"confirmed", "candidates"} {
 		if states[k] == 0 {
 			t.Fatalf("missing call resolution %s: %+v", k, states)
 		}

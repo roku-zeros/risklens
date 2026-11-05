@@ -27,6 +27,9 @@ func Tools() []Tool {
 		name, desc         string
 		required, optional []string
 	}{
+		{"audit_document", "Audit Markdown Go links and symbol references against the current snapshot. Does not verify business prose or rewrite documents.", []string{"document"}, []string{"limit", "cursor", "index_snapshot"}},
+		{"verify_evidence", "Check source claims (symbol/file/lines/expected_text/source_hash); find uniquely moved text anchors. Source validation is not semantic proof.", []string{"claims"}, []string{"limit", "cursor", "index_snapshot"}},
+		{"trace_field", "Bounded field read/write trace from an entry function through calls. Candidate paths optional. Does not prove same object or execution order.", []string{"symbol_id", "entry_symbol_id"}, []string{"depth", "include_candidates", "budget_bytes", "path", "package", "include_tests", "limit", "index_snapshot"}},
 		{"project_status", "RiskLens: current Go environment, load diagnostics and disk freshness.", nil, nil},
 		{"index_status", "RiskLens: snapshot, lexical/vector readiness, progress, cache hits and errors.", nil, nil},
 		{"refresh_index", "RiskLens: start asynchronous disk refresh; poll index_status. Rebuilds semantic analysis and reuses content-addressed embeddings.", nil, nil},
@@ -35,10 +38,10 @@ func Tools() []Tool {
 		{"find_references", "Find typed uses, with root-relative 1-based positions.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callers", "Find confirmed callers and possible interface callers; inspect resolution.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callees", "List calls in a function; function variables may be unresolved; graph is incomplete.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"find_field_accesses", "Find read, write, read_write and address accesses for a typed field. No alias/flow analysis.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"find_field_accesses", "Find typed field accesses and bounded SSA alias candidates. Inspect resolution/analysis; not complete object or value history.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_source", "Read indexed source with 1-based inclusive lines, UTF-8 byte columns. Source comes from the same snapshot.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot"}},
-		{"search_code", "Hybrid RRF of symbol/text/vector channels, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"build_context", "Bounded relationship expansion. Returns reasons, sources and omitted IDs for continuation. UTF-8 byte budget, not Qwen tokens.", nil, []string{"query", "symbol_ids", "chunk_ids", "mode", "distinct_symbols", "depth", "budget_bytes", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "index_snapshot"}},
+		{"search_code", "Hybrid RRF of symbol/text/vector channels, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "rerank", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"build_context", "Bounded relationship expansion. Returns reasons, sources and omitted IDs for continuation. UTF-8 byte budget, not Qwen tokens.", nil, []string{"query", "symbol_ids", "chunk_ids", "mode", "rerank", "distinct_symbols", "depth", "budget_bytes", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "index_snapshot"}},
 	}
 	out := []Tool{}
 	for _, s := range specs {
@@ -49,7 +52,7 @@ func Tools() []Tool {
 			switch k {
 			case "limit", "start_line", "end_line", "depth", "budget_bytes":
 				t = "integer"
-			case "include_tests", "distinct_symbols":
+			case "include_tests", "distinct_symbols", "include_candidates", "rerank":
 				t = "boolean"
 			case "symbol_ids", "chunk_ids", "paths", "exclude_paths":
 				t = "array"
@@ -61,6 +64,9 @@ func Tools() []Tool {
 			}
 			if k == "mode" {
 				v["enum"] = []string{"hybrid", "lexical", "vector"}
+			}
+			if k == "claims" {
+				v = map[string]any{"type": "array", "minItems": 1, "maxItems": 100, "items": map[string]any{"type": "object", "additionalProperties": false, "properties": map[string]any{"symbol_id": map[string]any{"type": "string"}, "file": map[string]any{"type": "string"}, "start_line": map[string]any{"type": "integer"}, "end_line": map[string]any{"type": "integer"}, "expected_text": map[string]any{"type": "string", "maxLength": 4096}, "source_hash": map[string]any{"type": "string"}}}}
 			}
 			props[k] = v
 		}
@@ -111,7 +117,7 @@ func Validate(name string, raw json.RawMessage) (lens.Args, error) {
 	if e := d.Decode(&a); e != nil {
 		return a, e
 	}
-	if len(a.Symbols) > 100 || len(a.Chunks) > 100 || len(a.Cursor) > 4096 || len(a.Paths) > 100 || len(a.ExcludePaths) > 100 {
+	if len(a.Symbols) > 100 || len(a.Chunks) > 100 || len(a.Cursor) > 4096 || len(a.Paths) > 100 || len(a.ExcludePaths) > 100 || len(a.Claims) > 100 {
 		return a, fmt.Errorf("argument exceeds limit")
 	}
 	return a, nil

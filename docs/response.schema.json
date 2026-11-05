@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:risklens:response:0.2.0",
+  "$id": "urn:risklens:response:0.3.0",
   "title": "RiskLens tool structuredContent",
   "anyOf": [
     {
@@ -129,6 +129,24 @@
         },
         "code": {
           "type": "string"
+        },
+        "analysis": {
+          "type": "string"
+        },
+        "flow_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unknown_targets_possible": {
+          "type": "boolean"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -172,6 +190,9 @@
         },
         "test": {
           "type": "boolean"
+        },
+        "static_facts": {
+          "type": "string"
         }
       },
       "required": [
@@ -220,6 +241,12 @@
         },
         "other_matching_chunks": {
           "type": "integer"
+        },
+        "rerank_score": {
+          "type": "number"
+        },
+        "reranker_model_key": {
+          "type": "string"
         }
       },
       "required": [
@@ -280,6 +307,9 @@
         },
         "code": {
           "type": "string"
+        },
+        "source_hash": {
+          "type": "string"
         }
       },
       "required": [
@@ -318,6 +348,12 @@
                   },
                   {
                     "$ref": "#/$defs/ContextItem"
+                  },
+                  {
+                    "$ref": "#/$defs/FieldTraceItem"
+                  },
+                  {
+                    "$ref": "#/$defs/EvidenceCheck"
                   }
                 ]
               }
@@ -453,6 +489,9 @@
         },
         "go_gc_cycles": {
           "type": "integer"
+        },
+        "call_analysis": {
+          "type": "object"
         }
       },
       "required": [
@@ -530,6 +569,88 @@
                 "$ref": "#/$defs/Symbol"
               }
             }
+          }
+        }
+      }
+    },
+    "FieldTraceItem": {
+      "type": "object",
+      "required": [
+        "access",
+        "call_path",
+        "certainty"
+      ],
+      "properties": {
+        "access": {
+          "$ref": "#/$defs/Relation"
+        },
+        "call_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Relation"
+          }
+        },
+        "certainty": {
+          "type": "string"
+        }
+      }
+    },
+    "EvidenceClaim": {
+      "type": "object",
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "start_line": {
+          "type": "integer"
+        },
+        "end_line": {
+          "type": "integer"
+        },
+        "expected_text": {
+          "type": "string"
+        },
+        "source_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "EvidenceCheck": {
+      "type": "object",
+      "required": [
+        "status",
+        "claim",
+        "note"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/EvidenceClaim"
+        },
+        "actual": {
+          "$ref": "#/$defs/EvidenceClaim"
+        },
+        "note": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "document_line": {
+          "type": "integer"
+        },
+        "source_excerpt": {
+          "type": "string"
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Symbol"
           }
         }
       }

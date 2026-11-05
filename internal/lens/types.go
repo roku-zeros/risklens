@@ -10,29 +10,59 @@ import (
 	"strings"
 )
 
-const Version = "0.2.0"
+const Version = "0.3.0"
 const ModelRevision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
 const ModelKey = "intfloat/multilingual-e5-small@" + ModelRevision + ":fp32:384:mask-mean:l2:e5-prefix:window510:v2"
 
 type Config struct {
-	Root             string   `json:"root"`
-	Cache            string   `json:"cache"`
-	EmbeddingCommand []string `json:"embedding_command"`
-	ModelKey         string   `json:"model_key"`
-	Dimension        int      `json:"dimension"`
-	BatchSize        int      `json:"batch_size"`
-	ChunkBytes       int      `json:"chunk_bytes"`
-	MaxResults       int      `json:"max_results"`
-	MaxSourceBytes   int      `json:"max_source_bytes"`
-	MaxContextBytes  int      `json:"max_context_bytes"`
-	MaxFiles         int      `json:"max_files"`
-	MaxProjectBytes  int64    `json:"max_project_bytes"`
-	OperationSeconds int      `json:"operation_seconds"`
-	BuildFlags       []string `json:"build_flags"`
+	RerankCommand      []string `json:"reranker_command"`
+	RerankModelKey     string   `json:"reranker_model_key"`
+	RerankCandidates   int      `json:"rerank_candidates"`
+	MaxSSAInstructions int      `json:"max_ssa_instructions"`
+	CallAnalysis       string   `json:"call_analysis"`
+	MaxSSAFunctions    int      `json:"max_ssa_functions"`
+	Root               string   `json:"root"`
+	Cache              string   `json:"cache"`
+	EmbeddingCommand   []string `json:"embedding_command"`
+	ModelKey           string   `json:"model_key"`
+	Dimension          int      `json:"dimension"`
+	BatchSize          int      `json:"batch_size"`
+	ChunkBytes         int      `json:"chunk_bytes"`
+	MaxResults         int      `json:"max_results"`
+	MaxSourceBytes     int      `json:"max_source_bytes"`
+	MaxContextBytes    int      `json:"max_context_bytes"`
+	MaxFiles           int      `json:"max_files"`
+	MaxProjectBytes    int64    `json:"max_project_bytes"`
+	OperationSeconds   int      `json:"operation_seconds"`
+	BuildFlags         []string `json:"build_flags"`
 }
 
 func (c *Config) Defaults() error {
 	var err error
+	if c.RerankCandidates == 0 {
+		c.RerankCandidates = 30
+	}
+	if c.RerankCandidates < 1 || c.RerankCandidates > 100 {
+		return fmt.Errorf("invalid rerank_candidates")
+	}
+	if len(c.RerankCommand) > 0 && c.RerankModelKey == "" {
+		return fmt.Errorf("reranker_model_key required")
+	}
+	if c.CallAnalysis == "" {
+		c.CallAnalysis = "vta"
+	}
+	if c.MaxSSAInstructions == 0 {
+		c.MaxSSAInstructions = 300000
+	}
+	if c.MaxSSAInstructions < 1 {
+		return fmt.Errorf("invalid max_ssa_instructions")
+	}
+	if c.MaxSSAFunctions == 0 {
+		c.MaxSSAFunctions = 20000
+	}
+	if (c.CallAnalysis != "ast" && c.CallAnalysis != "vta") || c.MaxSSAFunctions < 1 {
+		return fmt.Errorf("invalid call analysis configuration")
+	}
 	c.Root, err = filepath.Abs(c.Root)
 	if err != nil {
 		return err
@@ -110,15 +140,20 @@ type Symbol struct {
 	start, end int
 }
 type Relation struct {
-	Symbol     string   `json:"symbol_id,omitempty"`
-	From       string   `json:"from_symbol,omitempty"`
-	Kind       string   `json:"kind"`
-	Resolution string   `json:"resolution"`
-	Position   Position `json:"position"`
-	Candidates []string `json:"candidates,omitempty"`
-	Code       string   `json:"code,omitempty"`
+	Conditions     []string `json:"conditions,omitempty"`
+	Analysis       string   `json:"analysis,omitempty"`
+	FlowCandidates []string `json:"flow_candidates,omitempty"`
+	UnknownTargets bool     `json:"unknown_targets_possible,omitempty"`
+	Symbol         string   `json:"symbol_id,omitempty"`
+	From           string   `json:"from_symbol,omitempty"`
+	Kind           string   `json:"kind"`
+	Resolution     string   `json:"resolution"`
+	Position       Position `json:"position"`
+	Candidates     []string `json:"candidates,omitempty"`
+	Code           string   `json:"code,omitempty"`
 }
 type Chunk struct {
+	Facts      string `json:"static_facts,omitempty"`
 	ID         string `json:"chunk_id"`
 	Symbol     string `json:"symbol_id"`
 	Package    string `json:"package_path"`
@@ -134,6 +169,7 @@ type Chunk struct {
 	start, end int
 }
 type Snapshot struct {
+	Calls       CallAnalysis           `json:"call_analysis"`
 	TypeFields  map[string][]FieldInfo `json:"-"`
 	ID          string                 `json:"index_snapshot"`
 	Fingerprint string                 `json:"-"`
@@ -149,6 +185,7 @@ type Snapshot struct {
 	Text        *TextIndex             `json:"-"`
 }
 type Status struct {
+	Calls               CallAnalysis      `json:"call_analysis"`
 	Version             string            `json:"version"`
 	GoHeapReservedBytes uint64            `json:"go_heap_reserved_bytes"`
 	GoTotalAllocBytes   uint64            `json:"go_total_alloc_bytes"`
@@ -174,27 +211,32 @@ type Status struct {
 	Module              string            `json:"module"`
 }
 type Args struct {
-	OwnerID         string   `json:"owner_id"`
-	Paths           []string `json:"paths"`
-	ExcludePaths    []string `json:"exclude_paths"`
-	DistinctSymbols *bool    `json:"distinct_symbols"`
-	Query           string   `json:"query"`
-	Symbol          string   `json:"symbol_id"`
-	Symbols         []string `json:"symbol_ids"`
-	Chunks          []string `json:"chunk_ids"`
-	File            string   `json:"file"`
-	Start           int      `json:"start_line"`
-	End             int      `json:"end_line"`
-	Path            string   `json:"path"`
-	Package         string   `json:"package"`
-	Kind            string   `json:"kind"`
-	IncludeTests    *bool    `json:"include_tests"`
-	Limit           int      `json:"limit"`
-	Cursor          string   `json:"cursor"`
-	Mode            string   `json:"mode"`
-	Depth           int      `json:"depth"`
-	Budget          int      `json:"budget_bytes"`
-	Snapshot        string   `json:"index_snapshot"`
+	Rerank            *bool           `json:"rerank"`
+	Document          string          `json:"document"`
+	Claims            []EvidenceClaim `json:"claims"`
+	EntrySymbol       string          `json:"entry_symbol_id"`
+	IncludeCandidates bool            `json:"include_candidates"`
+	OwnerID           string          `json:"owner_id"`
+	Paths             []string        `json:"paths"`
+	ExcludePaths      []string        `json:"exclude_paths"`
+	DistinctSymbols   *bool           `json:"distinct_symbols"`
+	Query             string          `json:"query"`
+	Symbol            string          `json:"symbol_id"`
+	Symbols           []string        `json:"symbol_ids"`
+	Chunks            []string        `json:"chunk_ids"`
+	File              string          `json:"file"`
+	Start             int             `json:"start_line"`
+	End               int             `json:"end_line"`
+	Path              string          `json:"path"`
+	Package           string          `json:"package"`
+	Kind              string          `json:"kind"`
+	IncludeTests      *bool           `json:"include_tests"`
+	Limit             int             `json:"limit"`
+	Cursor            string          `json:"cursor"`
+	Mode              string          `json:"mode"`
+	Depth             int             `json:"depth"`
+	Budget            int             `json:"budget_bytes"`
+	Snapshot          string          `json:"index_snapshot"`
 }
 type Response struct {
 	Snapshot    string         `json:"index_snapshot"`
@@ -208,7 +250,7 @@ type Response struct {
 	Meta        map[string]any `json:"meta,omitempty"`
 }
 
-var Limitations = []string{"Static relationships are not execution order or proof of business correctness.", "Interface/function-variable targets are unresolved or candidates; graph is incomplete.", "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.", "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."}
+var Limitations = []string{"Static relationships are not execution order or proof of business correctness.", "Interface/function-variable targets are unresolved or candidates; graph is incomplete.", "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.", "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."}
 
 func hash(b []byte) string { s := sha256.Sum256(b); return hex.EncodeToString(s[:]) }
 func digest(v any) string  { b, _ := json.Marshal(v); return hash(b) }

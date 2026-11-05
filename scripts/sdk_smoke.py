@@ -9,7 +9,7 @@ async def run(a):
         async with ClientSession(read,write) as session:
             init=await session.initialize()
             tools=await session.list_tools()
-            assert len(tools.tools)==12
+            assert len(tools.tools)==15
             for _ in range(600):
                 result=await session.call_tool('index_status',{})
                 st=result.structuredContent
@@ -32,6 +32,16 @@ async def run(a):
             wrong=await session.call_tool('find_field_accesses',{'symbol_id':'example.com/strategy/state#field::Application.Limit'})
             assert wrong.isError and wrong.structuredContent['details']['code']=='unknown_symbol_id'
             assert any(v['id']==field['symbol_id'] for v in wrong.structuredContent['details']['candidates'])
-            print(json.dumps({'canonical_field_navigation':True,'structured_recovery':True,'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
+            entry=await session.call_tool('search_symbols',{'query':'Evaluate','kind':'function','package':'example.com/strategy'})
+            entry_id=entry.structuredContent['items'][0]['id']
+            trace=await session.call_tool('trace_field',{'symbol_id':field['symbol_id'],'entry_symbol_id':entry_id,'include_candidates':True,'depth':5,'limit':10})
+            assert not trace.isError and trace.structuredContent['items']
+            definition=await session.call_tool('get_symbol',{'symbol_id':entry_id})
+            symbol=definition.structuredContent['items']
+            verified=await session.call_tool('verify_evidence',{'claims':[{'symbol_id':entry_id,'file':symbol['position']['file'],'start_line':symbol['position']['line'],'end_line':symbol['end_line'],'expected_text':'func Evaluate','source_hash':definition.structuredContent['meta']['source_hash']}]})
+            assert verified.structuredContent['items'][0]['status']=='source_verified'
+            audit=await session.call_tool('audit_document',{'document':'notes.md','limit':20})
+            assert not audit.isError and any(c['status']=='missing_file' for c in audit.structuredContent['items']) and any(c['status']=='missing_symbol' for c in audit.structuredContent['items'])
+            print(json.dumps({'field_trace':True,'evidence_verification':True,'document_audit':True,'canonical_field_navigation':True,'structured_recovery':True,'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--binary',required=True);p.add_argument('--config',required=True);asyncio.run(run(p.parse_args()))

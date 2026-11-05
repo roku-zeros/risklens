@@ -19,17 +19,20 @@ import (
 )
 
 type analyzer struct {
-	s          *Snapshot
-	fs         *token.FileSet
-	objects    map[types.Object]string
-	owner      map[*types.Var]string
-	ownerPos   map[Position]string
-	lineStarts map[string][]int
-	root       string
-	funcs      map[*ast.FuncDecl]string
-	literals   map[*ast.FuncLit]string
-	pkg        *packages.Package
-	file       *ast.File
+	s              *Snapshot
+	fs             *token.FileSet
+	objects        map[types.Object]string
+	owner          map[*types.Var]string
+	ownerPos       map[Position]string
+	lineStarts     map[string][]int
+	callPositions  map[Position]Position
+	fieldPositions map[Position]map[string]bool
+	siteContexts   map[Position][]string
+	root           string
+	funcs          map[*ast.FuncDecl]string
+	literals       map[*ast.FuncLit]string
+	pkg            *packages.Package
+	file           *ast.File
 }
 
 func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) (*Snapshot, error) {
@@ -81,7 +84,7 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 	var units []unit
 	seen := map[string]bool{}
 	diags := map[string]bool{}
-	a := &analyzer{s: s, fs: fs, root: c.Root, ownerPos: map[Position]string{}, lineStarts: map[string][]int{}, objects: map[types.Object]string{}, owner: map[*types.Var]string{}, funcs: map[*ast.FuncDecl]string{}, literals: map[*ast.FuncLit]string{}}
+	a := &analyzer{s: s, fs: fs, root: c.Root, ownerPos: map[Position]string{}, lineStarts: map[string][]int{}, callPositions: map[Position]Position{}, fieldPositions: map[Position]map[string]bool{}, siteContexts: map[Position][]string{}, objects: map[types.Object]string{}, owner: map[*types.Var]string{}, funcs: map[*ast.FuncDecl]string{}, literals: map[*ast.FuncLit]string{}}
 	for _, p := range ps {
 		for _, e := range p.Errors {
 			diags[e.Error()] = true
@@ -258,6 +261,7 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 		a.file = u.f
 		a.relations(parentMap(u.f))
 	}
+	a.refineCalls(ctx, ps, c)
 	// Stable source order without repeatedly serializing relations inside a sort comparator.
 	type key struct {
 		symbol, from, kind, resolution, file, candidates string
@@ -436,6 +440,10 @@ func (a *analyzer) relations(parents map[ast.Node]ast.Node) {
 			return true
 		}
 		from := a.from(n, parents)
+		switch n.(type) {
+		case *ast.AssignStmt, *ast.IncDecStmt, *ast.StarExpr, *ast.CallExpr:
+			a.siteContexts[a.position(n.Pos())] = a.conditions(n, parents)
+		}
 		if id, ok := n.(*ast.Ident); ok {
 			if o := a.pkg.TypesInfo.Uses[id]; o != nil {
 				if v, ok := o.(*types.Var); ok && v.IsField() {
@@ -452,16 +460,23 @@ func (a *analyzer) relations(parents map[ast.Node]ast.Node) {
 			if v, ok := a.pkg.TypesInfo.ObjectOf(sel.Sel).(*types.Var); ok && v.IsField() {
 				p := a.position(sel.Sel.Pos())
 				k := fieldKind(sel, parents)
-				a.s.Relations = append(a.s.Relations, Relation{Symbol: a.objectID(v), From: from, Kind: k, Resolution: "confirmed", Position: p, Code: a.line(p)})
+				for _, site := range []Position{a.position(sel.Pos()), a.position(sel.Sel.Pos())} {
+					if a.fieldPositions[site] == nil {
+						a.fieldPositions[site] = map[string]bool{}
+					}
+					a.fieldPositions[site][a.objectID(v)] = true
+				}
+				a.s.Relations = append(a.s.Relations, Relation{Symbol: a.objectID(v), From: from, Kind: k, Resolution: "confirmed", Position: p, Code: a.line(p), Conditions: a.conditions(n, parents)})
 			}
 		}
 		if call, ok := n.(*ast.CallExpr); ok {
 			if tv, ok := a.pkg.TypesInfo.Types[call.Fun]; ok && tv.IsType() {
 				return true
 			}
+			a.callPositions[a.position(call.Lparen)] = a.position(call.Pos())
 			target, res, candidates := a.callTarget(call.Fun)
 			p := a.position(call.Pos())
-			a.s.Relations = append(a.s.Relations, Relation{Symbol: target, From: from, Kind: "call", Resolution: res, Position: p, Candidates: candidates, Code: a.line(p)})
+			a.s.Relations = append(a.s.Relations, Relation{Symbol: target, From: from, Kind: "call", Resolution: res, Position: p, Candidates: candidates, Code: a.line(p), Conditions: a.conditions(n, parents)})
 		}
 		return true
 	})

@@ -1,0 +1,18 @@
+{
+  "model": "onnx-community/Qwen3-Embedding-0.6B-ONNX",
+  "base_model": "Qwen/Qwen3-Embedding-0.6B",
+  "revision": "c25a394dd583836952667c12f008335071b3f43d",
+  "dimension": 1024,
+  "max_tokens": 2048,
+  "pooling": "last",
+  "model_file": "model_quantized.onnx",
+  "query_prefix": "Instruct: Given a code search query, retrieve relevant Go source code implementing the described behavior.\nQuery: ",
+  "document_prefix": "",
+  "model_key": "onnx-community/Qwen3-Embedding-0.6B-ONNX@c25a394dd583836952667c12f008335071b3f43d:q8:1024:last:l2:go-instruct:windows2048:batch1:v2",
+  "profile": "qwen3",
+  "files": {
+    "model_quantized.onnx": "87cd124e0ef1fd1f223ebc283efccbaeac386d0b08344701c46975d0657b591f",
+    "tokenizer.json": "def76fb086971c7867b829c23a26261e38d9d74e02139253b38aeb9df8b4b50a",
+    "config.json": "66a10929782f3c9a3cd5dec90e2a95c60e05736134a63cd54479eeae80bed175"
+  }
+}

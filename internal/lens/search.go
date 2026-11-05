@@ -13,6 +13,10 @@ import (
 )
 
 func makeChunks(s *Snapshot, max int, model string) {
+	relationsBySymbol := map[string][]Relation{}
+	for _, r := range s.Relations {
+		relationsBySymbol[r.From] = append(relationsBySymbol[r.From], r)
+	}
 	syms := make([]*Symbol, 0, len(s.Symbols))
 	for _, v := range s.Symbols {
 		if v.Kind == "function" || v.Kind == "method" || v.Kind == "type" || v.Kind == "constant" || v.Kind == "variable" {
@@ -34,6 +38,7 @@ func makeChunks(s *Snapshot, max int, model string) {
 	})
 	seen := map[string]bool{}
 	fileBoundaries := map[string][]int{}
+	fileFacts := map[string][]syntaxFact{}
 	for name, b := range s.Files {
 		if !strings.HasSuffix(name, ".go") {
 			continue
@@ -56,6 +61,7 @@ func makeChunks(s *Snapshot, max int, model string) {
 			}
 			return true
 		})
+		fileFacts[name] = syntaxFacts(fs, f)
 		sort.Ints(fileBoundaries[name])
 	}
 	fileChunks := map[string][]*Chunk{}
@@ -111,8 +117,9 @@ func makeChunks(s *Snapshot, max int, model string) {
 			code := string(b[start:end])
 			line := 1 + strings.Count(string(b[:start]), "\n")
 			last := line + strings.Count(code, "\n")
-			input := sym.Package + "\n" + sym.Name + "\n" + sym.Signature + "\n" + sym.Comment + "\n" + code
-			c := &Chunk{Symbol: sym.ID, Package: sym.Package, File: file, Start: line, End: last, Hash: hash([]byte(input)), Snapshot: s.ID, Model: model, Code: code, Input: input, Test: sym.Test, start: start, end: end}
+			facts := chunkFacts(s, sym, start, end, fileFacts[file], relationsBySymbol[sym.ID])
+			input := sym.Package + "\n" + sym.Name + "\n" + sym.Signature + "\n" + sym.Comment + "\nStatic Go facts: " + facts + "\n" + code
+			c := &Chunk{Facts: facts, Symbol: sym.ID, Package: sym.Package, File: file, Start: line, End: last, Hash: hash([]byte(input)), Snapshot: s.ID, Model: model, Code: code, Input: input, Test: sym.Test, start: start, end: end}
 			c.ID = hash([]byte(fmt.Sprintf("%s:%d:%d:%s", file, start, end, c.Hash)))[:24]
 			s.Chunks = append(s.Chunks, c)
 			fileChunks[file] = append(fileChunks[file], c)
@@ -337,9 +344,11 @@ func queryTerms(q string) []string {
 }
 
 type Hit struct {
-	Evidence     string `json:"evidence"`
-	VerifySource bool   `json:"requires_source_verification"`
-	OtherChunks  int    `json:"other_matching_chunks,omitempty"`
+	RerankScore  *float64 `json:"rerank_score,omitempty"`
+	RerankModel  string   `json:"reranker_model_key,omitempty"`
+	Evidence     string   `json:"evidence"`
+	VerifySource bool     `json:"requires_source_verification"`
+	OtherChunks  int      `json:"other_matching_chunks,omitempty"`
 
 	Chunk    *Chunk         `json:"chunk"`
 	Score    float64        `json:"rrf_score"`
