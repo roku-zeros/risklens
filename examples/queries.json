@@ -1,0 +1,14 @@
+[
+ {"query":"ограничить сумму выдачи исходя из заработка заёмщика","expected":["example.com/strategy/state#function::ApplyIncomeCap"]},
+ {"query":"сколько денег доступно после погашения старого кредита","expected":["example.com/strategy/refinance#function::Calculate"]},
+ {"query":"льготный период пока клиент учится","expected":["example.com/strategy/education#function::StudyGrace"]},
+ {"query":"отказ при высокой долговой нагрузке","expected":["example.com/strategy/consumer#function::Calculate"]},
+ {"query":"общая последовательность расчёта и заключительное уменьшение суммы","expected":["example.com/strategy#function::Evaluate","example.com/strategy/state#function::Finalize"]},
+ {"query":"C_DEBT_40","expected":["example.com/strategy/consumer#constant::RuleDebt","example.com/strategy/consumer#function::Calculate"]},
+ {"query":"ApplyIncomeCap","expected":["example.com/strategy/state#function::ApplyIncomeCap"]},
+ {"query":"StudyGrace","expected":["example.com/strategy/education#function::StudyGrace"]},
+ {"query":"Shadow","expected":["example.com/strategy/consumer#function::Shadow"]},
+ {"query":"refinance Calculate debt income","expected":["example.com/strategy/refinance#function::Calculate"]},
+ {"query":"consumer Calculate income debt","expected":["example.com/strategy/consumer#function::Calculate"]},
+ {"query":"изменения поля через указатель и увеличение счётчика","expected":["example.com/strategy/state#function::AccessKinds"]}
+]

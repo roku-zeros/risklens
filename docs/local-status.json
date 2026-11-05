@@ -1,0 +1,33 @@
+{
+  "go_heap_bytes": 7387352,
+  "index_snapshot": "2ce48c98ff94bf5503d515c6",
+  "state": "ready",
+  "fresh": true,
+  "loading": false,
+  "vectors": "ready",
+  "vector_done": 43,
+  "vector_total": 43,
+  "cache_hits": 43,
+  "symbols": 70,
+  "chunks": 43,
+  "files": 10,
+  "complete": true,
+  "diagnostics": null,
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "arm64",
+    "GOEXPERIMENT": "",
+    "GOFLAGS": "-mod=readonly",
+    "GONOPROXY": "none",
+    "GOOS": "darwin",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local",
+    "GOVCS": "*:off",
+    "GOVERSION": "go1.26.6",
+    "GOWORK": "off",
+    "build_flags": "",
+    "toolchain": "go1.26.6"
+  },
+  "module": "example.com/strategy"
+}

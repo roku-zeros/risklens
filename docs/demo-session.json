@@ -1,0 +1,849 @@
+{
+  "real_embeddings": true,
+  "sources_unchanged": true,
+  "calls": [
+    {
+      "tool": "project_status",
+      "arguments": {},
+      "result": {
+        "go_heap_bytes": 8806392,
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 0,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "result": {
+        "go_heap_bytes": 8894848,
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 0,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Calculate",
+        "kind": "function",
+        "package": "example.com/strategy/consumer"
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/consumer#function::Calculate",
+            "name": "Calculate",
+            "kind": "function",
+            "package": "example.com/strategy/consumer",
+            "signature": "func example.com/strategy/consumer.Calculate(a *example.com/strategy/state.Application)",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 10,
+              "column": 6
+            },
+            "end_line": 17,
+            "test": false
+          },
+          {
+            "id": "example.com/strategy/consumer#function::TestCalculate",
+            "name": "TestCalculate",
+            "kind": "function",
+            "package": "example.com/strategy/consumer",
+            "signature": "func example.com/strategy/consumer.TestCalculate(t *testing.T)",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 8,
+              "column": 6
+            },
+            "end_line": 14,
+            "test": true
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Limit",
+        "kind": "field",
+        "package": "example.com/strategy/state"
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/state.Decision#field:Limit",
+            "name": "Limit",
+            "kind": "field",
+            "package": "example.com/strategy/state",
+            "signature": "field Limit int",
+            "position": {
+              "file": "state/state.go",
+              "line": 5,
+              "column": 2
+            },
+            "end_line": 5,
+            "test": false
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Finalize",
+        "kind": "function",
+        "package": "example.com/strategy/state"
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/state#function::Finalize",
+            "name": "Finalize",
+            "kind": "function",
+            "package": "example.com/strategy/state",
+            "signature": "func example.com/strategy/state.Finalize(a *example.com/strategy/state.Application, rule example.com/strategy/state.Adjuster, callback func(*example.com/strategy/state.Application))",
+            "position": {
+              "file": "state/state.go",
+              "line": 28,
+              "column": 6
+            },
+            "end_line": 32,
+            "test": false
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "get_symbol",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate"
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": {
+          "id": "example.com/strategy/consumer#function::Calculate",
+          "name": "Calculate",
+          "kind": "function",
+          "package": "example.com/strategy/consumer",
+          "signature": "func example.com/strategy/consumer.Calculate(a *example.com/strategy/state.Application)",
+          "position": {
+            "file": "consumer/consumer.go",
+            "line": 10,
+            "column": 6
+          },
+          "end_line": 17,
+          "test": false,
+          "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+          "comment": "Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n"
+        },
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "find_references",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "reference",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 10,
+              "column": 2
+            },
+            "code": "\tCalculate(a)"
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "reference",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 12,
+              "column": 12
+            },
+            "code": "\t\tconsumer.Calculate(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "get_callers",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 12,
+              "column": 3
+            },
+            "code": "\t\tconsumer.Calculate(a)"
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 10,
+              "column": 2
+            },
+            "code": "\tCalculate(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "get_callees",
+      "arguments": {
+        "symbol_id": "example.com/strategy/state#function::Finalize",
+        "limit": 10
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "unresolved",
+            "position": {
+              "file": "state/state.go",
+              "line": 31,
+              "column": 2
+            },
+            "code": "\tcallback(a)"
+          },
+          {
+            "symbol_id": "example.com/strategy/state#method:example.com/strategy/state.Adjuster:Adjust",
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "candidates",
+            "position": {
+              "file": "state/state.go",
+              "line": 30,
+              "column": 2
+            },
+            "candidates": [
+              "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+              "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+            ],
+            "code": "\trule.Adjust(a)"
+          },
+          {
+            "symbol_id": "example.com/strategy/state#function::ApplyIncomeCap",
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/state.go",
+              "line": 29,
+              "column": 2
+            },
+            "code": "\tApplyIncomeCap(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "find_field_accesses",
+      "arguments": {
+        "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+        "limit": 8
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 318,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 79"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 54,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 13"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 178,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 44"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 134,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 33"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 38,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 9"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 6,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 1"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::AccessKinds",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/state.go",
+              "line": 39,
+              "column": 4
+            },
+            "code": "\ta.Limit++"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/state#function::LongPipeline",
+            "kind": "read_write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/large.go",
+              "line": 14,
+              "column": 5
+            },
+            "code": "\t\ta.Limit += 3"
+          }
+        ],
+        "truncated": true,
+        "next_cursor": "eyJzbmFwc2hvdCI6IjJjZTQ4Yzk4ZmY5NGJmNTUwM2Q1MTVjNiIsInF1ZXJ5IjoiYWZiNTE0OWU3ZjM0NTJlZmJjZDZiZDVmMjNkZjFlMDUxM2JmMTMxNGRmYmU4NTllY2RkZWUxZjdiMTMzZGUwMCIsIm9mZnNldCI6OH0",
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "get_source",
+      "arguments": {
+        "file": "main.go",
+        "start_line": 1,
+        "end_line": 10
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": {
+          "code": "package main\n\nimport (\n\t\"example.com/strategy/consumer\"\n\t\"example.com/strategy/refinance\"\n\t\"example.com/strategy/state\"\n)\n\n// Evaluate chooses branches, joins their shared state, and overwrites earlier values.\nfunc Evaluate(a *state.Application) {",
+          "end_line": 10,
+          "file": "main.go",
+          "start_line": 1
+        },
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "search_code",
+      "arguments": {
+        "query": "льготный период пока клиент учится",
+        "mode": "hybrid",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "chunk": {
+              "chunk_id": "5976c6b050485647bc6904ec",
+              "symbol_id": "example.com/strategy/education#file:education/education.go",
+              "package_path": "example.com/strategy/education",
+              "file_path": "education/education.go",
+              "start_line": 1,
+              "end_line": 6,
+              "content_hash": "d84e6c36bfcfdfb7bdfd6199c0b74694c2d53a2adeae70f758990ff0f4892df8",
+              "index_snapshot": "2ce48c98ff94bf5503d515c6",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "package education\n\nimport \"example.com/strategy/state\"\n\n// StudyGrace sets a study repayment grace period. Образовательный кредит: льготный период и срок обучения.\n",
+              "test": false
+            },
+            "rrf_score": 0.03278688524590164,
+            "channels": [
+              "text",
+              "vector"
+            ],
+            "ranks": {
+              "text": 1,
+              "vector": 1
+            }
+          },
+          {
+            "chunk": {
+              "chunk_id": "837735c3ecf5f31ab40eb3b6",
+              "symbol_id": "example.com/strategy/education#function::StudyGrace",
+              "package_path": "example.com/strategy/education",
+              "file_path": "education/education.go",
+              "start_line": 6,
+              "end_line": 6,
+              "content_hash": "5d23e2099377500629946eb66a230f33811da5649fa37f3a631ac8f189dee3cc",
+              "index_snapshot": "2ce48c98ff94bf5503d515c6",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "func StudyGrace(a *state.Application, years int) { a.Term = years*12 + 9; a.Rate = 3.0 }",
+              "test": false
+            },
+            "rrf_score": 0.03225806451612903,
+            "channels": [
+              "text",
+              "vector"
+            ],
+            "ranks": {
+              "text": 2,
+              "vector": 2
+            }
+          },
+          {
+            "chunk": {
+              "chunk_id": "e92724ff8a97f844f3c8a40f",
+              "symbol_id": "example.com/strategy/consumer#file:consumer/consumer.go",
+              "package_path": "example.com/strategy/consumer",
+              "file_path": "consumer/consumer.go",
+              "start_line": 7,
+              "end_line": 10,
+              "content_hash": "a79918e39ef56210d49013b574dd0bedc262bf28309c11a240e757396d1245a9",
+              "index_snapshot": "2ce48c98ff94bf5503d515c6",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "\n\n// Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n",
+              "test": false
+            },
+            "rrf_score": 0.015873015873015872,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 3
+            }
+          },
+          {
+            "chunk": {
+              "chunk_id": "d98f9e7df537313049a3cccb",
+              "symbol_id": "example.com/strategy/state#file:state/state.go",
+              "package_path": "example.com/strategy/state",
+              "file_path": "state/state.go",
+              "start_line": 15,
+              "end_line": 18,
+              "content_hash": "f0f647a39219a8ef7e444fc588b1ec2d8d7eaf04e4ac2d6ade143e83c4289b9b",
+              "index_snapshot": "2ce48c98ff94bf5503d515c6",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "\n\n// ApplyIncomeCap is shared by products. Ограничение лимита по доходу клиента.\n",
+              "test": false
+            },
+            "rrf_score": 0.015625,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 4
+            }
+          },
+          {
+            "chunk": {
+              "chunk_id": "7132af0f04a0e11342dc983f",
+              "symbol_id": "example.com/strategy/consumer#function::Calculate",
+              "package_path": "example.com/strategy/consumer",
+              "file_path": "consumer/consumer.go",
+              "start_line": 10,
+              "end_line": 17,
+              "content_hash": "16903746386f030ce83ba0c73c641ac6157c7daa65ccd35719dc0ba05f51cd2d",
+              "index_snapshot": "2ce48c98ff94bf5503d515c6",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+              "test": false
+            },
+            "rrf_score": 0.015384615384615385,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 5
+            }
+          }
+        ],
+        "truncated": true,
+        "next_cursor": "eyJzbmFwc2hvdCI6IjJjZTQ4Yzk4ZmY5NGJmNTUwM2Q1MTVjNiIsInF1ZXJ5IjoiNzVkYTAwMDljYWU1Yzg1ZTEzNzIwODc5YTY3ZjdmZDAyNmI0NTBhMzMxZWQwNDcwZmZmMjAxYzU2M2FkN2ZiOCIsIm9mZnNldCI6NX0",
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ]
+      }
+    },
+    {
+      "tool": "build_context",
+      "arguments": {
+        "symbol_ids": [
+          "example.com/strategy/state.Decision#field:Limit"
+        ],
+        "depth": 1,
+        "budget_bytes": 6000,
+        "limit": 6
+      },
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "file": "state/state.go",
+            "start_line": 5,
+            "end_line": 5,
+            "code": "Limit int",
+            "reason": "selected symbol"
+          },
+          {
+            "symbol_id": "example.com/strategy/state#function::LongPipeline",
+            "chunk_id": "b09666bdbaaf7aafa95f6847",
+            "file": "state/large.go",
+            "start_line": 4,
+            "end_line": 86,
+            "code": "func LongPipeline(a *Application) {\n\tif a.Income > 1 {\n\t\ta.Limit += 1\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 2 {\n\t\ta.Limit += 2\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 3 {\n\t\ta.Limit += 3\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 4 {\n\t\ta.Limit += 4\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 5 {\n\t\ta.Limit += 5\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 6 {\n\t\ta.Limit += 6\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 7 {\n\t\ta.Limit += 7\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 8 {\n\t\ta.Limit += 8\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 9 {\n\t\ta.Limit += 9\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 10 {\n\t\ta.Limit += 10\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 11 {\n\t\ta.Limit += 11\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 12 {\n\t\ta.Limit += 12\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 13 {\n\t\ta.Limit += 13\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 14 {\n\t\ta.Limit += 14\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 15 {\n\t\ta.Limit += 15\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 16 {\n\t\ta.Limit += 16\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 17 {\n\t\ta.Limit += 17\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 18 {\n\t\ta.Limit += 18\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 19 {\n\t\ta.Limit += 19\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 20 {\n\t\ta.Limit += 20\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 21 {\n\t\ta.Limit += 21",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/state#function::LongPipeline",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "state/large.go",
+                "line": 54,
+                "column": 5
+              },
+              "code": "\t\ta.Limit += 13"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/state#function::LongPipeline",
+            "chunk_id": "69ab8826de683c3d2e301625",
+            "file": "state/large.go",
+            "start_line": 86,
+            "end_line": 170,
+            "code": "\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 22 {\n\t\ta.Limit += 22\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 23 {\n\t\ta.Limit += 23\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 24 {\n\t\ta.Limit += 24\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 25 {\n\t\ta.Limit += 25\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 26 {\n\t\ta.Limit += 26\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 27 {\n\t\ta.Limit += 27\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 28 {\n\t\ta.Limit += 28\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 29 {\n\t\ta.Limit += 29\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 30 {\n\t\ta.Limit += 30\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 31 {\n\t\ta.Limit += 31\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 32 {\n\t\ta.Limit += 32\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 33 {\n\t\ta.Limit += 33\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 34 {\n\t\ta.Limit += 34\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 35 {\n\t\ta.Limit += 35\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 36 {\n\t\ta.Limit += 36\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 37 {\n\t\ta.Limit += 37\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 38 {\n\t\ta.Limit += 38\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 39 {\n\t\ta.Limit += 39\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 40 {\n\t\ta.Limit += 40\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 41 {\n\t\ta.Limit += 41\n\t\ta.Rate += 0.001\n\t}\n\tif a.Income > 42 {\n\t\ta.Limit += 42",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/state#function::LongPipeline",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "state/large.go",
+                "line": 54,
+                "column": 5
+              },
+              "code": "\t\ta.Limit += 13"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/state#function::LongPipeline",
+            "chunk_id": "e8618460026b56f8bb6ecac3",
+            "file": "state/large.go",
+            "start_line": 338,
+            "end_line": 341,
+            "code": "\n\t\ta.Rate += 0.001\n\t}\n}",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/state#function::LongPipeline",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "state/large.go",
+                "line": 54,
+                "column": 5
+              },
+              "code": "\t\ta.Limit += 13"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "chunk_id": "7132af0f04a0e11342dc983f",
+            "file": "consumer/consumer.go",
+            "start_line": 10,
+            "end_line": 17,
+            "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#function::Calculate",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 11,
+                "column": 4
+              },
+              "code": "\ta.Limit = a.Income * 6"
+            }
+          }
+        ],
+        "truncated": true,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Field accesses do not track writes through prior aliases, whole-struct assignment, reflection, or external code.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior."
+        ],
+        "meta": {
+          "accounted_bytes": 5500,
+          "budget_bytes": 6000,
+          "budget_unit": "serialized JSON items array in UTF-8 bytes (envelope excluded); not Qwen tokens",
+          "continuation": "build_context with omitted chunk_ids or symbol_ids and index_snapshot",
+          "omitted": [
+            "8e50654689e343113ee4aa2f",
+            "51be24c9fae1a0acbc6b17d4",
+            "32f73210ac948e052b258e0c",
+            "473e063574250b70ba4885d7",
+            "b02e75be64fc1512893f43b9",
+            "7632651240722c0a7bb38f11",
+            "008b7d60a0f4d6c63ba8c5de",
+            "example.com/strategy#closure@main.go:17:51:2ce48c98ff94bf5503d515c6",
+            "20ca13e49561fa356d050a6a",
+            "004ecdbc3895dfe8bb195f23"
+          ],
+          "omitted_count": 10
+        }
+      }
+    },
+    {
+      "tool": "refresh_index",
+      "arguments": {},
+      "result": {
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "next": "poll index_status until loading=false and fresh=true",
+        "started": true
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "result": {
+        "go_heap_bytes": 196461984,
+        "index_snapshot": "2ce48c98ff94bf5503d515c6",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 43,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    }
+  ]
+}

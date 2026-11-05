@@ -1,0 +1,21 @@
+{
+  "root": "/absolute/path/to/go-module",
+  "cache": "/absolute/path/to/risklens-cache",
+  "embedding_command": [
+    "/absolute/path/to/risklens/.venv/bin/python",
+    "/absolute/path/to/risklens/runtime/worker.py",
+    "--model-dir", "/absolute/path/to/risklens/models/e5-small",
+    "--threads", "2"
+  ],
+  "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+  "dimension": 384,
+  "batch_size": 8,
+  "chunk_bytes": 1200,
+  "max_results": 100,
+  "max_source_bytes": 16000,
+  "max_context_bytes": 48000,
+  "max_files": 30000,
+  "max_project_bytes": 134217728,
+  "operation_seconds": 300,
+  "build_flags": []
+}

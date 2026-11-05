@@ -1,0 +1,13 @@
+?   	risklens/cmd/risklens-mcp	[no test files]
+ok  	risklens/internal/lens	78.849s
+ok  	risklens/internal/mcp	1.475s
+
+Go vet: PASS (no diagnostics)
+
+Fixture tests:
+?   	example.com/strategy	[no test files]
+ok  	example.com/strategy/consumer	0.288s
+?   	example.com/strategy/education	[no test files]
+?   	example.com/strategy/other	[no test files]
+?   	example.com/strategy/refinance	[no test files]
+?   	example.com/strategy/state	[no test files]

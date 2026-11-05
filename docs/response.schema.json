@@ -1,0 +1,457 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:risklens:response:0.1.0",
+  "title": "RiskLens tool structuredContent",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Status"
+    },
+    {
+      "$ref": "#/$defs/Response"
+    },
+    {
+      "$ref": "#/$defs/Refresh"
+    }
+  ],
+  "$defs": {
+    "Position": {
+      "type": "object",
+      "required": [
+        "file",
+        "line",
+        "column"
+      ],
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "Symbol": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "package": {
+          "type": "string"
+        },
+        "receiver": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        },
+        "end_line": {
+          "type": "integer"
+        },
+        "test": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "package",
+        "signature",
+        "position",
+        "end_line",
+        "test"
+      ]
+    },
+    "Relation": {
+      "type": "object",
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "from_symbol": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "reference",
+            "call",
+            "read",
+            "write",
+            "read_write",
+            "address"
+          ]
+        },
+        "resolution": {
+          "enum": [
+            "confirmed",
+            "candidates",
+            "unresolved"
+          ]
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "resolution",
+        "position"
+      ]
+    },
+    "Chunk": {
+      "type": "object",
+      "properties": {
+        "chunk_id": {
+          "type": "string"
+        },
+        "symbol_id": {
+          "type": "string"
+        },
+        "package_path": {
+          "type": "string"
+        },
+        "file_path": {
+          "type": "string"
+        },
+        "start_line": {
+          "type": "integer"
+        },
+        "end_line": {
+          "type": "integer"
+        },
+        "content_hash": {
+          "type": "string"
+        },
+        "index_snapshot": {
+          "type": "string"
+        },
+        "embedding_model_revision": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "test": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "symbol_id",
+        "package_path",
+        "file_path",
+        "start_line",
+        "end_line",
+        "content_hash",
+        "index_snapshot",
+        "embedding_model_revision",
+        "code",
+        "test"
+      ]
+    },
+    "Hit": {
+      "type": "object",
+      "properties": {
+        "chunk": {
+          "$ref": "#/$defs/Chunk"
+        },
+        "rrf_score": {
+          "type": "number"
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ranks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "chunk",
+        "rrf_score",
+        "channels",
+        "ranks"
+      ]
+    },
+    "ContextItem": {
+      "type": "object",
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "chunk_id": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "start_line": {
+          "type": "integer"
+        },
+        "end_line": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "via": {
+          "$ref": "#/$defs/Relation"
+        }
+      },
+      "required": [
+        "symbol_id",
+        "file",
+        "start_line",
+        "end_line",
+        "code",
+        "reason"
+      ]
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "start_line": {
+          "type": "integer"
+        },
+        "end_line": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "start_line",
+        "end_line",
+        "code"
+      ]
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "index_snapshot": {
+          "type": "string"
+        },
+        "fresh": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "items": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Symbol"
+                  },
+                  {
+                    "$ref": "#/$defs/Relation"
+                  },
+                  {
+                    "$ref": "#/$defs/Hit"
+                  },
+                  {
+                    "$ref": "#/$defs/ContextItem"
+                  }
+                ]
+              }
+            },
+            {
+              "$ref": "#/$defs/Symbol"
+            },
+            {
+              "$ref": "#/$defs/Source"
+            }
+          ]
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "next_cursor": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "meta": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "index_snapshot",
+        "fresh",
+        "complete",
+        "items",
+        "truncated"
+      ]
+    },
+    "Status": {
+      "type": "object",
+      "properties": {
+        "index_snapshot": {
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "unloaded",
+            "loading",
+            "ready",
+            "failed"
+          ]
+        },
+        "fresh": {
+          "type": "boolean"
+        },
+        "loading": {
+          "type": "boolean"
+        },
+        "vectors": {
+          "enum": [
+            "not_ready",
+            "building",
+            "ready",
+            "degraded"
+          ]
+        },
+        "vector_done": {
+          "type": "integer"
+        },
+        "vector_total": {
+          "type": "integer"
+        },
+        "cache_hits": {
+          "type": "integer"
+        },
+        "go_heap_bytes": {
+          "type": "integer"
+        },
+        "last_error": {
+          "type": "string"
+        },
+        "embedding_error": {
+          "type": "string"
+        },
+        "symbols": {
+          "type": "integer"
+        },
+        "chunks": {
+          "type": "integer"
+        },
+        "files": {
+          "type": "integer"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "environment": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "module": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "index_snapshot",
+        "state",
+        "fresh",
+        "loading",
+        "vectors",
+        "vector_done",
+        "vector_total",
+        "cache_hits",
+        "symbols",
+        "chunks",
+        "files",
+        "complete"
+      ]
+    },
+    "Refresh": {
+      "type": "object",
+      "properties": {
+        "started": {
+          "type": "boolean"
+        },
+        "index_snapshot": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "started",
+        "index_snapshot",
+        "next"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "notice": "Conceptual connection template only. These keys are not a verified GigaCode configuration schema.",
+  "server_name": "risklens-mcp",
+  "transport": "stdio",
+  "command": "/absolute/path/to/risklens/bin/risklens-mcp",
+  "args": ["--config", "/absolute/path/to/risklens/config.local.json"]
+}

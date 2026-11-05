@@ -1,0 +1,14 @@
+{
+  "sdk": "mcp==1.26.0",
+  "protocol": "2025-11-25",
+  "server": {
+    "name": "risklens-mcp",
+    "title": null,
+    "version": "0.1.0",
+    "websiteUrl": null,
+    "icons": null
+  },
+  "tools": 12,
+  "snapshot": "2ce48c98ff94bf5503d515c6",
+  "search_items": 5
+}
