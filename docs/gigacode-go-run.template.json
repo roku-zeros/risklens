@@ -1,0 +1,14 @@
+{
+  "notice": "Conceptual connection template only. Map command/args to the format supported by your GigaCode version.",
+  "server_name": "risklens-mcp",
+  "transport": "stdio",
+  "command": "/absolute/path/to/go",
+  "args": [
+    "-C",
+    "/absolute/path/to/risklens",
+    "run",
+    "./cmd/risklens-mcp",
+    "--config",
+    "/absolute/path/to/risklens/config.local.json"
+  ]
+}

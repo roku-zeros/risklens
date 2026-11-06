@@ -62,6 +62,37 @@ py -3.11 -m venv .venv
 /absolute/path/to/risklens/bin/risklens-mcp --config /absolute/path/to/risklens/config.local.json
 ```
 
+### Запуск исходников через go run
+
+GigaCode может сам запускать MCP через `go run`: отдельная служба и предварительная сборка бинарника не требуются. Укажите transport `stdio`, command — абсолютный путь к Go 1.26+, args — отдельные элементы массива:
+
+```json
+{
+  "command": "/absolute/path/to/go",
+  "args": [
+    "-C", "/absolute/path/to/risklens",
+    "run", "./cmd/risklens-mcp",
+    "--config", "/absolute/path/to/risklens/config.local.json"
+  ]
+}
+```
+
+Это поля запуска процесса, не проверенная полная схема GigaCode. [Шаблон go run](docs/gigacode-go-run.template.json) переносится в формат вашей версии клиента. `-C` выбирает каталог исходников RiskLens независимо от открытого в IDE проекта; исследуемый проект задаётся `root` в config. Все пути замените на свои. Каталог выбранного Go также должен быть в PATH клиента для загрузки исследуемого модуля.
+
+Для проверки в терминале:
+
+```sh
+go -C /absolute/path/to/risklens run ./cmd/risklens-mcp --config /absolute/path/to/risklens/config.local.json
+```
+
+Процесс ждёт MCP-сообщений на stdin; его запускает клиент при подключении, закрытие stdin завершает сервер и workers. Не добавляйте `&`, `nohup` или `--tool`. `go run` компилирует исходники при запуске и использует Go build cache, поэтому первый старт медленнее готового бинарника. Один MCP-процесс обслуживает последующие вызовы инструментов. После изменения исходников перезапустите подключение. Зависимости RiskLens и модели установите заранее по инструкции выше; офлайн-запуск требует заполненного Go module cache.
+
+Проверка этого способа запуска официальным SDK:
+
+```sh
+.venv/bin/python scripts/sdk_smoke.py --go-run --config /absolute/path/to/risklens/config.local.json
+```
+
 На Windows имя файла — `risklens-mcp.exe`. У клиентского процесса должны быть Go 1.26+ в PATH и доступ к подготовленному модульному кэшу. Активную версию внешней команды Go показывает `environment.GOVERSION`; `environment.toolchain` — версия сборки самого сервера.
 
 [Шаблон подключения](docs/gigacode-connection.template.json) **концептуальный, его ключи не являются проверенной схемой конфигурации GigaCode**. Версия GigaCode в окружении разработки отсутствовала. Перенесите command/args в документированный вашей версией формат. Интероперабельность `stdio` проверена официальным Python SDK `mcp==1.26.0`, но это не проверка GigaCode/Qwen.
