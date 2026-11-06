@@ -1,5 +1,5 @@
 {
-  "notice": "Conceptual connection template only. Map command/args to the format supported by your GigaCode version.",
+  "notice": "Preferred launch method: go run over stdio. Conceptual connection template only. Map command/args to the format supported by your GigaCode version.",
   "server_name": "risklens-mcp",
   "transport": "stdio",
   "command": "/absolute/path/to/go",

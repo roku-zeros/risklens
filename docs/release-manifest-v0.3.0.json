@@ -11,7 +11,7 @@
   "files": {
     ".gitignore": "605268d9e9d3d7e724024b063740ec10ca602c1a860e5329a2efd91a557a5b6b",
     "LICENSE": "946127e73b5130b4560512dee7eea2e2467adb7c1384775efb9dbd4fcc62fa22",
-    "README.md": "5f4951f6f263b59c2c7c0dbf315901486f1efd15351b707d1dc1cd1ec0d6e3ec",
+    "README.md": "81702a6cf0b1e2e3d29d158fc8331c8b18eec97f651d6c9437f28d3a2ef328ff",
     "THIRD_PARTY.md": "a51b2526d875918c5eca5b1c3d7a1b5b4a735caa08b279015b6a0d583f28d3c8",
     "bin/darwin-arm64/risklens-mcp": "d8a5173ebd3e942e2448a21678e2201d5febde9927382f86aa511bd06e876963",
     "bin/linux-amd64/risklens-mcp": "4f3d758136bcec0e4c548c399b8646f886ebbab6b86cb3b28809c632a7643104",
@@ -36,7 +36,7 @@
     "docs/e5-v0.3.0.json": "ab511d21643c0ac4af7b3c5b57ea4201fa5830844935920813e926cde4e97e2c",
     "docs/experiments/qwen3-batch4-rejected.json": "a4fbde86ab1b9672caa035b9c9e6d26d1d49e705db5a4cad94dfbeef9a174f0e",
     "docs/gigacode-connection.template.json": "47d0e7e9a9a22fd8f454c9f4cda43ba305199eca17c49b83857397511e8ed404",
-    "docs/gigacode-go-run.template.json": "e81dd5f7faedab1feb0c7a5af4af3ccde8e9f06082d200f72c46fa80dd46d71f",
+    "docs/gigacode-go-run.template.json": "51281311676428f32f61ca45e9f81fbb31d93fc0c998d8e6e1d66b07027b2177",
     "docs/loading-v0.2.0.json": "51ccba6ed4ff4c021832780a6bf5635c8d93f9b5c7290abc77b9b08d4f07be97",
     "docs/local-status.json": "a796d10fb65ae245782a8dc9e3545d5d32ed0608cae0a373ad2852253a0c5d0f",
     "docs/mcp-tools.json": "b32c23fd950a7e717e201a8083f84af5d0b9d2524da06622bcaca8cd7bda4a69",

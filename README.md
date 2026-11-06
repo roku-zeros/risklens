@@ -12,7 +12,6 @@
 
 ```sh
 go mod download
-go build -trimpath -o bin/risklens-mcp ./cmd/risklens-mcp
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -r runtime/requirements-lock.txt
 .venv/bin/python runtime/setup_model.py --output models/e5-small
@@ -29,7 +28,6 @@ Windows PowerShell:
 
 ```powershell
 go mod download
-go build -trimpath -o bin/risklens-mcp.exe ./cmd/risklens-mcp
 py -3.11 -m venv .venv
 .venv\Scripts\python.exe -m pip install -r runtime/requirements-lock.txt
 .venv\Scripts\python.exe runtime/setup_model.py --output models/e5-small
@@ -38,33 +36,29 @@ py -3.11 -m venv .venv
 
 Подготовьте зависимости **исследуемого** проекта отдельным установочным шагом `go mod download` в нём. Анализатор не загружает зависимости и toolchain из интернета. Он использует `GOPROXY=off`, `GONOPROXY=none`, `GOSUMDB=off`, `GOVCS=*:off`, `GOTOOLCHAIN=local`, `GOWORK=off` и `-mod=readonly`; `go.mod`/`go.sum` не меняет. Локальные `replace` должны быть доступны на диске; их исходники не индексируются, если находятся за пределами выбранного модуля.
 
-Штатная работа после подготовки окружения — офлайн:
+**Предпочтительный способ запуска — `go run` через stdio под управлением GigaCode.** После подготовки окружения запуск из корня RiskLens работает офлайн:
 
 ```sh
-./bin/risklens-mcp --config config.local.json
+go run ./cmd/risklens-mcp --config config.local.json
 ```
 
 Это MCP-сервер, ожидающий JSON-RPC на stdin. Отсутствие обычного текста в терминале нормально. Протокольный stdout отделён от диагностического stderr. Для проверки без MCP-клиента:
 
 ```sh
-./bin/risklens-mcp --config config.local.json --wait-vectors --tool index_status
-./bin/risklens-mcp --config config.local.json --tool search_symbols --args '{"query":"Calculate","limit":10}'
-./bin/risklens-mcp --config config.local.json --wait-vectors --tool search_code --args '{"query":"льготный период обучения","limit":5}'
+go run ./cmd/risklens-mcp --config config.local.json --wait-vectors --tool index_status
+go run ./cmd/risklens-mcp --config config.local.json --tool search_symbols --args '{"query":"Calculate","limit":10}'
+go run ./cmd/risklens-mcp --config config.local.json --wait-vectors --tool search_code --args '{"query":"льготный период обучения","limit":5}'
 ```
 
 Перед одноразовой проверкой остановите постоянный сервер либо укажите отдельный `--cache`. Одноразовый запуск заново загружает Go-модуль. Для постоянной работы используйте один MCP-процесс. `--wait-vectors` обязателен в одноразовом запуске, если нужны готовые векторы. Без настройки embeddings можно использовать `--root /path/to/module`: точная навигация и текстовый поиск работают, статус сообщает `vectors=degraded`.
 
 ## Подключение GigaCode
 
-Зарегистрируйте сервер с именем `risklens-mcp`, транспортом `stdio`, абсолютным путём к исполняемому файлу и аргументами:
+Зарегистрируйте сервер с именем `risklens-mcp` и транспортом `stdio`.
 
-```text
-/absolute/path/to/risklens/bin/risklens-mcp --config /absolute/path/to/risklens/config.local.json
-```
+### Предпочтительный способ: go run
 
-### Запуск исходников через go run
-
-GigaCode может сам запускать MCP через `go run`: отдельная служба и предварительная сборка бинарника не требуются. Укажите transport `stdio`, command — абсолютный путь к Go 1.26+, args — отдельные элементы массива:
+Рекомендуется поручить GigaCode запуск MCP через `go run`: отдельная служба и предварительная сборка бинарника не требуются. Укажите transport `stdio`, command — абсолютный путь к Go 1.26+, args — отдельные элементы массива:
 
 ```json
 {
@@ -92,6 +86,10 @@ go -C /absolute/path/to/risklens run ./cmd/risklens-mcp --config /absolute/path/
 ```sh
 .venv/bin/python scripts/sdk_smoke.py --go-run --config /absolute/path/to/risklens/config.local.json
 ```
+
+### Альтернатива: готовый бинарник
+
+Если нужен запуск заранее собранной версии, выполните `go build -trimpath -o bin/risklens-mcp ./cmd/risklens-mcp` и укажите command `/absolute/path/to/risklens/bin/risklens-mcp`, args `["--config", "/absolute/path/to/risklens/config.local.json"]`. Для предпочтительного запуска через `go run` этот шаг не требуется.
 
 На Windows имя файла — `risklens-mcp.exe`. У клиентского процесса должны быть Go 1.26+ в PATH и доступ к подготовленному модульному кэшу. Активную версию внешней команды Go показывает `environment.GOVERSION`; `environment.toolchain` — версия сборки самого сервера.
 
