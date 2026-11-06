@@ -12,6 +12,9 @@ try:
     funcs=call('search_symbols',query='Calculate',kind='function',package='example.com/strategy/consumer')['items'];fn=funcs[0]['id']
     field=call('search_symbols',query='Limit',kind='field',package='example.com/strategy/state')['items'][0]['id']
     final=call('search_symbols',query='Finalize',kind='function',package='example.com/strategy/state')['items'][0]['id']
+    call('resolve_reference',query='Application.Limit',namespace='go')
+    batch=call('batch_tools',calls=[{'tool':'get_source','arguments':{'file':'main.go','end_line':1}},{'tool':'search_symbols','arguments':{'query':'Calculate','limit':3}}])
+    assert batch['fresh'] and batch['meta']['freshness_scans']==2
     call('get_symbol',symbol_id=fn);call('find_references',symbol_id=fn,limit=5);call('get_callers',symbol_id=fn,limit=5);call('get_callees',symbol_id=final,limit=10)
     call('find_field_accesses',symbol_id=field,limit=8);call('get_source',file='main.go',start_line=1,end_line=10)
     call('search_code',query='льготный период пока клиент учится',mode='hybrid',limit=5)

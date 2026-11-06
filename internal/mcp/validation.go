@@ -25,6 +25,10 @@ type ArgumentError struct {
 func (e *ArgumentError) Error() string { return e.Message + "; " + e.Hint }
 func argumentExample(name string) map[string]any {
 	switch name {
+	case "batch_tools":
+		return map[string]any{"calls": []any{map[string]any{"tool": "get_source", "arguments": map[string]any{"file": "main.go", "end_line": -1}}}}
+	case "resolve_reference":
+		return map[string]any{"query": "Request.Limit", "namespace": "go"}
 	case "verify_evidence":
 		return map[string]any{"claims": []any{map[string]any{"file": "main.go", "start_line": 1, "end_line": 1, "expected_text": "package"}}}
 	case "audit_document":
@@ -92,6 +96,9 @@ func validateValue(raw json.RawMessage, schema map[string]any, path string, fail
 		var values map[string]json.RawMessage
 		if json.Unmarshal(raw, &values) != nil || values == nil {
 			return bad()
+		}
+		if schema["properties"] == nil && schema["additionalProperties"] == true {
+			return nil
 		}
 		props := schema["properties"].(map[string]any)
 		allowed := make([]string, 0, len(props))

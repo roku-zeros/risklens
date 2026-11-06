@@ -22,14 +22,17 @@ type EvidenceClaim struct {
 	Hash     string `json:"source_hash,omitempty"`
 }
 type EvidenceCheck struct {
-	Reference    string         `json:"reference,omitempty"`
-	DocumentLine int            `json:"document_line,omitempty"`
-	Status       string         `json:"status"`
-	Claim        EvidenceClaim  `json:"claim"`
-	Actual       *EvidenceClaim `json:"actual,omitempty"`
-	Excerpt      string         `json:"source_excerpt,omitempty"`
-	Candidates   []Symbol       `json:"candidates,omitempty"`
-	Note         string         `json:"note"`
+	Bindings        []ReferenceMatch          `json:"bindings,omitempty"`
+	BindingCount    int                       `json:"binding_count,omitempty"`
+	CandidateGroups []CandidateSignatureGroup `json:"candidate_signature_groups,omitempty"`
+	Reference       string                    `json:"reference,omitempty"`
+	DocumentLine    int                       `json:"document_line,omitempty"`
+	Status          string                    `json:"status"`
+	Claim           EvidenceClaim             `json:"claim"`
+	Actual          *EvidenceClaim            `json:"actual,omitempty"`
+	Excerpt         string                    `json:"source_excerpt,omitempty"`
+	Candidates      []Symbol                  `json:"candidates,omitempty"`
+	Note            string                    `json:"note"`
 }
 
 func sourceLines(b []byte, start, end int) string {
@@ -152,8 +155,8 @@ func (e *Engine) evidencePage(ctx context.Context, s *Snapshot, a Args, r Respon
 	meta["status_counts"] = counts
 	meta["semantic_verification"] = false
 	r.Meta = meta
-	if fp, err := fingerprintFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
-		return r, fmt.Errorf("Go files changed during verification; refresh and retry")
+	if err := validateSnapshot(ctx, e.C, s); err != nil {
+		return r, err
 	}
 	return r, nil
 }
@@ -247,11 +250,15 @@ func (e *Engine) auditDocument(ctx context.Context, s *Snapshot, a Args, r Respo
 			checks = append(checks, EvidenceCheck{Reference: ref, DocumentLine: line, Status: "unsupported_reference", Note: "Unsupported Go-reference format; provide a structured verify_evidence claim."})
 			return
 		}
+		if check, ok := auditFieldReference(s, ref, line); ok {
+			checks = append(checks, check)
+			return
+		}
 		if !docIdentifier.MatchString(ref) {
 			return
 		}
 		name := strings.TrimSuffix(ref, "()")
-		if !strings.ContainsAny(name, "ABCDEFGHIJKLMNOPQRSTUVWXYZ.") && !strings.HasSuffix(ref, "()") {
+		if !strings.ContainsAny(name, "ABCDEFGHIJKLMNOPQRSTUVWXYZ.") && !strings.HasSuffix(ref, "()") && !strings.Contains(name, "_") {
 			return
 		}
 		found := []*Symbol{}
@@ -267,22 +274,9 @@ func (e *Engine) auditDocument(ctx context.Context, s *Snapshot, a Args, r Respo
 			if len(parts) > 1 {
 				ownerName := parts[len(parts)-2]
 				if sym.Kind == "field" {
-					owned := false
-					for id, fields := range s.TypeFields {
-						if s.Symbols[id].Name != ownerName {
-							continue
-						}
-						for _, f := range fields {
-							if f.Symbol == sym.ID {
-								owned = true
-								break
-							}
-						}
-					}
-					if !owned {
-						continue
-					}
-				} else if !strings.Contains(sym.Package, ownerName) && !strings.Contains(sym.Receiver, ownerName) {
+					continue
+				} // An unresolved typed field path is not a verified source binding.
+				if !strings.Contains(sym.Package, ownerName) && !strings.Contains(sym.Receiver, ownerName) {
 					continue
 				}
 			}
@@ -298,10 +292,18 @@ func (e *Engine) auditDocument(ctx context.Context, s *Snapshot, a Args, r Respo
 			c := EvidenceCheck{Reference: ref, DocumentLine: line, Status: "missing_symbol", Note: "Names are not semantic claims. Resolve and bind the intended canonical ID before changing a document."}
 			if len(found) > 1 {
 				c.Status = "ambiguous_symbol"
+				c.CandidateGroups = signatureGroups(found)
 				for _, sym := range found[:min(8, len(found))] {
 					c.Candidates = append(c.Candidates, summary(sym))
 				}
 			} else {
+				if strings.Contains(name, ".") {
+					c.Status = "unbound_path"
+					c.Note = "No typed path binding in scope. Specify the root owner with resolve_reference; this is not evidence that the document is wrong."
+				} else if strings.Contains(name, "_") {
+					c.Status = "unrecognized_token"
+					c.Note = "Unbound contract/prose token, not a verified missing Go declaration. Use exact JSON aliases or explicit source claims."
+				}
 				c.Candidates = suggestSymbols(s, Args{Query: last}, 8)
 			}
 			checks = append(checks, c)
@@ -320,5 +322,5 @@ func (e *Engine) auditDocument(ctx context.Context, s *Snapshot, a Args, r Respo
 	if err != nil || hash(after) != docHash {
 		return r, fmt.Errorf("document changed during audit; retry")
 	}
-	return e.evidencePage(ctx, s, a, r, "audit_document:"+docHash, checks, map[string]any{"document": filepath.ToSlash(rel), "document_hash": docHash, "parser_scope": "Markdown Go links, inline Go file/ranges and CamelCase/qualified symbol references. Prose/business claims are not verified."})
+	return e.evidencePage(ctx, s, a, r, "audit_document:"+docHash, checks, map[string]any{"document": filepath.ToSlash(rel), "document_hash": docHash, "field_scope_truncated": s.FieldScopeTruncated, "parser_scope": "Markdown Go links, typed Go field paths, exact JSON declaration aliases and symbol references. Prose/business claims and JSON serialization paths are not verified."})
 }

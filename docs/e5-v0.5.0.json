@@ -1,0 +1,1908 @@
+{
+  "hardware": {
+    "platform": "macOS-14.1.1-arm64-i386-64bit",
+    "machine": "arm64",
+    "python": "3.11.2"
+  },
+  "corpus": {
+    "go_files": 9,
+    "lines": 488,
+    "source_bytes": 8700
+  },
+  "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+  "reranker_model_key": null,
+  "repeats": 3,
+  "threads": 2,
+  "batch_size": 8,
+  "first_index_seconds": 10.43787958403118,
+  "cached_start_seconds": 0.45617137500084937,
+  "update_one_function_seconds": 0.8461993329692632,
+  "runtime_cold_vector_query_ms": 1488.7524161022156,
+  "sampled_process_tree_peak_rss_bytes": null,
+  "vector_index_bytes": 209257,
+  "initial_status": {
+    "last_refresh": {
+      "freshness_file_reads": 20,
+      "freshness_scans": 2,
+      "freshness_source_bytes": 17478,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 2.0103340000000003,
+        "freshness_read_hash": 0.8358329999999999,
+        "freshness_walk_metadata": 0.981042,
+        "load_analysis": 528.669041,
+        "total": 553.7255
+      }
+    },
+    "meta": {
+      "freshness_file_reads": 10,
+      "freshness_scans": 1,
+      "freshness_source_bytes": 8739,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 0.606042,
+        "freshness_read_hash": 0.217332,
+        "freshness_walk_metadata": 0.34021,
+        "total": 0.647208
+      }
+    },
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.5.0",
+    "go_heap_reserved_bytes": 129171456,
+    "go_total_alloc_bytes": 204116216,
+    "go_gc_cycles": 28,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2368024,
+    "index_snapshot": "ea6032755680fc060a3328a7",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 0,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "updated_status": {
+    "last_refresh": {
+      "freshness_file_reads": 20,
+      "freshness_scans": 2,
+      "freshness_source_bytes": 17550,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 1.602749,
+        "freshness_read_hash": 0.590873,
+        "freshness_walk_metadata": 0.878961,
+        "load_analysis": 529.123417,
+        "total": 550.982542
+      }
+    },
+    "meta": {
+      "freshness_file_reads": 10,
+      "freshness_scans": 1,
+      "freshness_source_bytes": 8775,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 0.886375,
+        "freshness_read_hash": 0.366752,
+        "freshness_walk_metadata": 0.46504,
+        "total": 0.924958
+      }
+    },
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.5.0",
+    "go_heap_reserved_bytes": 129236992,
+    "go_total_alloc_bytes": 415914704,
+    "go_gc_cycles": 64,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2258024,
+    "index_snapshot": "9fa7471f1a5dc1235fa238e1",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 42,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "cached_status": {
+    "last_refresh": {
+      "freshness_file_reads": 20,
+      "freshness_scans": 2,
+      "freshness_source_bytes": 17550,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 2.44825,
+        "freshness_read_hash": 0.9448319999999999,
+        "freshness_walk_metadata": 1.3376679999999999,
+        "load_analysis": 395.607833,
+        "total": 414.204
+      }
+    },
+    "meta": {
+      "freshness_file_reads": 10,
+      "freshness_scans": 1,
+      "freshness_source_bytes": 8775,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 1.655375,
+        "freshness_read_hash": 0.505917,
+        "freshness_walk_metadata": 1.067625,
+        "total": 1.730583
+      }
+    },
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.5.0",
+    "go_heap_reserved_bytes": 129302528,
+    "go_total_alloc_bytes": 170832808,
+    "go_gc_cycles": 11,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2339328,
+    "index_snapshot": "9fa7471f1a5dc1235fa238e1",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 43,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "summary": {
+    "lexical": {
+      "queries": 12,
+      "hit5": 8,
+      "hit10": 8,
+      "median_warm_ms": 1.1900522513315082,
+      "median_first_ms": 1.493937917985022
+    },
+    "vector": {
+      "queries": 12,
+      "hit5": 10,
+      "hit10": 11,
+      "median_warm_ms": 1.6308124759234488,
+      "median_first_ms": 11.777853942476213
+    },
+    "hybrid": {
+      "queries": 12,
+      "hit5": 10,
+      "hit10": 11,
+      "median_warm_ms": 1.714864803943783,
+      "median_first_ms": 1.7365205567330122
+    }
+  },
+  "rows": [
+    {
+      "mode": "lexical",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.3897500466555357,
+      "warm_median_ms": 1.2708959402516484,
+      "durations_ms": [
+        1.3897500466555357,
+        1.303916797041893,
+        1.2378750834614038
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.559208845719695,
+      "warm_median_ms": 1.19320850353688,
+      "durations_ms": [
+        1.559208845719695,
+        1.2892920058220625,
+        1.0971250012516975
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.5036668628454208,
+      "warm_median_ms": 1.1868959991261363,
+      "durations_ms": [
+        1.5036668628454208,
+        1.1891250032931566,
+        1.184666994959116
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.5446669422090054,
+      "warm_median_ms": 1.12437445204705,
+      "durations_ms": [
+        1.5446669422090054,
+        1.1486660223454237,
+        1.1000828817486763
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.1874169576913118,
+      "warm_median_ms": 1.119000487960875,
+      "durations_ms": [
+        1.1874169576913118,
+        1.1009590234607458,
+        1.1370419524610043
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.3956250622868538,
+      "warm_median_ms": 1.2536040740087628,
+      "durations_ms": [
+        1.3956250622868538,
+        1.2449580244719982,
+        1.2622501235455275
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 2.374999923631549,
+      "warm_median_ms": 1.3842704938724637,
+      "durations_ms": [
+        2.374999923631549,
+        1.3603330589830875,
+        1.4082079287618399
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.4842089731246233,
+      "warm_median_ms": 1.1652290122583508,
+      "durations_ms": [
+        1.4842089731246233,
+        1.2030829675495625,
+        1.1273750569671392
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.1204169131815434,
+      "warm_median_ms": 1.098666456528008,
+      "durations_ms": [
+        1.1204169131815434,
+        1.0888329707086086,
+        1.1084999423474073
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.846000086516142,
+      "warm_median_ms": 1.420520944520831,
+      "durations_ms": [
+        1.846000086516142,
+        1.4848748687654734,
+        1.3561670202761889
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.853249967098236,
+      "warm_median_ms": 1.5522290486842394,
+      "durations_ms": [
+        1.853249967098236,
+        1.4988749753683805,
+        1.6055831220000982
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "lexical",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 1.0977080091834068,
+      "warm_median_ms": 1.0487085673958063,
+      "durations_ms": [
+        1.0977080091834068,
+        1.0517081245779991,
+        1.0457090102136135
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 15.759708127006888,
+      "warm_median_ms": 1.872749999165535,
+      "durations_ms": [
+        15.759708127006888,
+        2.0897078793495893,
+        1.6557921189814806
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 12.272249907255173,
+      "warm_median_ms": 1.559166586957872,
+      "durations_ms": [
+        12.272249907255173,
+        1.7039580270648003,
+        1.4143751468509436
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 12.174416100606322,
+      "warm_median_ms": 1.7351454589515924,
+      "durations_ms": [
+        12.174416100606322,
+        1.9344999454915524,
+        1.5357909724116325
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 12.113458011299372,
+      "warm_median_ms": 1.5910000074654818,
+      "durations_ms": [
+        12.113458011299372,
+        1.6342499293386936,
+        1.54775008559227
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 16.11312502063811,
+      "warm_median_ms": 1.5371665358543396,
+      "durations_ms": [
+        16.11312502063811,
+        1.5837501268833876,
+        1.4905829448252916
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/other#type::Decision"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 10.647916933521628,
+      "warm_median_ms": 1.8196459859609604,
+      "durations_ms": [
+        10.647916933521628,
+        1.6945840325206518,
+        1.944707939401269
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/state#type::Application"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.442249873653054,
+      "warm_median_ms": 1.620062510482967,
+      "durations_ms": [
+        11.442249873653054,
+        1.6524579841643572,
+        1.5876670368015766
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 10.31291694380343,
+      "warm_median_ms": 1.5211044810712337,
+      "durations_ms": [
+        10.31291694380343,
+        1.6049169935286045,
+        1.437291968613863
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/state#type::Adjuster",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/state#file:state/large.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 9.294499875977635,
+      "warm_median_ms": 1.5954794362187386,
+      "durations_ms": [
+        9.294499875977635,
+        1.6660839319229126,
+        1.5248749405145645
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy#file:main.go"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.21237501502037,
+      "warm_median_ms": 1.7855624901130795,
+      "durations_ms": [
+        11.21237501502037,
+        1.618791837245226,
+        1.9523331429809332
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#file:consumer/consumer_test.go",
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#type::Application"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 11.217041872441769,
+      "warm_median_ms": 1.7050839960575104,
+      "durations_ms": [
+        11.217041872441769,
+        1.595458947122097,
+        1.8147090449929237
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "vector",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 12.263250071555376,
+      "warm_median_ms": 1.6415624413639307,
+      "durations_ms": [
+        12.263250071555376,
+        1.6827499493956566,
+        1.6003749333322048
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "requested": false,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "not_applicable"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "ограничить сумму выдачи исходя из заработка заёмщика",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 2.942041028290987,
+      "warm_median_ms": 1.723271096125245,
+      "durations_ms": [
+        2.942041028290987,
+        1.786709064617753,
+        1.6598331276327372
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "сколько денег доступно после погашения старого кредита",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::LongPipeline"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.6582498792558908,
+      "warm_median_ms": 1.7895413329824805,
+      "durations_ms": [
+        1.6582498792558908,
+        2.057582838460803,
+        1.521499827504158
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "льготный период пока клиент учится",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.5980831813067198,
+      "warm_median_ms": 1.8409584881737828,
+      "durations_ms": [
+        1.5980831813067198,
+        1.6265830490738153,
+        2.0553339272737503
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "отказ при высокой долговой нагрузке",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.866667065769434,
+      "warm_median_ms": 1.5551875112578273,
+      "durations_ms": [
+        1.866667065769434,
+        1.5869999770075083,
+        1.5233750455081463
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "общая последовательность расчёта и заключительное уменьшение суммы",
+      "expected": [
+        "example.com/strategy#function::Evaluate",
+        "example.com/strategy/state#function::Finalize"
+      ],
+      "top10": [
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#type::Policy"
+      ],
+      "hit5": false,
+      "hit10": false,
+      "cold_query_ms": 2.041042083874345,
+      "warm_median_ms": 1.6191250178962946,
+      "durations_ms": [
+        2.041042083874345,
+        1.5587080270051956,
+        1.6795420087873936
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "C_DEBT_40",
+      "expected": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/other#type::Decision"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.6814160626381636,
+      "warm_median_ms": 1.4251250540837646,
+      "durations_ms": [
+        1.6814160626381636,
+        1.3931670691817999,
+        1.4570830389857292
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "ApplyIncomeCap",
+      "expected": [
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "top10": [
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#function::Finalize",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.4965829905122519,
+      "warm_median_ms": 1.706458511762321,
+      "durations_ms": [
+        1.4965829905122519,
+        1.6067919787019491,
+        1.8061250448226929
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "StudyGrace",
+      "expected": [
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "top10": [
+        "example.com/strategy/education#function::StudyGrace",
+        "example.com/strategy/education#file:education/education.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/other#type::Decision",
+        "example.com/strategy/consumer#function::EducationTerm",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.560125034302473,
+      "warm_median_ms": 1.6004584031179547,
+      "durations_ms": [
+        1.560125034302473,
+        1.6434579156339169,
+        1.5574588906019926
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "Shadow",
+      "expected": [
+        "example.com/strategy/consumer#function::Shadow"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Shadow",
+        "example.com/strategy/consumer_test#function::TestShadow",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/other#file:other/other.go",
+        "example.com/strategy/state#type::Adjuster",
+        "example.com/strategy/state#type::Decision",
+        "example.com/strategy/state#file:state/large.go",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.7916250508278608,
+      "warm_median_ms": 1.4352499274536967,
+      "durations_ms": [
+        1.7916250508278608,
+        1.4004579279571772,
+        1.4700419269502163
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "refinance Calculate debt income",
+      "expected": [
+        "example.com/strategy/refinance#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/refinance#type::Policy",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.5067500062286854,
+      "warm_median_ms": 1.9313335651531816,
+      "durations_ms": [
+        1.5067500062286854,
+        2.030750038102269,
+        1.831917092204094
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "consumer Calculate income debt",
+      "expected": [
+        "example.com/strategy/consumer#function::Calculate"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/consumer#function::TestCalculate",
+        "example.com/strategy/consumer#constant::RuleDebt",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/state#type::Application",
+        "example.com/strategy/other#function::ApplyIncomeCap",
+        "example.com/strategy/consumer#type::Policy",
+        "example.com/strategy/consumer#file:consumer/consumer_test.go",
+        "example.com/strategy/state#function::ApplyIncomeCap"
+      ],
+      "hit5": true,
+      "hit10": true,
+      "cold_query_ms": 1.7957920208573341,
+      "warm_median_ms": 1.7235210398212075,
+      "durations_ms": [
+        1.7957920208573341,
+        1.7274171113967896,
+        1.7196249682456255
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    },
+    {
+      "mode": "hybrid",
+      "query": "изменения поля через указатель и увеличение счётчика",
+      "expected": [
+        "example.com/strategy/state#function::AccessKinds"
+      ],
+      "top10": [
+        "example.com/strategy/consumer#function::Calculate",
+        "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+        "example.com/strategy/state#function::LongPipeline",
+        "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+        "example.com/strategy/refinance#function::Calculate",
+        "example.com/strategy/state#file:state/state.go",
+        "example.com/strategy/consumer#file:consumer/consumer.go",
+        "example.com/strategy/refinance#file:refinance/refinance.go",
+        "example.com/strategy/state#function::AccessKinds",
+        "example.com/strategy/education#function::StudyGrace"
+      ],
+      "hit5": false,
+      "hit10": true,
+      "cold_query_ms": 2.294749952852726,
+      "warm_median_ms": 1.8138955347239971,
+      "durations_ms": [
+        2.294749952852726,
+        1.8546250648796558,
+        1.7731660045683384
+      ],
+      "reranker_stage": {
+        "attempted": false,
+        "cache_hits": 0,
+        "configured": false,
+        "executed": false,
+        "explicitly_requested": false,
+        "model_key": "",
+        "reason": "not_configured",
+        "requested": true,
+        "reranked_items": 0,
+        "scored_items": 0,
+        "status": "disabled"
+      },
+      "reranked_items": 0,
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ]
+    }
+  ],
+  "limitations": [
+    "Small bilingual synthetic corpus; not evidence of performance on production strategy.",
+    "Top-k counts distinct parent symbols by default in 0.2.0; raw chunk mode requires distinct_symbols=false. Hit@k is at least one expected symbol.",
+    "First query per case may be warm in OS/model cache; runtime cold startup is reported separately.",
+    "RSS samples process tree at 100ms intervals; not a precise allocator maximum.",
+    "Update includes full Go reload and changed-chunk inference."
+  ]
+}

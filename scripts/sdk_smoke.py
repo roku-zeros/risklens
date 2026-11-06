@@ -15,7 +15,7 @@ async def run(a):
         async with ClientSession(read,write) as session:
             init=await session.initialize()
             tools=await session.list_tools()
-            assert len(tools.tools)==16
+            assert len(tools.tools)==18
             for _ in range(600):
                 result=await session.call_tool('index_status',{})
                 st=result.structuredContent
@@ -35,6 +35,12 @@ async def run(a):
             assert not result.isError
             types=await session.call_tool('search_symbols',{'query':'Application','kind':'type','package':'example.com/strategy/state'})
             owner=types.structuredContent['items'][0]['id']
+            resolved=await session.call_tool('resolve_reference',{'query':'Application.Limit','namespace':'go','owner_id':owner})
+            assert resolved.structuredContent['items']
+            batched=await session.call_tool('batch_tools',{'calls':[{'tool':'get_source','arguments':{'file':'main.go','end_line':1}},{'tool':'list_files','arguments':{'limit':2}},{'tool':'get_source','arguments':{'file':'missing-file.go'}}]})
+            batch=batched.structuredContent
+            assert batch['fresh'] and batch['meta']['freshness_scans']==2 and len(batch['items'])==3
+            assert batch['items'][2]['is_error'] and not batch['items'][0]['is_error']
             definition=await session.call_tool('get_symbol',{'symbol_id':owner})
             field=next(f for f in definition.structuredContent['meta']['fields'] if f['name']=='Limit')
             assert field['promoted'] and field['definition_indexed']
@@ -55,6 +61,6 @@ async def run(a):
             assert verified.structuredContent['items'][0]['status']=='source_verified'
             audit=await session.call_tool('audit_document',{'document':'notes.md','limit':20})
             assert not audit.isError and any(c['status']=='missing_file' for c in audit.structuredContent['items']) and any(c['status']=='missing_symbol' for c in audit.structuredContent['items'])
-            print(json.dumps({'launch':'go_run' if a.go_run else 'binary','field_trace':True,'evidence_verification':True,'document_audit':True,'canonical_field_navigation':True,'structured_recovery':True,'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
+            print(json.dumps({'batch_strict_snapshot':True,'typed_field_resolution':True,'launch':'go_run' if a.go_run else 'binary','field_trace':True,'evidence_verification':True,'document_audit':True,'canonical_field_navigation':True,'structured_recovery':True,'sdk':'mcp==1.26.0','protocol':init.protocolVersion,'server':init.serverInfo.model_dump(),'tools':len(tools.tools),'snapshot':st['index_snapshot'],'search_items':len(result.structuredContent['items'])},indent=2))
 if __name__=='__main__':
     p=argparse.ArgumentParser();launch=p.add_mutually_exclusive_group(required=True);launch.add_argument('--binary');launch.add_argument('--go-run',action='store_true');p.add_argument('--go',default='go');p.add_argument('--config',required=True);asyncio.run(run(p.parse_args()))

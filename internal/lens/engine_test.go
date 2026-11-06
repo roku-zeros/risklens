@@ -14,9 +14,10 @@ import (
 )
 
 type fakeEmbed struct {
-	mu   sync.Mutex
-	Docs int
-	Fail bool
+	mu      sync.Mutex
+	Docs    int
+	Queries int
+	Fail    bool
 }
 
 func (f *fakeEmbed) Embed(ctx context.Context, mode string, ss []string) (EmbeddingResult, error) {
@@ -35,6 +36,9 @@ func (f *fakeEmbed) Embed(ctx context.Context, mode string, ss []string) (Embedd
 		r.Vectors = append(r.Vectors, v)
 		r.Tokens = append(r.Tokens, 10)
 		r.Windows = append(r.Windows, 1)
+		if mode == "query" {
+			f.Queries++
+		}
 		if mode == "document" {
 			f.Docs++
 		}

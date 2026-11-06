@@ -1,0 +1,162 @@
+{
+  "calls_per_group": 10,
+  "repeats": 3,
+  "initial_status": {
+    "last_refresh": {
+      "freshness_file_reads": 20,
+      "freshness_scans": 2,
+      "freshness_source_bytes": 17478,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 2.332709,
+        "freshness_read_hash": 0.904206,
+        "freshness_walk_metadata": 1.253419,
+        "load_analysis": 350.77625,
+        "total": 371.931833
+      }
+    },
+    "meta": {
+      "freshness_file_reads": 10,
+      "freshness_scans": 1,
+      "freshness_source_bytes": 8739,
+      "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+      "timings_ms": {
+        "freshness": 0.922792,
+        "freshness_read_hash": 0.3385,
+        "freshness_walk_metadata": 0.510417,
+        "total": 0.974125
+      }
+    },
+    "call_analysis": {
+      "instructions": 1732,
+      "mode": "vta",
+      "state": "ready",
+      "functions": 31,
+      "dynamic_sites": 2,
+      "recovered_sites": 2,
+      "alias_accesses": 4,
+      "limitations": [
+        "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+        "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+      ]
+    },
+    "version": "0.5.0",
+    "go_heap_reserved_bytes": 133496832,
+    "go_total_alloc_bytes": 170612048,
+    "go_gc_cycles": 11,
+    "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+    "go_heap_bytes": 2318832,
+    "index_snapshot": "ea6032755680fc060a3328a7",
+    "state": "ready",
+    "fresh": true,
+    "loading": false,
+    "vectors": "ready",
+    "vector_done": 43,
+    "vector_total": 43,
+    "cache_hits": 43,
+    "symbols": 70,
+    "chunks": 43,
+    "files": 10,
+    "complete": true,
+    "diagnostics": null,
+    "environment": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOFLAGS": "-mod=readonly",
+      "GONOPROXY": "none",
+      "GOOS": "darwin",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOVCS": "*:off",
+      "GOVERSION": "go1.26.6",
+      "GOWORK": "off",
+      "build_flags": "",
+      "toolchain": "go1.26.6"
+    },
+    "module": "example.com/strategy"
+  },
+  "rows": [
+    {
+      "single_ms": 20.17191587947309,
+      "batch_ms": 3.5903749521821737,
+      "single_freshness_scans": 20,
+      "batch_freshness_scans": 2,
+      "batch_meta": {
+        "accounted_bytes": 15653,
+        "byte_limit": 524288,
+        "freshness_file_reads": 20,
+        "freshness_scans": 2,
+        "freshness_source_bytes": 17478,
+        "requested_calls": 10,
+        "results_complete": true,
+        "returned_calls": 10,
+        "snapshot_policy": "One immutable Go snapshot. Full content checks before/after the entire batch; individual items do not rescan. Document hashes are validated per audit item.",
+        "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+        "timings_ms": {
+          "freshness": 1.213292,
+          "freshness_read_hash": 0.443543,
+          "freshness_walk_metadata": 0.677791,
+          "total": 1.4305
+        }
+      }
+    },
+    {
+      "single_ms": 17.047875095158815,
+      "batch_ms": 3.3652919810265303,
+      "single_freshness_scans": 20,
+      "batch_freshness_scans": 2,
+      "batch_meta": {
+        "accounted_bytes": 15659,
+        "byte_limit": 524288,
+        "freshness_file_reads": 20,
+        "freshness_scans": 2,
+        "freshness_source_bytes": 17478,
+        "requested_calls": 10,
+        "results_complete": true,
+        "returned_calls": 10,
+        "snapshot_policy": "One immutable Go snapshot. Full content checks before/after the entire batch; individual items do not rescan. Document hashes are validated per audit item.",
+        "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+        "timings_ms": {
+          "freshness": 1.0954169999999999,
+          "freshness_read_hash": 0.420832,
+          "freshness_walk_metadata": 0.616709,
+          "total": 1.292833
+        }
+      }
+    },
+    {
+      "single_ms": 14.715374913066626,
+      "batch_ms": 3.280957927927375,
+      "single_freshness_scans": 20,
+      "batch_freshness_scans": 2,
+      "batch_meta": {
+        "accounted_bytes": 15661,
+        "byte_limit": 524288,
+        "freshness_file_reads": 20,
+        "freshness_scans": 2,
+        "freshness_source_bytes": 17478,
+        "requested_calls": 10,
+        "results_complete": true,
+        "returned_calls": 10,
+        "snapshot_policy": "One immutable Go snapshot. Full content checks before/after the entire batch; individual items do not rescan. Document hashes are validated per audit item.",
+        "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+        "timings_ms": {
+          "freshness": 1.145291,
+          "freshness_read_hash": 0.428044,
+          "freshness_walk_metadata": 0.6502060000000001,
+          "total": 1.783125
+        }
+      }
+    }
+  ],
+  "summary": {
+    "single_median_ms": 17.047875095158815,
+    "batch_median_ms": 3.3652919810265303
+  },
+  "limitations": [
+    "Local warm persistent server; not production latency evidence.",
+    "Batch items are fresh only under the outer snapshot validation; byte budget and post-change failure apply."
+  ]
+}

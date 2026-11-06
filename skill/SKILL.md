@@ -47,3 +47,13 @@ description: Исследование и доработка Go-кода с ло�
 - audit_document принимает document, не file. verify_evidence принимает claims: [{file, start_line, end_line, expected_text, source_hash?, symbol_id?}], а не строки и не поля symbol/line/text. ID копировать из инструментов. Ошибки схемы содержат error.data с правильными полями и примером; runtime details могут указывать total_lines или maximum limit.
 - Ошибка аргумента не повод перестраивать индекс. Fresh=false в error при freshness_checked=false означает отсутствие повторной проверки после ошибки. Исправь поле по details/error.data. При явной ошибке stale/snapshot changed дождись refresh и повтори discovery.
 - Для медленного запроса сохраняй meta.timings_ms и freshness_scans. Не складывай freshness с его вложенными read_hash/walk_metadata; не выдавай байты за токены и серверный total за время всей агентной задачи.
+
+
+## Пакетное исследование и контрактные имена (0.5.0)
+
+- Группируй до 20 независимых чтений/поисков в batch_tools. Весь пакет опирается на один Go snapshot и две content freshness-проверки. Проверяй outer fresh/index_snapshot, каждый item.is_error и truncated/remaining_from. Inner fresh=false не означает устарелый результат: его покрывает внешняя проверка. Не выполняй control/status/refresh внутри batch, не строй аргументы из ещё не полученных результатов. При изменении файлов повтори discovery.
+- Для JSON имён и составных Go-путей сначала resolve_reference, затем get_symbol/get_source/verify_evidence с найденным canonical ID. Различай namespace go/json и scope owner_id. Для anonymous nested types можно использовать возвращённый target_scope_id. Не выдавай JSON declaration alias за полный wire path и не смешивай разные runtime objects.
+- Unrecognized_token/unbound_path — запрос уточнения пространства имён/корня, а не доказанная ошибка документа. Ambiguous с одной группой одинаковых сигнатур остаётся неоднозначным по смыслу. Проверяй field_scope_truncated и bindings; не исправляй текст только по похожему имени.
+- По get_callees читай call_coverage, unresolved/external/candidate. Пустой callers/references не доказывает отсутствие вызова/правила. Внешний guard, аргументы фабрики, её тело и композиция набора требуют отдельного чтения; ни call, ни candidate не доказывают применимость бизнес-правила.
+- В сравнении reranker учитывай meta.reranker.status и scored_items/cache_hits. Disabled/fallback/empty — не измеренный полноценный reranker leg. Для повторов query_embedding_cache показывает reuse; не выдавай cache hit за скорость cold inference.
+- Server.lock в 0.5+ — постоянный marker ОС-блокировки. Не удаляй его по наличию или PID: активного владельца нужно штатно остановить; очистку vector-файлов выполнять через --clear-cache/обновлённый скрипт.

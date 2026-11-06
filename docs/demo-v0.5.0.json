@@ -1,0 +1,2488 @@
+{
+  "real_embeddings": true,
+  "sources_unchanged": true,
+  "calls": [
+    {
+      "tool": "project_status",
+      "arguments": {},
+      "result": {
+        "last_refresh": {
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 2.474209,
+            "freshness_read_hash": 0.800419,
+            "freshness_walk_metadata": 1.458622,
+            "load_analysis": 433.096458,
+            "total": 460.514708
+          }
+        },
+        "meta": {
+          "freshness_file_reads": 10,
+          "freshness_scans": 1,
+          "freshness_source_bytes": 8739,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 7.910625,
+            "freshness_read_hash": 0.229292,
+            "freshness_walk_metadata": 7.640417,
+            "total": 7.945917
+          }
+        },
+        "call_analysis": {
+          "instructions": 1732,
+          "mode": "vta",
+          "state": "ready",
+          "functions": 31,
+          "dynamic_sites": 2,
+          "recovered_sites": 2,
+          "alias_accesses": 4,
+          "limitations": [
+            "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+            "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+          ]
+        },
+        "version": "0.5.0",
+        "go_heap_reserved_bytes": 133529600,
+        "go_total_alloc_bytes": 170745472,
+        "go_gc_cycles": 11,
+        "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+        "go_heap_bytes": 2487424,
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 43,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "result": {
+        "last_refresh": {
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 2.474209,
+            "freshness_read_hash": 0.800419,
+            "freshness_walk_metadata": 1.458622,
+            "load_analysis": 433.096458,
+            "total": 460.514708
+          }
+        },
+        "meta": {
+          "freshness_file_reads": 10,
+          "freshness_scans": 1,
+          "freshness_source_bytes": 8739,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.580833,
+            "freshness_read_hash": 0.198,
+            "freshness_walk_metadata": 0.34425,
+            "total": 0.609625
+          }
+        },
+        "call_analysis": {
+          "instructions": 1732,
+          "mode": "vta",
+          "state": "ready",
+          "functions": 31,
+          "dynamic_sites": 2,
+          "recovered_sites": 2,
+          "alias_accesses": 4,
+          "limitations": [
+            "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+            "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+          ]
+        },
+        "version": "0.5.0",
+        "go_heap_reserved_bytes": 133529600,
+        "go_total_alloc_bytes": 170930944,
+        "go_gc_cycles": 11,
+        "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+        "go_heap_bytes": 2672896,
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 43,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    },
+    {
+      "tool": "list_files",
+      "arguments": {
+        "limit": 3
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "bytes": 871,
+            "file_path": "consumer/consumer.go",
+            "source_hash": "4f4d39bfd73eb723b2ee549a5461240b10696f1c711e2e20d9d8a25bc0ce0f48",
+            "total_lines": 35
+          },
+          {
+            "bytes": 203,
+            "file_path": "consumer/consumer_test.go",
+            "source_hash": "de9f1da12acc1135f9f7b5ea8b2cb9b306e5c9ccff2f908e40e970f194cc0236",
+            "total_lines": 14
+          },
+          {
+            "bytes": 165,
+            "file_path": "consumer/external_test.go",
+            "source_hash": "58f841ab290e73e6af9b0cf4469fd701fae07f6df4c70bc0b0070a4ad00f2ab8",
+            "total_lines": 12
+          }
+        ],
+        "truncated": true,
+        "next_cursor": "eyJzbmFwc2hvdCI6ImVhNjAzMjc1NTY4MGZjMDYwYTMzMjhhNyIsInF1ZXJ5IjoiNjExZDA1ODhmMWViMGM0MzJiMDE4YWNkZTI4MDVlMWYxMjg3YWEzY2NhMjIxODNmMGYwOWEyYWYxMzU0MzE0NyIsIm9mZnNldCI6M30",
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "continuation": "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page.",
+          "effective_limit": 3,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": true,
+          "offset": 0,
+          "results_complete": false,
+          "returned_results": 3,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.946459,
+            "freshness_read_hash": 0.610331,
+            "freshness_walk_metadata": 1.0043360000000001,
+            "total": 2.030791
+          },
+          "total_results": 10
+        }
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Calculate",
+        "kind": "function",
+        "package": "example.com/strategy/consumer"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/consumer#function::Calculate",
+            "name": "Calculate",
+            "kind": "function",
+            "package": "example.com/strategy/consumer",
+            "signature": "func example.com/strategy/consumer.Calculate(a *example.com/strategy/state.Application)",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 10,
+              "column": 6
+            },
+            "end_line": 17,
+            "test": false
+          },
+          {
+            "id": "example.com/strategy/consumer#function::TestCalculate",
+            "name": "TestCalculate",
+            "kind": "function",
+            "package": "example.com/strategy/consumer",
+            "signature": "func example.com/strategy/consumer.TestCalculate(t *testing.T)",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 8,
+              "column": 6
+            },
+            "end_line": 14,
+            "test": true
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 2,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 6.29575,
+            "freshness_read_hash": 0.486247,
+            "freshness_walk_metadata": 5.726252,
+            "total": 6.317375
+          },
+          "total_results": 2
+        }
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Limit",
+        "kind": "field",
+        "package": "example.com/strategy/state"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/state.Decision#field:Limit",
+            "name": "Limit",
+            "kind": "field",
+            "package": "example.com/strategy/state",
+            "signature": "field Limit int",
+            "position": {
+              "file": "state/state.go",
+              "line": 5,
+              "column": 2
+            },
+            "end_line": 5,
+            "test": false
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 1,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.166458,
+            "freshness_read_hash": 0.417292,
+            "freshness_walk_metadata": 0.679959,
+            "total": 1.181041
+          },
+          "total_results": 1
+        }
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Finalize",
+        "kind": "function",
+        "package": "example.com/strategy/state"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy/state#function::Finalize",
+            "name": "Finalize",
+            "kind": "function",
+            "package": "example.com/strategy/state",
+            "signature": "func example.com/strategy/state.Finalize(a *example.com/strategy/state.Application, rule example.com/strategy/state.Adjuster, callback func(*example.com/strategy/state.Application))",
+            "position": {
+              "file": "state/state.go",
+              "line": 28,
+              "column": 6
+            },
+            "end_line": 32,
+            "test": false
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 1,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.2072919999999998,
+            "freshness_read_hash": 0.413958,
+            "freshness_walk_metadata": 0.7294160000000001,
+            "total": 1.219959
+          },
+          "total_results": 1
+        }
+      }
+    },
+    {
+      "tool": "resolve_reference",
+      "arguments": {
+        "query": "Application.Limit",
+        "namespace": "go"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "case_sensitive": true,
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "limitation": "Declaration aliases and typed Go field paths. JSON names are leaf declaration aliases, not proof of serialization paths, execution or the same runtime object. owner_id may be an opaque returned target_scope_id.",
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 0,
+          "scope_truncated": false,
+          "semantic_verification": false,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.219334,
+            "freshness_read_hash": 0.42017,
+            "freshness_walk_metadata": 0.733997,
+            "total": 1.228958
+          },
+          "total_results": 0
+        }
+      }
+    },
+    {
+      "tool": "batch_tools",
+      "arguments": {
+        "calls": [
+          {
+            "tool": "get_source",
+            "arguments": {
+              "file": "main.go",
+              "end_line": 1
+            }
+          },
+          {
+            "tool": "search_symbols",
+            "arguments": {
+              "query": "Calculate",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "index": 0,
+            "tool": "get_source",
+            "is_error": false,
+            "result": {
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "fresh": false,
+              "complete": true,
+              "items": {
+                "code": "package main",
+                "end_line": 1,
+                "eof": false,
+                "file": "main.go",
+                "range_clamped": false,
+                "returned_lines": 1,
+                "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535",
+                "start_line": 1,
+                "total_lines": 19
+              },
+              "truncated": false,
+              "limitations": [
+                "Static relationships are not execution order or proof of business correctness.",
+                "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+                "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+                "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+              ],
+              "meta": {
+                "byte_limit": 16000,
+                "continuation": "get_source with start_line=next_line, end_line=-1 and index_snapshot",
+                "effective_limit": 20,
+                "freshness_file_reads": 0,
+                "freshness_policy": "covered by outer batch validation; inspect batch fresh/index_snapshot",
+                "freshness_scans": 0,
+                "freshness_source_bytes": 0,
+                "next_line": 2,
+                "range_clamped": false,
+                "requested_end_line": 1,
+                "requested_start_line": 1,
+                "results_complete": true,
+                "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+                "timings_ms": {
+                  "total": 0.006833
+                },
+                "total_lines": 19
+              }
+            }
+          },
+          {
+            "index": 1,
+            "tool": "search_symbols",
+            "is_error": false,
+            "result": {
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "fresh": false,
+              "complete": true,
+              "items": [
+                {
+                  "id": "example.com/strategy/consumer#function::Calculate",
+                  "name": "Calculate",
+                  "kind": "function",
+                  "package": "example.com/strategy/consumer",
+                  "signature": "func example.com/strategy/consumer.Calculate(a *example.com/strategy/state.Application)",
+                  "position": {
+                    "file": "consumer/consumer.go",
+                    "line": 10,
+                    "column": 6
+                  },
+                  "end_line": 17,
+                  "test": false
+                },
+                {
+                  "id": "example.com/strategy/refinance#function::Calculate",
+                  "name": "Calculate",
+                  "kind": "function",
+                  "package": "example.com/strategy/refinance",
+                  "signature": "func example.com/strategy/refinance.Calculate(a *example.com/strategy/state.Application)",
+                  "position": {
+                    "file": "refinance/refinance.go",
+                    "line": 8,
+                    "column": 6
+                  },
+                  "end_line": 8,
+                  "test": false
+                },
+                {
+                  "id": "example.com/strategy/consumer#function::TestCalculate",
+                  "name": "TestCalculate",
+                  "kind": "function",
+                  "package": "example.com/strategy/consumer",
+                  "signature": "func example.com/strategy/consumer.TestCalculate(t *testing.T)",
+                  "position": {
+                    "file": "consumer/consumer_test.go",
+                    "line": 8,
+                    "column": 6
+                  },
+                  "end_line": 14,
+                  "test": true
+                }
+              ],
+              "truncated": false,
+              "limitations": [
+                "Static relationships are not execution order or proof of business correctness.",
+                "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+                "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+                "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+              ],
+              "meta": {
+                "effective_limit": 3,
+                "freshness_file_reads": 0,
+                "freshness_policy": "covered by outer batch validation; inspect batch fresh/index_snapshot",
+                "freshness_scans": 0,
+                "freshness_source_bytes": 0,
+                "has_more": false,
+                "offset": 0,
+                "results_complete": true,
+                "returned_results": 3,
+                "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+                "timings_ms": {
+                  "total": 0.04875
+                },
+                "total_results": 3
+              }
+            }
+          }
+        ],
+        "truncated": false,
+        "meta": {
+          "accounted_bytes": 3761,
+          "byte_limit": 524288,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "requested_calls": 2,
+          "results_complete": true,
+          "returned_calls": 2,
+          "snapshot_policy": "One immutable Go snapshot. Full content checks before/after the entire batch; individual items do not rescan. Document hashes are validated per audit item.",
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.633583,
+            "freshness_read_hash": 0.5298350000000001,
+            "freshness_walk_metadata": 1.009957,
+            "total": 1.7585
+          }
+        }
+      }
+    },
+    {
+      "tool": "get_symbol",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": {
+          "id": "example.com/strategy/consumer#function::Calculate",
+          "name": "Calculate",
+          "kind": "function",
+          "package": "example.com/strategy/consumer",
+          "signature": "func example.com/strategy/consumer.Calculate(a *example.com/strategy/state.Application)",
+          "position": {
+            "file": "consumer/consumer.go",
+            "line": 10,
+            "column": 6
+          },
+          "end_line": 17,
+          "test": false,
+          "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+          "comment": "Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n"
+        },
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "results_complete": true,
+          "source_hash": "4f4d39bfd73eb723b2ee549a5461240b10696f1c711e2e20d9d8a25bc0ce0f48",
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.979457,
+            "freshness_read_hash": 0.38321099999999997,
+            "freshness_walk_metadata": 0.538663,
+            "total": 0.984834
+          }
+        }
+      }
+    },
+    {
+      "tool": "find_references",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "reference",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 10,
+              "column": 2
+            },
+            "code": "\tCalculate(a)"
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "reference",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 12,
+              "column": 12
+            },
+            "code": "\t\tconsumer.Calculate(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "absence_is_not_proven": true,
+          "coverage_note": "Unknown call targets cannot be attributed to this symbol. Inspect get_callees at entry functions for unresolved/external boundaries.",
+          "effective_limit": 5,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 2,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.963875,
+            "freshness_read_hash": 0.36558599999999997,
+            "freshness_walk_metadata": 0.541914,
+            "total": 0.979208
+          },
+          "total_results": 2
+        }
+      }
+    },
+    {
+      "tool": "get_callers",
+      "arguments": {
+        "symbol_id": "example.com/strategy/consumer#function::Calculate",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 10,
+              "column": 2
+            },
+            "code": "\tCalculate(a)"
+          },
+          {
+            "conditions": [
+              "if a.Product == \"consumer\""
+            ],
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 12,
+              "column": 3
+            },
+            "code": "\t\tconsumer.Calculate(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "absence_is_not_proven": true,
+          "coverage_note": "Unknown call targets cannot be attributed to this symbol. Inspect get_callees at entry functions for unresolved/external boundaries.",
+          "effective_limit": 5,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 2,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.728376,
+            "freshness_read_hash": 0.5537920000000001,
+            "freshness_walk_metadata": 1.056583,
+            "total": 1.746542
+          },
+          "total_results": 2
+        }
+      }
+    },
+    {
+      "tool": "get_callees",
+      "arguments": {
+        "symbol_id": "example.com/strategy/state#function::Finalize",
+        "limit": 10
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/state#function::ApplyIncomeCap",
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "confirmed",
+            "position": {
+              "file": "state/state.go",
+              "line": 29,
+              "column": 2
+            },
+            "code": "\tApplyIncomeCap(a)"
+          },
+          {
+            "analysis": "vta_module",
+            "flow_candidates": [
+              "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+            ],
+            "unknown_targets_possible": true,
+            "symbol_id": "example.com/strategy/state#method:example.com/strategy/state.Adjuster:Adjust",
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "candidates",
+            "position": {
+              "file": "state/state.go",
+              "line": 30,
+              "column": 2
+            },
+            "candidates": [
+              "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+              "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+            ],
+            "code": "\trule.Adjust(a)"
+          },
+          {
+            "analysis": "vta_module",
+            "flow_candidates": [
+              "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+            ],
+            "unknown_targets_possible": true,
+            "from_symbol": "example.com/strategy/state#function::Finalize",
+            "kind": "call",
+            "resolution": "candidates",
+            "position": {
+              "file": "state/state.go",
+              "line": 31,
+              "column": 2
+            },
+            "candidates": [
+              "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+            ],
+            "code": "\tcallback(a)"
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "call_coverage": {
+            "analysis_state": "ready",
+            "counts": {
+              "candidate": 2,
+              "confirmed_external": 0,
+              "confirmed_internal": 1,
+              "unresolved": 0
+            },
+            "examples_truncated": false,
+            "indexed_direct_sites": 3,
+            "scope": "Indexed direct calls, excluding type conversions; no proof of runtime execution, absence, transitive completeness or same object.",
+            "unknown_or_external_examples": [
+              {
+                "analysis": "vta_module",
+                "flow_candidates": [
+                  "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+                ],
+                "unknown_targets_possible": true,
+                "symbol_id": "example.com/strategy/state#method:example.com/strategy/state.Adjuster:Adjust",
+                "from_symbol": "example.com/strategy/state#function::Finalize",
+                "kind": "call",
+                "resolution": "candidates",
+                "position": {
+                  "file": "state/state.go",
+                  "line": 30,
+                  "column": 2
+                },
+                "candidates": [
+                  "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+                  "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+                ],
+                "code": "\trule.Adjust(a)"
+              },
+              {
+                "analysis": "vta_module",
+                "flow_candidates": [
+                  "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+                ],
+                "unknown_targets_possible": true,
+                "from_symbol": "example.com/strategy/state#function::Finalize",
+                "kind": "call",
+                "resolution": "candidates",
+                "position": {
+                  "file": "state/state.go",
+                  "line": 31,
+                  "column": 2
+                },
+                "candidates": [
+                  "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+                ],
+                "code": "\tcallback(a)"
+              }
+            ]
+          },
+          "effective_limit": 10,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 3,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 2.721833,
+            "freshness_read_hash": 0.368168,
+            "freshness_walk_metadata": 2.304457,
+            "total": 2.753167
+          },
+          "total_results": 3
+        }
+      }
+    },
+    {
+      "tool": "find_field_accesses",
+      "arguments": {
+        "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+        "limit": 8
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#function::Calculate",
+            "kind": "write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 11,
+              "column": 4
+            },
+            "code": "\ta.Limit = a.Income * 6"
+          },
+          {
+            "conditions": [
+              "if a.Debt*100 > a.Income*40"
+            ],
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#function::Calculate",
+            "kind": "write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 13,
+              "column": 5
+            },
+            "code": "\t\ta.Limit = 0"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+            "kind": "read",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 21,
+              "column": 7
+            },
+            "code": "\tif a.Limit > p.Limit {"
+          },
+          {
+            "conditions": [
+              "if a.Limit > p.Limit"
+            ],
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+            "kind": "write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer.go",
+              "line": 22,
+              "column": 5
+            },
+            "code": "\t\ta.Limit = p.Limit"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "read",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 11,
+              "column": 7
+            },
+            "code": "\tif a.Limit != 400 {"
+          },
+          {
+            "conditions": [
+              "if a.Limit != 400"
+            ],
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+            "kind": "read",
+            "resolution": "confirmed",
+            "position": {
+              "file": "consumer/consumer_test.go",
+              "line": 12,
+              "column": 13
+            },
+            "code": "\t\tt.Fatal(a.Limit)"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "write",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 16,
+              "column": 4
+            },
+            "code": "\ta.Limit = min(a.Limit, 100000)"
+          },
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "from_symbol": "example.com/strategy#function::Evaluate",
+            "kind": "read",
+            "resolution": "confirmed",
+            "position": {
+              "file": "main.go",
+              "line": 16,
+              "column": 18
+            },
+            "code": "\ta.Limit = min(a.Limit, 100000)"
+          }
+        ],
+        "truncated": true,
+        "next_cursor": "eyJzbmFwc2hvdCI6ImVhNjAzMjc1NTY4MGZjMDYwYTMzMjhhNyIsInF1ZXJ5IjoiMTM2ZGIwNTc4MDZmNTNkNTlhM2VjN2RiOTEwYTFkNDdiMWFhMzQ1YjcwNmZmODQ4NTIyYzZkNTY4OTM2ZTZlYSIsIm9mZnNldCI6OH0",
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "continuation": "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page.",
+          "effective_limit": 8,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": true,
+          "offset": 0,
+          "results_complete": false,
+          "returned_results": 8,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 2.404125,
+            "freshness_read_hash": 0.366707,
+            "freshness_walk_metadata": 1.988752,
+            "total": 2.444583
+          },
+          "total_results": 108
+        }
+      }
+    },
+    {
+      "tool": "get_source",
+      "arguments": {
+        "file": "main.go",
+        "start_line": 1,
+        "end_line": 10
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": {
+          "code": "package main\n\nimport (\n\t\"example.com/strategy/consumer\"\n\t\"example.com/strategy/refinance\"\n\t\"example.com/strategy/state\"\n)\n\n// Evaluate chooses branches, joins their shared state, and overwrites earlier values.\nfunc Evaluate(a *state.Application) {",
+          "end_line": 10,
+          "eof": false,
+          "file": "main.go",
+          "range_clamped": false,
+          "returned_lines": 10,
+          "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535",
+          "start_line": 1,
+          "total_lines": 19
+        },
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "byte_limit": 16000,
+          "continuation": "get_source with start_line=next_line, end_line=-1 and index_snapshot",
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "next_line": 11,
+          "range_clamped": false,
+          "requested_end_line": 10,
+          "requested_start_line": 1,
+          "results_complete": true,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.954125,
+            "freshness_read_hash": 0.368958,
+            "freshness_walk_metadata": 0.534459,
+            "total": 0.96375
+          },
+          "total_lines": 19
+        }
+      }
+    },
+    {
+      "tool": "search_code",
+      "arguments": {
+        "query": "льготный период пока клиент учится",
+        "mode": "hybrid",
+        "limit": 5
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "evidence": "lexical_supported",
+            "requires_source_verification": true,
+            "chunk": {
+              "chunk_id": "5976c6b050485647bc6904ec",
+              "symbol_id": "example.com/strategy/education#file:education/education.go",
+              "package_path": "example.com/strategy/education",
+              "file_path": "education/education.go",
+              "start_line": 1,
+              "end_line": 6,
+              "content_hash": "d84e6c36bfcfdfb7bdfd6199c0b74694c2d53a2adeae70f758990ff0f4892df8",
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "package education\n\nimport \"example.com/strategy/state\"\n\n// StudyGrace sets a study repayment grace period. Образовательный кредит: льготный период и срок обучения.\n",
+              "test": false
+            },
+            "rrf_score": 0.03278688524590164,
+            "channels": [
+              "text",
+              "vector"
+            ],
+            "ranks": {
+              "text": 1,
+              "vector": 1
+            }
+          },
+          {
+            "evidence": "lexical_supported",
+            "requires_source_verification": true,
+            "chunk": {
+              "static_facts": "field write: Rate (confirmed); field write: Term (confirmed); signature includes pointer types",
+              "chunk_id": "e9786ae9c12ed71ea9fce821",
+              "symbol_id": "example.com/strategy/education#function::StudyGrace",
+              "package_path": "example.com/strategy/education",
+              "file_path": "education/education.go",
+              "start_line": 6,
+              "end_line": 6,
+              "content_hash": "56fe3148bebb16d3767576c3b805b3aa0bb667b53a2b830b10a3909e4a3fca65",
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "func StudyGrace(a *state.Application, years int) { a.Term = years*12 + 9; a.Rate = 3.0 }",
+              "test": false
+            },
+            "rrf_score": 0.03225806451612903,
+            "channels": [
+              "text",
+              "vector"
+            ],
+            "ranks": {
+              "text": 2,
+              "vector": 2
+            }
+          },
+          {
+            "evidence": "semantic_only",
+            "requires_source_verification": true,
+            "other_matching_chunks": 3,
+            "chunk": {
+              "chunk_id": "e92724ff8a97f844f3c8a40f",
+              "symbol_id": "example.com/strategy/consumer#file:consumer/consumer.go",
+              "package_path": "example.com/strategy/consumer",
+              "file_path": "consumer/consumer.go",
+              "start_line": 7,
+              "end_line": 10,
+              "content_hash": "a79918e39ef56210d49013b574dd0bedc262bf28309c11a240e757396d1245a9",
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "\n\n// Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n",
+              "test": false
+            },
+            "rrf_score": 0.015873015873015872,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 3
+            }
+          },
+          {
+            "evidence": "semantic_only",
+            "requires_source_verification": true,
+            "other_matching_chunks": 3,
+            "chunk": {
+              "chunk_id": "d98f9e7df537313049a3cccb",
+              "symbol_id": "example.com/strategy/state#file:state/state.go",
+              "package_path": "example.com/strategy/state",
+              "file_path": "state/state.go",
+              "start_line": 15,
+              "end_line": 18,
+              "content_hash": "f0f647a39219a8ef7e444fc588b1ec2d8d7eaf04e4ac2d6ade143e83c4289b9b",
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "\n\n// ApplyIncomeCap is shared by products. Ограничение лимита по доходу клиента.\n",
+              "test": false
+            },
+            "rrf_score": 0.015625,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 4
+            }
+          },
+          {
+            "evidence": "semantic_only",
+            "requires_source_verification": true,
+            "chunk": {
+              "static_facts": "field read: Codes (confirmed); field read: Debt (confirmed); field read: Income (confirmed); field write: Codes (confirmed); field write: Limit (confirmed); lexical call site: example.com/strategy/state.ApplyIncomeCap (not execution order); signature includes pointer types",
+              "chunk_id": "44a62666499cc912902ae532",
+              "symbol_id": "example.com/strategy/consumer#function::Calculate",
+              "package_path": "example.com/strategy/consumer",
+              "file_path": "consumer/consumer.go",
+              "start_line": 10,
+              "end_line": 17,
+              "content_hash": "cacb1f2679362490031a9fcd945e45da550e720ab9747574038d45aad7aeb3c5",
+              "index_snapshot": "ea6032755680fc060a3328a7",
+              "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+              "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+              "test": false
+            },
+            "rrf_score": 0.015384615384615385,
+            "channels": [
+              "vector"
+            ],
+            "ranks": {
+              "vector": 5
+            }
+          }
+        ],
+        "truncated": true,
+        "next_cursor": "eyJzbmFwc2hvdCI6ImVhNjAzMjc1NTY4MGZjMDYwYTMzMjhhNyIsInF1ZXJ5IjoiZWYxNzE1NGNkYzY5YjM2NmQzMGU0NTZmMjk0YWM3OWZkZGNhMjcwMmQ1MmE5MmI2ZDhjNzk4YmFhMmU4NzNjMCIsIm9mZnNldCI6NX0",
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "continuation": "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page.",
+          "effective_limit": 5,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": true,
+          "offset": 0,
+          "query_embedding_cache": {
+            "executed": true,
+            "hit": false,
+            "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2"
+          },
+          "reranker": {
+            "attempted": false,
+            "cache_hits": 0,
+            "configured": false,
+            "executed": false,
+            "explicitly_requested": false,
+            "model_key": "",
+            "reason": "not_configured",
+            "requested": true,
+            "reranked_items": 0,
+            "scored_items": 0,
+            "status": "disabled"
+          },
+          "results_complete": false,
+          "returned_results": 5,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 1.380167,
+            "freshness_read_hash": 0.533498,
+            "freshness_walk_metadata": 0.630961,
+            "fusion": 0.080958,
+            "query_embedding": 1457.553917,
+            "rerank": 0.001417,
+            "symbol_text": 0.059083,
+            "total": 1459.633667,
+            "vector_scan_sort": 0.063
+          },
+          "total_results": 32
+        }
+      }
+    },
+    {
+      "tool": "build_context",
+      "arguments": {
+        "symbol_ids": [
+          "example.com/strategy/state.Decision#field:Limit"
+        ],
+        "depth": 1,
+        "budget_bytes": 6000,
+        "limit": 6
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+            "file": "state/state.go",
+            "start_line": 5,
+            "end_line": 5,
+            "code": "Limit int",
+            "reason": "selected symbol"
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "chunk_id": "44a62666499cc912902ae532",
+            "file": "consumer/consumer.go",
+            "start_line": 10,
+            "end_line": 17,
+            "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#function::Calculate",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 11,
+                "column": 4
+              },
+              "code": "\ta.Limit = a.Income * 6"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+            "chunk_id": "122d7fdd46fb0858c58b6616",
+            "file": "consumer/consumer.go",
+            "start_line": 20,
+            "end_line": 24,
+            "code": "func (p Policy) Adjust(a *state.Application) {\n\tif a.Limit > p.Limit {\n\t\ta.Limit = p.Limit\n\t}\n}",
+            "reason": "read (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+              "kind": "read",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 21,
+                "column": 7
+              },
+              "code": "\tif a.Limit > p.Limit {"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/consumer#function::TestCalculate",
+            "chunk_id": "bb837e394f1b46080dc1f9e3",
+            "file": "consumer/consumer_test.go",
+            "start_line": 8,
+            "end_line": 14,
+            "code": "func TestCalculate(t *testing.T) {\n\ta := &state.Application{Income: 100}\n\tCalculate(a)\n\tif a.Limit != 400 {\n\t\tt.Fatal(a.Limit)\n\t}\n}",
+            "reason": "read (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#function::TestCalculate",
+              "kind": "read",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer_test.go",
+                "line": 11,
+                "column": 7
+              },
+              "code": "\tif a.Limit != 400 {"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy#function::Evaluate",
+            "chunk_id": "d35dda396f3df76719b11875",
+            "file": "main.go",
+            "start_line": 10,
+            "end_line": 18,
+            "code": "func Evaluate(a *state.Application) {\n\tif a.Product == \"consumer\" {\n\t\tconsumer.Calculate(a)\n\t} else {\n\t\trefinance.Calculate(a)\n\t}\n\ta.Limit = min(a.Limit, 100000)\n\tstate.Finalize(a, consumer.Policy{Limit: 90000}, func(a *state.Application) { a.Limit -= 100 })\n}",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy#function::Evaluate",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "main.go",
+                "line": 16,
+                "column": 4
+              },
+              "code": "\ta.Limit = min(a.Limit, 100000)"
+            }
+          },
+          {
+            "symbol_id": "example.com/strategy/refinance#function::Calculate",
+            "chunk_id": "c0272804f1c61bc7aa55c3ef",
+            "file": "refinance/refinance.go",
+            "start_line": 8,
+            "end_line": 8,
+            "code": "func Calculate(a *state.Application)          { a.Limit = a.Income*6 - a.Debt; state.ApplyIncomeCap(a) }",
+            "reason": "reference (confirmed) from example.com/strategy/state.Decision#field:Limit",
+            "via": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/refinance#function::Calculate",
+              "kind": "reference",
+              "resolution": "confirmed",
+              "position": {
+                "file": "refinance/refinance.go",
+                "line": 8,
+                "column": 51
+              },
+              "code": "func Calculate(a *state.Application)          { a.Limit = a.Income*6 - a.Debt; state.ApplyIncomeCap(a) }"
+            }
+          }
+        ],
+        "truncated": true,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "accounted_bytes": 3795,
+          "budget_bytes": 6000,
+          "budget_unit": "serialized JSON items array in UTF-8 bytes (envelope excluded); not Qwen tokens",
+          "continuation": "build_context with omitted chunk_ids or symbol_ids and index_snapshot",
+          "effective_limit": 6,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "omitted": [
+            "66bb23d0b2af739ff3dde866",
+            "33a96c80a312c1e5d2073e2e",
+            "d9d84c994bb04c360a347ff8",
+            "6dc5284ec93e0a46258ead18",
+            "8cd32ea64627452c79929abf",
+            "38474058ae95af21d1c737ff",
+            "9cd457f0f84737d3489b30d0",
+            "ff1b9fd32cf6617e4b01de61"
+          ],
+          "omitted_count": 8,
+          "results_complete": false,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.8066249999999999,
+            "freshness_read_hash": 0.307375,
+            "freshness_walk_metadata": 0.435833,
+            "total": 0.974625
+          }
+        }
+      }
+    },
+    {
+      "tool": "search_symbols",
+      "arguments": {
+        "query": "Evaluate",
+        "kind": "function",
+        "package": "example.com/strategy"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "id": "example.com/strategy#function::Evaluate",
+            "name": "Evaluate",
+            "kind": "function",
+            "package": "example.com/strategy",
+            "signature": "func example.com/strategy.Evaluate(a *example.com/strategy/state.Application)",
+            "position": {
+              "file": "main.go",
+              "line": 10,
+              "column": 6
+            },
+            "end_line": 18,
+            "test": false
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 1,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.8510409999999999,
+            "freshness_read_hash": 0.31512300000000004,
+            "freshness_walk_metadata": 0.474418,
+            "total": 0.865
+          },
+          "total_results": 1
+        }
+      }
+    },
+    {
+      "tool": "get_symbol",
+      "arguments": {
+        "symbol_id": "example.com/strategy#function::Evaluate"
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": {
+          "id": "example.com/strategy#function::Evaluate",
+          "name": "Evaluate",
+          "kind": "function",
+          "package": "example.com/strategy",
+          "signature": "func example.com/strategy.Evaluate(a *example.com/strategy/state.Application)",
+          "position": {
+            "file": "main.go",
+            "line": 10,
+            "column": 6
+          },
+          "end_line": 18,
+          "test": false,
+          "code": "func Evaluate(a *state.Application) {\n\tif a.Product == \"consumer\" {\n\t\tconsumer.Calculate(a)\n\t} else {\n\t\trefinance.Calculate(a)\n\t}\n\ta.Limit = min(a.Limit, 100000)\n\tstate.Finalize(a, consumer.Policy{Limit: 90000}, func(a *state.Application) { a.Limit -= 100 })\n}",
+          "comment": "Evaluate chooses branches, joins their shared state, and overwrites earlier values.\n"
+        },
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "results_complete": true,
+          "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535",
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.7366250000000001,
+            "freshness_read_hash": 0.282289,
+            "freshness_walk_metadata": 0.40404399999999996,
+            "total": 0.740459
+          }
+        }
+      }
+    },
+    {
+      "tool": "trace_field",
+      "arguments": {
+        "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+        "entry_symbol_id": "example.com/strategy#function::Evaluate",
+        "include_candidates": true,
+        "depth": 5,
+        "budget_bytes": 12000,
+        "limit": 8
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy#function::Evaluate",
+              "kind": "write",
+              "resolution": "confirmed",
+              "position": {
+                "file": "main.go",
+                "line": 16,
+                "column": 4
+              },
+              "code": "\ta.Limit = min(a.Limit, 100000)"
+            },
+            "call_path": [],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy#function::Evaluate",
+              "kind": "read",
+              "resolution": "confirmed",
+              "position": {
+                "file": "main.go",
+                "line": 16,
+                "column": 18
+              },
+              "code": "\ta.Limit = min(a.Limit, 100000)"
+            },
+            "call_path": [],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#function::Calculate",
+              "kind": "write",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 11,
+                "column": 4
+              },
+              "code": "\ta.Limit = a.Income * 6"
+            },
+            "call_path": [
+              {
+                "conditions": [
+                  "if a.Product == \"consumer\""
+                ],
+                "symbol_id": "example.com/strategy/consumer#function::Calculate",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 12,
+                  "column": 3
+                },
+                "code": "\t\tconsumer.Calculate(a)"
+              }
+            ],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "conditions": [
+                "if a.Debt*100 > a.Income*40"
+              ],
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#function::Calculate",
+              "kind": "write",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 13,
+                "column": 5
+              },
+              "code": "\t\ta.Limit = 0"
+            },
+            "call_path": [
+              {
+                "conditions": [
+                  "if a.Product == \"consumer\""
+                ],
+                "symbol_id": "example.com/strategy/consumer#function::Calculate",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 12,
+                  "column": 3
+                },
+                "code": "\t\tconsumer.Calculate(a)"
+              }
+            ],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/refinance#function::Calculate",
+              "kind": "write",
+              "resolution": "confirmed",
+              "position": {
+                "file": "refinance/refinance.go",
+                "line": 8,
+                "column": 51
+              },
+              "code": "func Calculate(a *state.Application)          { a.Limit = a.Income*6 - a.Debt; state.ApplyIncomeCap(a) }"
+            },
+            "call_path": [
+              {
+                "conditions": [
+                  "else of if a.Product == \"consumer\""
+                ],
+                "symbol_id": "example.com/strategy/refinance#function::Calculate",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 14,
+                  "column": 3
+                },
+                "code": "\t\trefinance.Calculate(a)"
+              }
+            ],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/state#function::ApplyIncomeCap",
+              "kind": "read",
+              "resolution": "confirmed",
+              "position": {
+                "file": "state/state.go",
+                "line": 20,
+                "column": 7
+              },
+              "code": "\tif a.Limit > cap {"
+            },
+            "call_path": [
+              {
+                "conditions": [
+                  "if a.Product == \"consumer\""
+                ],
+                "symbol_id": "example.com/strategy/consumer#function::Calculate",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 12,
+                  "column": 3
+                },
+                "code": "\t\tconsumer.Calculate(a)"
+              },
+              {
+                "symbol_id": "example.com/strategy/state#function::ApplyIncomeCap",
+                "from_symbol": "example.com/strategy/consumer#function::Calculate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 16,
+                  "column": 2
+                },
+                "code": "\tstate.ApplyIncomeCap(a)"
+              }
+            ],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "conditions": [
+                "if a.Limit > cap"
+              ],
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/state#function::ApplyIncomeCap",
+              "kind": "write",
+              "resolution": "confirmed",
+              "position": {
+                "file": "state/state.go",
+                "line": 21,
+                "column": 5
+              },
+              "code": "\t\ta.Limit = cap"
+            },
+            "call_path": [
+              {
+                "conditions": [
+                  "if a.Product == \"consumer\""
+                ],
+                "symbol_id": "example.com/strategy/consumer#function::Calculate",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 12,
+                  "column": 3
+                },
+                "code": "\t\tconsumer.Calculate(a)"
+              },
+              {
+                "symbol_id": "example.com/strategy/state#function::ApplyIncomeCap",
+                "from_symbol": "example.com/strategy/consumer#function::Calculate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 16,
+                  "column": 2
+                },
+                "code": "\tstate.ApplyIncomeCap(a)"
+              }
+            ],
+            "certainty": "confirmed_call_path"
+          },
+          {
+            "access": {
+              "symbol_id": "example.com/strategy/state.Decision#field:Limit",
+              "from_symbol": "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+              "kind": "read",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 21,
+                "column": 7
+              },
+              "code": "\tif a.Limit > p.Limit {"
+            },
+            "call_path": [
+              {
+                "symbol_id": "example.com/strategy/state#function::Finalize",
+                "from_symbol": "example.com/strategy#function::Evaluate",
+                "kind": "call",
+                "resolution": "confirmed",
+                "position": {
+                  "file": "main.go",
+                  "line": 17,
+                  "column": 2
+                },
+                "code": "\tstate.Finalize(a, consumer.Policy{Limit: 90000}, func(a *state.Application) { a.Limit -= 100 })"
+              },
+              {
+                "analysis": "vta_module",
+                "flow_candidates": [
+                  "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+                ],
+                "unknown_targets_possible": true,
+                "symbol_id": "example.com/strategy/state#method:example.com/strategy/state.Adjuster:Adjust",
+                "from_symbol": "example.com/strategy/state#function::Finalize",
+                "kind": "call",
+                "resolution": "candidates",
+                "position": {
+                  "file": "state/state.go",
+                  "line": 30,
+                  "column": 2
+                },
+                "candidates": [
+                  "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+                  "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+                ],
+                "code": "\trule.Adjust(a)"
+              }
+            ],
+            "certainty": "candidate_call_path"
+          }
+        ],
+        "truncated": true,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "accounted_bytes": 5729,
+          "budget_bytes": 12000,
+          "call_analysis": {
+            "instructions": 1732,
+            "mode": "vta",
+            "state": "ready",
+            "functions": 31,
+            "dynamic_sites": 2,
+            "recovered_sites": 2,
+            "alias_accesses": 4,
+            "limitations": [
+              "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+              "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+            ]
+          },
+          "effective_limit": 8,
+          "entry_symbol_id": "example.com/strategy#function::Evaluate",
+          "field_symbol_id": "example.com/strategy/state.Decision#field:Limit",
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "frontier": [],
+          "limitation": "Accesses to the same field declaration, not proof of the same runtime object. Paths are possible call relationships, not execution order or full value history. At most one discovered path per function is shown. Dynamic/external/alias/whole-struct effects may be absent.",
+          "results_complete": false,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.881,
+            "freshness_read_hash": 0.295877,
+            "freshness_walk_metadata": 0.529872,
+            "total": 1.599125
+          },
+          "unresolved_or_external_calls": [
+            {
+              "symbol_id": "builtin#local:min@:0:0:ea6032755680fc060a3328a7",
+              "from_symbol": "example.com/strategy#function::Evaluate",
+              "kind": "call",
+              "resolution": "confirmed",
+              "position": {
+                "file": "main.go",
+                "line": 16,
+                "column": 12
+              },
+              "code": "\ta.Limit = min(a.Limit, 100000)"
+            },
+            {
+              "conditions": [
+                "if a.Debt*100 > a.Income*40"
+              ],
+              "symbol_id": "builtin#local:append@:0:0:ea6032755680fc060a3328a7",
+              "from_symbol": "example.com/strategy/consumer#function::Calculate",
+              "kind": "call",
+              "resolution": "confirmed",
+              "position": {
+                "file": "consumer/consumer.go",
+                "line": 14,
+                "column": 13
+              },
+              "code": "\t\ta.Codes = append(a.Codes, RuleDebt)"
+            },
+            {
+              "analysis": "vta_module",
+              "flow_candidates": [
+                "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust"
+              ],
+              "unknown_targets_possible": true,
+              "symbol_id": "example.com/strategy/state#method:example.com/strategy/state.Adjuster:Adjust",
+              "from_symbol": "example.com/strategy/state#function::Finalize",
+              "kind": "call",
+              "resolution": "candidates",
+              "position": {
+                "file": "state/state.go",
+                "line": 30,
+                "column": 2
+              },
+              "candidates": [
+                "example.com/strategy/consumer#method:example.com/strategy/consumer.Policy:Adjust",
+                "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust"
+              ],
+              "code": "\trule.Adjust(a)"
+            },
+            {
+              "analysis": "vta_module",
+              "flow_candidates": [
+                "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+              ],
+              "unknown_targets_possible": true,
+              "from_symbol": "example.com/strategy/state#function::Finalize",
+              "kind": "call",
+              "resolution": "candidates",
+              "position": {
+                "file": "state/state.go",
+                "line": 31,
+                "column": 2
+              },
+              "candidates": [
+                "example.com/strategy#closure@main.go:17:51:ea6032755680fc060a3328a7"
+              ],
+              "code": "\tcallback(a)"
+            },
+            {
+              "symbol_id": "builtin#local:min@:0:0:ea6032755680fc060a3328a7",
+              "from_symbol": "example.com/strategy/refinance#method:*example.com/strategy/refinance.Policy:Adjust",
+              "kind": "call",
+              "resolution": "confirmed",
+              "position": {
+                "file": "refinance/refinance.go",
+                "line": 9,
+                "column": 59
+              },
+              "code": "func (p *Policy) Adjust(a *state.Application) { a.Limit = min(a.Limit, p.Limit) }"
+            }
+          ],
+          "visited_functions": 8
+        }
+      }
+    },
+    {
+      "tool": "verify_evidence",
+      "arguments": {
+        "claims": [
+          {
+            "symbol_id": "example.com/strategy#function::Evaluate",
+            "file": "main.go",
+            "start_line": 10,
+            "end_line": 18,
+            "expected_text": "func Evaluate",
+            "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535"
+          }
+        ]
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "status": "source_verified",
+            "claim": {
+              "symbol_id": "example.com/strategy#function::Evaluate",
+              "file": "main.go",
+              "start_line": 10,
+              "end_line": 18,
+              "expected_text": "func Evaluate",
+              "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535"
+            },
+            "actual": {
+              "symbol_id": "example.com/strategy#function::Evaluate",
+              "file": "main.go",
+              "start_line": 10,
+              "end_line": 18,
+              "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535"
+            },
+            "source_excerpt": "func Evaluate(a *state.Application) {\n\tif a.Product == \"consumer\" {\n\t\tconsumer.Calculate(a)\n\t} else {\n\t\trefinance.Calculate(a)\n\t}\n\ta.Limit = min(a.Limit, 100000)\n\tstate.Finalize(a, consumer.Policy{Limit: 90000}, func(a *state.Application) { a.Limit -= 100 })\n}",
+            "note": "Source location/text only; business meaning, reachability and execution order are not verified."
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "effective_limit": 20,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "results_complete": true,
+          "returned_results": 1,
+          "semantic_verification": false,
+          "status_counts": {
+            "source_verified": 1
+          },
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.739126,
+            "freshness_read_hash": 0.283249,
+            "freshness_walk_metadata": 0.411084,
+            "total": 0.75025
+          },
+          "total_checks": 1,
+          "total_results": 1
+        }
+      }
+    },
+    {
+      "tool": "audit_document",
+      "arguments": {
+        "document": "notes.md",
+        "limit": 20
+      },
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "fresh": true,
+        "complete": true,
+        "items": [
+          {
+            "reference": "main.go#L1-L10",
+            "document_line": 6,
+            "status": "range_exists_unbound",
+            "claim": {
+              "file": "main.go",
+              "start_line": 1,
+              "end_line": 10
+            },
+            "source_excerpt": "package main\n\nimport (\n\t\"example.com/strategy/consumer\"\n\t\"example.com/strategy/refinance\"\n\t\"example.com/strategy/state\"\n)\n\n// Evaluate chooses branches, joins their shared state, and overwrites earlier values.\nfunc Evaluate(a *state.Application) {",
+            "note": "Source location/text only; business meaning, reachability and execution order are not verified."
+          },
+          {
+            "reference": "Evaluate()",
+            "document_line": 3,
+            "status": "symbol_location_verified",
+            "claim": {
+              "symbol_id": "example.com/strategy#function::Evaluate"
+            },
+            "actual": {
+              "symbol_id": "example.com/strategy#function::Evaluate",
+              "file": "main.go",
+              "start_line": 10,
+              "end_line": 18,
+              "source_hash": "f90362c3341f9000552dd145cb210e7479d630d1e5f3477997420a2d5a26a535"
+            },
+            "source_excerpt": "func Evaluate(a *state.Application) {\n\tif a.Product == \"consumer\" {\n\t\tconsumer.Calculate(a)\n\t} else {\n\t\trefinance.Calculate(a)\n\t}\n\ta.Limit = min(a.Limit, 100000)\n\tstate.Finalize(a, consumer.Policy{Limit: 90000}, func(a *state.Application) { a.Limit -= 100 })\n}",
+            "note": "Source location/text only; business meaning, reachability and execution order are not verified."
+          },
+          {
+            "reference": "legacy/limit.go:999",
+            "document_line": 10,
+            "status": "missing_file",
+            "claim": {
+              "file": "legacy/limit.go",
+              "start_line": 999,
+              "end_line": 999
+            },
+            "note": "Source location/text only; business meaning, reachability and execution order are not verified."
+          },
+          {
+            "reference": "MissingLimitBuilder()",
+            "document_line": 11,
+            "status": "missing_symbol",
+            "claim": {},
+            "candidates": [
+              {
+                "id": "example.com/strategy/consumer#local:limit@consumer/consumer.go:26:2:ea6032755680fc060a3328a7",
+                "name": "limit",
+                "kind": "local",
+                "package": "example.com/strategy/consumer",
+                "signature": "var limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 26,
+                  "column": 2
+                },
+                "end_line": 26,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/consumer#local:limit@consumer/consumer.go:28:3:ea6032755680fc060a3328a7",
+                "name": "limit",
+                "kind": "local",
+                "package": "example.com/strategy/consumer",
+                "signature": "var limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 28,
+                  "column": 3
+                },
+                "end_line": 28,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/consumer.Policy#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/consumer",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 7,
+                  "column": 21
+                },
+                "end_line": 7,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/other.Decision#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/other",
+                "signature": "field Limit string",
+                "position": {
+                  "file": "other/other.go",
+                  "line": 4,
+                  "column": 23
+                },
+                "end_line": 4,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/refinance.Policy#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/refinance",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "refinance/refinance.go",
+                  "line": 5,
+                  "column": 21
+                },
+                "end_line": 5,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/state.Decision#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/state",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "state/state.go",
+                  "line": 5,
+                  "column": 2
+                },
+                "end_line": 5,
+                "test": false
+              }
+            ],
+            "note": "Names are not semantic claims. Resolve and bind the intended canonical ID before changing a document."
+          },
+          {
+            "reference": "Application.Limit",
+            "document_line": 13,
+            "status": "unbound_path",
+            "claim": {},
+            "candidates": [
+              {
+                "id": "example.com/strategy/consumer#local:limit@consumer/consumer.go:26:2:ea6032755680fc060a3328a7",
+                "name": "limit",
+                "kind": "local",
+                "package": "example.com/strategy/consumer",
+                "signature": "var limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 26,
+                  "column": 2
+                },
+                "end_line": 26,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/consumer#local:limit@consumer/consumer.go:28:3:ea6032755680fc060a3328a7",
+                "name": "limit",
+                "kind": "local",
+                "package": "example.com/strategy/consumer",
+                "signature": "var limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 28,
+                  "column": 3
+                },
+                "end_line": 28,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/consumer.Policy#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/consumer",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "consumer/consumer.go",
+                  "line": 7,
+                  "column": 21
+                },
+                "end_line": 7,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/other.Decision#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/other",
+                "signature": "field Limit string",
+                "position": {
+                  "file": "other/other.go",
+                  "line": 4,
+                  "column": 23
+                },
+                "end_line": 4,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/refinance.Policy#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/refinance",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "refinance/refinance.go",
+                  "line": 5,
+                  "column": 21
+                },
+                "end_line": 5,
+                "test": false
+              },
+              {
+                "id": "example.com/strategy/state.Decision#field:Limit",
+                "name": "Limit",
+                "kind": "field",
+                "package": "example.com/strategy/state",
+                "signature": "field Limit int",
+                "position": {
+                  "file": "state/state.go",
+                  "line": 5,
+                  "column": 2
+                },
+                "end_line": 5,
+                "test": false
+              }
+            ],
+            "note": "No typed path binding in scope. Specify the root owner with resolve_reference; this is not evidence that the document is wrong."
+          },
+          {
+            "bindings": [
+              {
+                "symbol_id": "example.com/strategy/state.Application#field:Decision",
+                "owner_id": "example.com/strategy/state#type::Application",
+                "namespace": "go",
+                "field_name": "Decision",
+                "json_name": "Decision",
+                "type": "example.com/strategy/state.Decision",
+                "access_path": [
+                  "Decision"
+                ],
+                "position": {
+                  "file": "state/state.go",
+                  "line": 11,
+                  "column": 2
+                }
+              }
+            ],
+            "binding_count": 1,
+            "reference": "Decision",
+            "document_line": 13,
+            "status": "symbol_location_verified",
+            "claim": {
+              "symbol_id": "example.com/strategy/state.Application#field:Decision"
+            },
+            "actual": {
+              "symbol_id": "example.com/strategy/state.Application#field:Decision",
+              "file": "state/state.go",
+              "start_line": 11,
+              "end_line": 11,
+              "source_hash": "cc22c194c71a4d6ced659d35a0f02f5c3380b04541d1d89e5692eb20330cb607"
+            },
+            "source_excerpt": "\tDecision // promoted fields must resolve to Decision, not Application.",
+            "note": "Source location/text only; business meaning, reachability and execution order are not verified."
+          }
+        ],
+        "truncated": false,
+        "limitations": [
+          "Static relationships are not execution order or proof of business correctness.",
+          "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+          "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+          "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+        ],
+        "meta": {
+          "document": "notes.md",
+          "document_hash": "f751e91a2034040785d76092d73fd0abd755ce15b3157198fb2b7e080100a091",
+          "effective_limit": 20,
+          "field_scope_truncated": false,
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "has_more": false,
+          "offset": 0,
+          "parser_scope": "Markdown Go links, typed Go field paths, exact JSON declaration aliases and symbol references. Prose/business claims and JSON serialization paths are not verified.",
+          "results_complete": true,
+          "returned_results": 6,
+          "semantic_verification": false,
+          "status_counts": {
+            "missing_file": 1,
+            "missing_symbol": 1,
+            "range_exists_unbound": 1,
+            "symbol_location_verified": 2,
+            "unbound_path": 1
+          },
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.728458,
+            "freshness_read_hash": 0.286127,
+            "freshness_walk_metadata": 0.40199799999999997,
+            "total": 0.944375
+          },
+          "total_checks": 6,
+          "total_results": 6
+        }
+      }
+    },
+    {
+      "tool": "refresh_index",
+      "arguments": {},
+      "result": {
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "next": "poll index_status until loading=false and fresh=true",
+        "started": true
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "result": {
+        "last_refresh": {
+          "freshness_file_reads": 20,
+          "freshness_scans": 2,
+          "freshness_source_bytes": 17478,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 2.019834,
+            "freshness_read_hash": 0.584455,
+            "freshness_walk_metadata": 1.18817,
+            "load_analysis": 450.158583,
+            "total": 467.896958
+          }
+        },
+        "meta": {
+          "freshness_file_reads": 10,
+          "freshness_scans": 1,
+          "freshness_source_bytes": 8739,
+          "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+          "timings_ms": {
+            "freshness": 0.596125,
+            "freshness_read_hash": 0.183624,
+            "freshness_walk_metadata": 0.371834,
+            "total": 0.641666
+          }
+        },
+        "call_analysis": {
+          "instructions": 1732,
+          "mode": "vta",
+          "state": "ready",
+          "functions": 31,
+          "dynamic_sites": 2,
+          "recovered_sites": 2,
+          "alias_accesses": 4,
+          "limitations": [
+            "Module-scoped static analysis; external function bodies, reflection, unsafe, runtime reachability and execution order are not proven.",
+            "VTA candidates describe possible function/type flow; they do not identify a specific runtime object."
+          ]
+        },
+        "version": "0.5.0",
+        "go_heap_reserved_bytes": 133464064,
+        "go_total_alloc_bytes": 348809856,
+        "go_gc_cycles": 29,
+        "freshness_scope": "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness.",
+        "go_heap_bytes": 2464152,
+        "index_snapshot": "ea6032755680fc060a3328a7",
+        "state": "ready",
+        "fresh": true,
+        "loading": false,
+        "vectors": "ready",
+        "vector_done": 43,
+        "vector_total": 43,
+        "cache_hits": 43,
+        "symbols": 70,
+        "chunks": 43,
+        "files": 10,
+        "complete": true,
+        "diagnostics": null,
+        "environment": {
+          "CGO_ENABLED": "1",
+          "GOARCH": "arm64",
+          "GOEXPERIMENT": "",
+          "GOFLAGS": "-mod=readonly",
+          "GONOPROXY": "none",
+          "GOOS": "darwin",
+          "GOPROXY": "off",
+          "GOSUMDB": "off",
+          "GOTOOLCHAIN": "local",
+          "GOVCS": "*:off",
+          "GOVERSION": "go1.26.6",
+          "GOWORK": "off",
+          "build_flags": "",
+          "toolchain": "go1.26.6"
+        },
+        "module": "example.com/strategy"
+      }
+    }
+  ]
+}

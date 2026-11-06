@@ -69,7 +69,25 @@ func (p *processReranker) Score(ctx context.Context, query string, docs []string
 	return result.Scores, nil
 }
 func (e *Engine) rerankHits(ctx context.Context, a Args, hits []Hit) ([]Hit, string) {
-	if e.rerank == nil || a.Mode != "hybrid" || (a.Rerank != nil && !*a.Rerank) || len(hits) == 0 {
+	stage := map[string]any{"requested": a.Mode == "hybrid" && (a.Rerank == nil || *a.Rerank), "explicitly_requested": a.Rerank != nil && *a.Rerank, "configured": e.rerank != nil, "attempted": false, "executed": false, "model_key": e.C.RerankModelKey, "scored_items": 0, "cache_hits": 0, "reranked_items": 0, "status": "disabled"}
+	defer func() { recordStage(ctx, "reranker", stage) }()
+	if a.Mode != "hybrid" {
+		stage["status"] = "not_applicable"
+		return hits, ""
+	}
+	if a.Rerank != nil && !*a.Rerank {
+		stage["reason"] = "disabled_by_request"
+		return hits, ""
+	}
+	if e.rerank == nil {
+		stage["reason"] = "not_configured"
+		if a.Rerank != nil && *a.Rerank {
+			return hits, "reranker explicitly requested but not configured; RRF retained"
+		}
+		return hits, ""
+	}
+	if len(hits) == 0 {
+		stage["status"] = "empty"
 		return hits, ""
 	}
 	n := min(e.C.RerankCandidates, len(hits))
@@ -89,16 +107,25 @@ func (e *Engine) rerankHits(ctx context.Context, a Args, hits []Hit) ([]Hit, str
 		}
 	}
 	e.mu.RUnlock()
+	stage["candidate_items"] = n
+	stage["cache_hits"] = n - len(missing)
 	if len(missing) > 0 {
+		stage["attempted"] = true
 		rctx, cancel := context.WithTimeout(ctx, time.Duration(e.C.OperationSeconds)*time.Second)
 		values, err := e.rerank.Score(rctx, a.Query, docs)
 		cancel()
 		if err != nil {
+			stage["status"] = "fallback"
+			stage["fallback_reason"] = err.Error()
 			return hits, "reranker unavailable; RRF retained: " + err.Error()
 		}
 		if len(values) != len(missing) {
+			stage["status"] = "fallback"
+			stage["fallback_reason"] = "invalid score count"
 			return hits, "reranker invalid count; RRF retained"
 		}
+		stage["executed"] = true
+		stage["scored_items"] = len(missing)
 		e.mu.Lock()
 		if e.rerankCache == nil {
 			e.rerankCache = map[string]float64{}
@@ -115,6 +142,11 @@ func (e *Engine) rerankHits(ctx context.Context, a Args, hits []Hit) ([]Hit, str
 			e.rerankOrder = e.rerankOrder[1:]
 		}
 		e.mu.Unlock()
+	}
+	stage["reranked_items"] = n
+	stage["status"] = "completed"
+	if len(missing) == 0 {
+		stage["status"] = "cache_hit"
 	}
 	for i, score := range scores {
 		x := score

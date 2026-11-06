@@ -17,6 +17,8 @@ import (
 )
 
 type Engine struct {
+	queryCache   map[string][]float32
+	queryOrder   []string
 	rerankCache  map[string]float64
 	rerankOrder  []string
 	rerank       Reranker
@@ -33,6 +35,8 @@ type Engine struct {
 	vectorCancel context.CancelFunc
 	wg           sync.WaitGroup
 	lockfile     string
+	cacheLock    *os.File
+	closeOnce    sync.Once
 }
 
 func New(c Config, provider Embedder) (*Engine, error) {
@@ -43,14 +47,12 @@ func New(c Config, provider Embedder) (*Engine, error) {
 		return nil, e
 	}
 	lock := filepath.Join(c.Cache, "server.lock")
-	f, e := os.OpenFile(lock, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	f, e := acquireCacheLock(lock)
 	if e != nil {
-		return nil, fmt.Errorf("cache already owned; if previous server crashed remove %s after checking its PID: %w", lock, e)
+		return nil, e
 	}
-	fmt.Fprintln(f, os.Getpid())
-	f.Close()
 	ctx, cancel := context.WithCancel(context.Background())
-	eng := &Engine{C: c, ctx: ctx, cancel: cancel, lockfile: lock}
+	eng := &Engine{C: c, ctx: ctx, cancel: cancel, lockfile: lock, cacheLock: f}
 	if provider == nil {
 		provider = NewProcessEmbedder(c)
 	}
@@ -67,13 +69,17 @@ func New(c Config, provider Embedder) (*Engine, error) {
 	return eng, nil
 }
 func (e *Engine) Close() {
-	e.cancel()
-	e.wg.Wait()
-	e.embed.Close()
-	if e.rerank != nil {
-		e.rerank.Close()
-	}
-	os.Remove(e.lockfile)
+	e.closeOnce.Do(func() {
+		e.cancel()
+		e.wg.Wait()
+		e.embed.Close()
+		if e.rerank != nil {
+			e.rerank.Close()
+		}
+		if e.cacheLock != nil {
+			e.cacheLock.Close()
+		}
+	})
 }
 func (e *Engine) Refresh(ctx context.Context) error {
 	start := time.Now()
@@ -205,6 +211,12 @@ func (e *Engine) Status(ctx context.Context) (st Status) {
 	return st
 }
 func (e *Engine) Current(ctx context.Context) (*Snapshot, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+	if s := pinnedSnapshot(ctx); s != nil {
+		return s, nil
+	}
 	e.mu.RLock()
 	s := e.snap
 	state := e.status.State
@@ -371,7 +383,7 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 		} else {
 			bctx, cancel := context.WithTimeout(ctx, time.Duration(e.C.OperationSeconds)*time.Second)
 			phase := time.Now()
-			r, err := e.embed.Embed(bctx, "query", []string{a.Query})
+			r, err := e.embedQuery(bctx, a.Query)
 			recordTime(ctx, "query_embedding", phase)
 			cancel()
 			if err != nil {
@@ -437,6 +449,9 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 			r.Fresh = false
 		}
 	}()
+	if name == "audit_document" && !validSourcePath(a.Document) {
+		return r, inputError("invalid_document_path", "document", "document must be a root-relative path with forward slashes", map[string]any{"hint": "Use document relative to config.root, not an absolute OS path."})
+	}
 	if name == "get_source" && !validSourcePath(a.File) {
 		return r, inputError("invalid_file_path", "file", "file must be root-relative; use list_files and copy file_path", map[string]any{"hint": "Use forward slashes and a path relative to config.root, not an absolute path."})
 	}
@@ -539,6 +554,12 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 		if s.Symbols[a.Symbol] == nil {
 			return r, unknownSymbol(s, a.Symbol, "")
 		}
+		if name == "get_callees" {
+			r.Meta = map[string]any{"call_coverage": callCoverage(s, a.Symbol, a)}
+		}
+		if name == "get_callers" || name == "find_references" {
+			r.Meta = map[string]any{"absence_is_not_proven": true, "coverage_note": "Unknown call targets cannot be attributed to this symbol. Inspect get_callees at entry functions for unresolved/external boundaries."}
+		}
 		for _, rel := range s.Relations {
 			yes := false
 			switch name {
@@ -555,6 +576,23 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 				list = append(list, rel)
 			}
 		}
+	case "resolve_reference":
+		if strings.TrimSpace(a.Query) == "" {
+			return r, fmt.Errorf("query is required")
+		}
+		if a.Namespace != "" && a.Namespace != "auto" && a.Namespace != "go" && a.Namespace != "json" {
+			return r, fmt.Errorf("namespace must be auto, go or json")
+		}
+		if a.OwnerID != "" {
+			if _, ok := s.TypeFields[a.OwnerID]; !ok {
+				return r, unknownSymbol(s, a.OwnerID, "type")
+			}
+		}
+		resolved := resolveFields(s, a)
+		for _, m := range resolved {
+			list = append(list, m)
+		}
+		r.Meta = map[string]any{"scope_truncated": s.FieldScopeTruncated, "case_sensitive": true, "semantic_verification": false, "limitation": "Declaration aliases and typed Go field paths. JSON names are leaf declaration aliases, not proof of serialization paths, execution or the same runtime object. owner_id may be an opaque returned target_scope_id."}
 	case "list_files":
 		names := make([]string, 0, len(s.Files))
 		for file := range s.Files {
@@ -594,7 +632,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 	default:
 		return r, fmt.Errorf("unknown tool: %s", name)
 	}
-	if list != nil || name == "list_files" || name == "search_symbols" || name == "search_code" || strings.HasPrefix(name, "get_call") || name == "find_references" || name == "find_field_accesses" {
+	if list != nil || name == "list_files" || name == "resolve_reference" || name == "search_symbols" || name == "search_code" || strings.HasPrefix(name, "get_call") || name == "find_references" || name == "find_field_accesses" {
 		if list == nil {
 			list = []any{}
 		}
@@ -623,8 +661,8 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 		}
 	}
 	// Revalidate after slower inference/context work. Positions and source always come from s.
-	if fp, e2 := fingerprintFiles(ctx, e.C); e2 != nil || fp != s.Fingerprint {
-		return r, fmt.Errorf("files changed during query; refresh and retry")
+	if err := validateSnapshot(ctx, e.C, s); err != nil {
+		return r, err
 	}
 	return r, nil
 }

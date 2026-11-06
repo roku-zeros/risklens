@@ -22,6 +22,7 @@ func main() {
 	}
 }
 func run() error {
+	clearCache := flag.Bool("clear-cache", false, "remove owned vector files while holding the cache OS lock; then exit")
 	config := flag.String("config", "", "JSON configuration file")
 	root := flag.String("root", "", "Go module root")
 	cache := flag.String("cache", "", "cache directory override")
@@ -58,6 +59,13 @@ func run() error {
 	}
 	if *cache != "" {
 		c.Cache = *cache
+	}
+	if *clearCache {
+		removed, err := lens.ClearCache(c)
+		if err != nil {
+			return err
+		}
+		return json.NewEncoder(os.Stdout).Encode(map[string]any{"removed": removed})
 	}
 	e, err := lens.New(c, nil)
 	if err != nil {

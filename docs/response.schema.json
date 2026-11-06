@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:risklens:response:0.4.0",
+  "$id": "urn:risklens:response:0.5.0",
   "title": "RiskLens tool structuredContent",
   "anyOf": [
     {
@@ -371,6 +371,12 @@
                   },
                   {
                     "$ref": "#/$defs/FileInfo"
+                  },
+                  {
+                    "$ref": "#/$defs/ReferenceMatch"
+                  },
+                  {
+                    "$ref": "#/$defs/BatchItem"
                   }
                 ]
               }
@@ -700,6 +706,40 @@
           "items": {
             "$ref": "#/$defs/Symbol"
           }
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReferenceMatch"
+          }
+        },
+        "binding_count": {
+          "type": "integer"
+        },
+        "candidate_signature_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "signature",
+              "count",
+              "symbol_ids"
+            ],
+            "properties": {
+              "signature": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "symbol_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -725,6 +765,75 @@
         },
         "source_hash": {
           "type": "string"
+        }
+      }
+    },
+    "ReferenceMatch": {
+      "type": "object",
+      "required": [
+        "symbol_id",
+        "owner_id",
+        "namespace",
+        "field_name",
+        "type",
+        "access_path"
+      ],
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "owner_id": {
+          "type": "string"
+        },
+        "namespace": {
+          "enum": [
+            "go",
+            "json"
+          ]
+        },
+        "field_name": {
+          "type": "string"
+        },
+        "json_name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "access_path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        }
+      }
+    },
+    "BatchItem": {
+      "type": "object",
+      "required": [
+        "index",
+        "tool",
+        "is_error"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool": {
+          "type": "string"
+        },
+        "is_error": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/$defs/Response"
+        },
+        "error": {
+          "type": "object"
         }
       }
     }

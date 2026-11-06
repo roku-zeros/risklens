@@ -2,7 +2,9 @@ package lens
 
 import (
 	"fmt"
+	"go/ast"
 	"go/types"
+	"reflect"
 	"sort"
 	"strings"
 )
@@ -10,14 +12,17 @@ import (
 // FieldInfo describes a legal selector on a type, with the declaration's canonical ID.
 // A promoted selector never creates a second field symbol owned by the outer type.
 type FieldInfo struct {
-	Symbol     string    `json:"symbol_id"`
-	Name       string    `json:"name"`
-	Type       string    `json:"type"`
-	AccessPath []string  `json:"access_path"`
-	Promoted   bool      `json:"promoted"`
-	Embedded   bool      `json:"embedded"`
-	Available  bool      `json:"definition_indexed"`
-	Position   *Position `json:"position,omitempty"`
+	JSONName    string    `json:"json_name,omitempty"`
+	JSONTag     string    `json:"json_tag,omitempty"`
+	TargetScope string    `json:"target_scope_id,omitempty"`
+	Symbol      string    `json:"symbol_id"`
+	Name        string    `json:"name"`
+	Type        string    `json:"type"`
+	AccessPath  []string  `json:"access_path"`
+	Promoted    bool      `json:"promoted"`
+	Embedded    bool      `json:"embedded"`
+	Available   bool      `json:"definition_indexed"`
+	Position    *Position `json:"position,omitempty"`
 }
 
 func structOf(t types.Type) *types.Struct {
@@ -30,18 +35,35 @@ func structOf(t types.Type) *types.Struct {
 }
 func (a *analyzer) collectTypeFields() {
 	a.s.TypeFields = map[string][]FieldInfo{}
+	type scope struct {
+		id  string
+		t   types.Type
+		pkg *types.Package
+	}
+	queue := []scope{}
 	for obj, id := range a.objects {
-		tn, ok := obj.(*types.TypeName)
-		if !ok || structOf(tn.Type()) == nil {
+		if tn, ok := obj.(*types.TypeName); ok && structOf(tn.Type()) != nil {
+			queue = append(queue, scope{id, tn.Type(), tn.Pkg()})
+		}
+	}
+	seen := map[string]bool{}
+	for len(queue) > 0 {
+		q := queue[0]
+		queue = queue[1:]
+		if seen[q.id] {
 			continue
+		}
+		seen[q.id] = true
+		if len(seen) > 50000 {
+			a.s.FieldScopeTruncated = true
+			break
 		}
 		names := map[string]bool{}
 		visited := map[types.Type]bool{}
-		queue := []types.Type{tn.Type()}
-		for len(queue) > 0 {
-			t := queue[0]
-			queue = queue[1:]
-			t = types.Unalias(t)
+		embedded := []types.Type{q.t}
+		for len(embedded) > 0 {
+			t := types.Unalias(embedded[0])
+			embedded = embedded[1:]
 			if visited[t] {
 				continue
 			}
@@ -54,20 +76,21 @@ func (a *analyzer) collectTypeFields() {
 				f := st.Field(i)
 				names[f.Name()] = true
 				if f.Embedded() {
-					queue = append(queue, f.Type())
+					embedded = append(embedded, f.Type())
 				}
 			}
 		}
 		fields := []FieldInfo{}
 		for name := range names {
-			o, index, _ := types.LookupFieldOrMethod(tn.Type(), false, tn.Pkg(), name)
-			f, ok := o.(*types.Var)
+			obj, index, _ := types.LookupFieldOrMethod(q.t, false, q.pkg, name)
+			f, ok := obj.(*types.Var)
 			if !ok || !f.IsField() || len(index) == 0 {
 				continue
 			}
 			path := []string{}
-			t := tn.Type()
+			t := q.t
 			valid := true
+			tag := ""
 			for _, i := range index {
 				st := structOf(t)
 				if st == nil || i >= st.NumFields() {
@@ -76,21 +99,46 @@ func (a *analyzer) collectTypeFields() {
 				}
 				v := st.Field(i)
 				path = append(path, v.Name())
+				tag = st.Tag(i)
 				t = v.Type()
 			}
 			if !valid {
 				continue
 			}
 			fid := a.objectID(f)
-			var position *Position
-			if definition := a.s.Symbols[fid]; definition != nil {
-				copy := definition.Position
-				position = &copy
+			var pos *Position
+			if def := a.s.Symbols[fid]; def != nil {
+				copy := def.Position
+				pos = &copy
 			}
-			fields = append(fields, FieldInfo{fid, f.Name(), types.TypeString(f.Type(), func(p *types.Package) string { return p.Path() }), path, len(index) > 1, f.Embedded(), a.s.Symbols[fid] != nil, position})
+			wire, _ := reflect.StructTag(tag).Lookup("json")
+			jsonName := strings.Split(wire, ",")[0]
+			if jsonName == "" {
+				jsonName = f.Name()
+			}
+			if jsonName == "-" || !ast.IsExported(f.Name()) {
+				jsonName = ""
+			}
+			target := ""
+			if structOf(t) != nil {
+				unwrapped := types.Unalias(t)
+				if ptr, ok := unwrapped.(*types.Pointer); ok {
+					unwrapped = types.Unalias(ptr.Elem())
+				}
+				if named, ok := unwrapped.(*types.Named); ok {
+					target = a.objectID(named.Obj())
+					if named.TypeArgs() != nil && named.TypeArgs().Len() > 0 {
+						target += "#inst:" + digest(types.TypeString(t, nil))[:12]
+					}
+				} else {
+					target = fid + "#struct"
+				}
+				queue = append(queue, scope{target, t, f.Pkg()})
+			}
+			fields = append(fields, FieldInfo{Symbol: fid, Name: f.Name(), Type: types.TypeString(f.Type(), func(p *types.Package) string { return p.Path() }), AccessPath: path, Promoted: len(index) > 1, Embedded: f.Embedded(), Available: a.s.Symbols[fid] != nil, Position: pos, JSONName: jsonName, JSONTag: wire, TargetScope: target})
 		}
 		sort.Slice(fields, func(i, j int) bool { return fields[i].Name < fields[j].Name })
-		a.s.TypeFields[id] = fields
+		a.s.TypeFields[q.id] = fields
 	}
 }
 

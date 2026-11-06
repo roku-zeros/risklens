@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const Version = "0.4.0"
+const Version = "0.5.0"
 const ModelRevision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
 const ModelKey = "intfloat/multilingual-e5-small@" + ModelRevision + ":fp32:384:mask-mean:l2:e5-prefix:window510:v2"
 
@@ -169,20 +169,21 @@ type Chunk struct {
 	start, end int
 }
 type Snapshot struct {
-	Calls       CallAnalysis           `json:"call_analysis"`
-	TypeFields  map[string][]FieldInfo `json:"-"`
-	ID          string                 `json:"index_snapshot"`
-	Fingerprint string                 `json:"-"`
-	Symbols     map[string]*Symbol     `json:"-"`
-	Relations   []Relation             `json:"-"`
-	Chunks      []*Chunk               `json:"-"`
-	Files       map[string][]byte      `json:"-"`
-	Diagnostics []string               `json:"diagnostics"`
-	Complete    bool                   `json:"complete"`
-	Environment map[string]string      `json:"environment"`
-	Module      string                 `json:"module"`
-	Created     string                 `json:"created"`
-	Text        *TextIndex             `json:"-"`
+	FieldScopeTruncated bool                   `json:"-"`
+	Calls               CallAnalysis           `json:"call_analysis"`
+	TypeFields          map[string][]FieldInfo `json:"-"`
+	ID                  string                 `json:"index_snapshot"`
+	Fingerprint         string                 `json:"-"`
+	Symbols             map[string]*Symbol     `json:"-"`
+	Relations           []Relation             `json:"-"`
+	Chunks              []*Chunk               `json:"-"`
+	Files               map[string][]byte      `json:"-"`
+	Diagnostics         []string               `json:"diagnostics"`
+	Complete            bool                   `json:"complete"`
+	Environment         map[string]string      `json:"environment"`
+	Module              string                 `json:"module"`
+	Created             string                 `json:"created"`
+	Text                *TextIndex             `json:"-"`
 }
 type Status struct {
 	LastRefresh         map[string]any    `json:"last_refresh,omitempty"`
@@ -213,6 +214,8 @@ type Status struct {
 	Module              string            `json:"module"`
 }
 type Args struct {
+	Namespace         string          `json:"namespace"`
+	Calls             []BatchCall     `json:"calls"`
 	Rerank            *bool           `json:"rerank"`
 	Document          string          `json:"document"`
 	Claims            []EvidenceClaim `json:"claims"`

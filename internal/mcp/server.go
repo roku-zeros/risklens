@@ -25,6 +25,7 @@ func Tools() []Tool {
 		name, desc         string
 		required, optional []string
 	}{
+		{"batch_tools", "Run 1..20 read-only calls on one Go snapshot with only two full freshness scans. Inspect outer fresh and per-item errors; control/nested calls forbidden; 512 KiB items budget.", []string{"calls"}, []string{"index_snapshot"}},
 		{"audit_document", "Audit Markdown Go links and symbol references against the current snapshot. Does not verify business prose or rewrite documents.", []string{"document"}, []string{"limit", "cursor", "index_snapshot"}},
 		{"verify_evidence", "Check source claims (symbol/file/lines/expected_text/source_hash); find uniquely moved text anchors. Source validation is not semantic proof.", []string{"claims"}, []string{"limit", "cursor", "index_snapshot"}},
 		{"trace_field", "Bounded field read/write trace from an entry function through calls. Candidate paths optional. Does not prove same object or execution order.", []string{"symbol_id", "entry_symbol_id"}, []string{"depth", "include_candidates", "budget_bytes", "path", "package", "include_tests", "limit", "index_snapshot"}},
@@ -37,6 +38,7 @@ func Tools() []Tool {
 		{"get_callers", "Find confirmed callers and possible interface callers; inspect resolution.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callees", "List calls in a function; function variables may be unresolved; graph is incomplete.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"find_field_accesses", "Find typed field accesses and bounded SSA alias candidates. Inspect resolution/analysis; not complete object or value history.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"resolve_reference", "Resolve exact Go field names/typed paths or JSON declaration aliases. Scope with returned owner_id; preserves ambiguity/case. Not runtime object or JSON serialization path proof.", []string{"query"}, []string{"namespace", "owner_id", "package", "path", "paths", "exclude_paths", "limit", "cursor", "index_snapshot"}},
 		{"list_files", "List indexed root-relative file paths, total_lines, bytes and hashes. Paginated: always follow next_cursor if truncated; use for inventory before get_source.", nil, []string{"path", "paths", "exclude_paths", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_source", "Read indexed source. Default 40 lines; end_line=-1 reads to EOF within byte budget. Returns total_lines/eof/next_line; ranges past EOF are clamped.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot"}},
 		{"search_code", "Hybrid RRF of symbol/text/vector channels, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "rerank", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
@@ -73,8 +75,14 @@ func Tools() []Tool {
 				v["maximum"] = 1000
 				v["description"] = "Page size, not total results. 0/omitted uses default; server max_results defaults to 100. Follow next_cursor."
 			}
+			if k == "namespace" {
+				v["enum"] = []string{"auto", "go", "json"}
+			}
 			if k == "mode" {
 				v["enum"] = []string{"hybrid", "lexical", "vector"}
+			}
+			if k == "calls" {
+				v = map[string]any{"type": "array", "minItems": 1, "maxItems": 20, "items": map[string]any{"type": "object", "required": []string{"tool", "arguments"}, "properties": map[string]any{"tool": map[string]any{"type": "string"}, "arguments": map[string]any{"type": "object", "additionalProperties": true}}, "additionalProperties": false}}
 			}
 			if k == "claims" {
 				v = map[string]any{"type": "array", "minItems": 1, "maxItems": 100, "items": map[string]any{"type": "object", "additionalProperties": false, "properties": map[string]any{"symbol_id": map[string]any{"type": "string"}, "file": map[string]any{"type": "string"}, "start_line": map[string]any{"type": "integer"}, "end_line": map[string]any{"type": "integer"}, "expected_text": map[string]any{"type": "string", "maxLength": 4096}, "source_hash": map[string]any{"type": "string"}}}}
@@ -250,6 +258,16 @@ func (s *Server) handle(ctx context.Context, r request) {
 		}
 		var result any
 		switch p.Name {
+		case "batch_tools":
+			batch := make([]lens.BatchRequest, 0, len(a.Calls))
+			for _, call := range a.Calls {
+				args, validationErr := Validate(call.Tool, call.Arguments)
+				if a.Snapshot != "" && args.Snapshot == "" {
+					args.Snapshot = a.Snapshot
+				}
+				batch = append(batch, lens.BatchRequest{Tool: call.Tool, Args: args, ValidationError: validationErr})
+			}
+			result, err = s.Engine.Batch(ctx, batch, a.Snapshot)
 		case "project_status", "index_status":
 			result = s.Engine.Status(ctx)
 		case "refresh_index":

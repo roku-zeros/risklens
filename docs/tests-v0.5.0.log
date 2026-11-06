@@ -1,0 +1,6 @@
+?   	risklens/cmd/risklens-mcp	[no test files]
+ok  	risklens/internal/lens	44.131s
+ok  	risklens/internal/mcp	1.939s
+
+Final MCP recovery-example regression:
+ok  	risklens/internal/mcp	1.695s

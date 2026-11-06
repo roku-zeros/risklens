@@ -93,3 +93,7 @@
 ## Уточнение по полному отчёту
 
 [Подробный анализ 15 фотографий полного отчёта 0.3.0](FIELD-REPORT-ANALYSIS-2026-11-06.md) содержит уточнённую разметку, качество 19 поисковых запросов, причины ошибочных бизнес-выводов и сравнение с текущей 0.4.0. Уточнённая разбивка ошибок согласована: 40 range + 8 limit + 1 path + 1 missing file + 1 missing claims + 1 missing document + 3 unknown nested fields = 55. Прежнее расхождение 55/56 снято. Reranker во внешнем eval фактически не исполнялся. Причина оставшегося lock и происхождение постоянно холодной файловой проверки требуют самостоятельного воспроизведения; рекомендации metadata-only freshness не приняты как эквивалент strict content validation.
+
+## Серия 0.5.0
+
+[Улучшения по полному отчёту](CHANGES-0.5.0.md): OS-held cache ownership и безопасная очистка; strict snapshot batch; JSON aliases и typed field paths; новые диагностические статусы аудита; per-function call coverage; явное исполнение reranker и query-vector cache. Остальные направления остаются в backlog; production-эффект ещё требует сопоставимого прогона.

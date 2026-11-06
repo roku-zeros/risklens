@@ -61,3 +61,35 @@ func TestRerankingIsOptionalAndDegradesSafely(t *testing.T) {
 		t.Fatal("reranker failure lost search", err)
 	}
 }
+
+func TestRerankerStageDistinguishesDisabledExecutedAndCached(t *testing.T) {
+	e, _, _ := newTest(t)
+	ctx := context.Background()
+	yes := true
+	r, err := e.Call(ctx, "search_code", Args{Query: "Calculate", Mode: "hybrid", Rerank: &yes})
+	if err != nil {
+		t.Fatal(err)
+	}
+	stage := r.Meta["reranker"].(map[string]any)
+	if stage["status"] != "disabled" || stage["configured"] != false || stage["executed"] != false {
+		t.Fatal(stage)
+	}
+	fake := &testReranker{}
+	e.rerank = fake
+	r, err = e.Call(ctx, "search_code", Args{Query: "Calculate", Mode: "hybrid", Rerank: &yes})
+	if err != nil {
+		t.Fatal(err)
+	}
+	stage = r.Meta["reranker"].(map[string]any)
+	if stage["status"] != "completed" || stage["executed"] != true {
+		t.Fatal(stage)
+	}
+	r, err = e.Call(ctx, "search_code", Args{Query: "Calculate", Mode: "hybrid", Rerank: &yes})
+	if err != nil {
+		t.Fatal(err)
+	}
+	stage = r.Meta["reranker"].(map[string]any)
+	if stage["status"] != "cache_hit" || stage["executed"] != false || stage["cache_hits"].(int) == 0 || fake.calls != 1 {
+		t.Fatal(stage, fake.calls)
+	}
+}

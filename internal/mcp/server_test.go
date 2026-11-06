@@ -66,7 +66,7 @@ func TestStdioLifecycleAndResponsiveStatus(t *testing.T) {
 	}
 	fmt.Fprintln(inw, `{"jsonrpc":"2.0","method":"notifications/initialized"}`)
 	ls := call(2, "tools/list", map[string]any{})
-	if len(ls["tools"].([]any)) != 16 {
+	if len(ls["tools"].([]any)) != 18 {
 		t.Fatal(ls)
 	}
 	call(3, "tools/call", map[string]any{"name": "refresh_index", "arguments": map[string]any{}})
@@ -152,5 +152,19 @@ func TestActionableArgumentErrors(t *testing.T) {
 	}
 	if _, err := Validate("get_source", json.RawMessage(`{"file":"x.go","end_line":-1}`)); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestNewToolRecoveryExamplesAreValid(t *testing.T) {
+	for name, raw := range map[string]string{"batch_tools": `{"calls":[]}`, "resolve_reference": `{"query":"x","namespace":"wrong"}`} {
+		_, err := Validate(name, json.RawMessage(raw))
+		var detail *ArgumentError
+		if !errors.As(err, &detail) {
+			t.Fatal(err)
+		}
+		example, _ := json.Marshal(detail.Example)
+		if _, err = Validate(name, example); err != nil {
+			t.Fatal("recovery example violates the tool schema", name, err)
+		}
 	}
 }

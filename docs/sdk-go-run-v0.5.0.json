@@ -1,0 +1,22 @@
+{
+  "batch_strict_snapshot": true,
+  "typed_field_resolution": true,
+  "launch": "go_run",
+  "field_trace": true,
+  "evidence_verification": true,
+  "document_audit": true,
+  "canonical_field_navigation": true,
+  "structured_recovery": true,
+  "sdk": "mcp==1.26.0",
+  "protocol": "2025-11-25",
+  "server": {
+    "name": "risklens-mcp",
+    "title": null,
+    "version": "0.5.0",
+    "websiteUrl": null,
+    "icons": null
+  },
+  "tools": 18,
+  "snapshot": "ea6032755680fc060a3328a7",
+  "search_items": 5
+}

@@ -476,7 +476,7 @@ func (a *analyzer) relations(parents map[ast.Node]ast.Node) {
 			a.callPositions[a.position(call.Lparen)] = a.position(call.Pos())
 			target, res, candidates := a.callTarget(call.Fun)
 			p := a.position(call.Pos())
-			a.s.Relations = append(a.s.Relations, Relation{Symbol: target, From: from, Kind: "call", Resolution: res, Position: p, Candidates: candidates, Code: a.line(p), Conditions: a.conditions(n, parents)})
+			a.s.Relations = append(a.s.Relations, Relation{Symbol: target, From: from, Kind: "call", Resolution: res, Position: p, Candidates: candidates, Code: a.line(p), Conditions: a.conditions(n, parents), UnknownTargets: res != "confirmed"})
 		}
 		return true
 	})

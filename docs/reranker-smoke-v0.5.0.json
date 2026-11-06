@@ -1,0 +1,400 @@
+{
+  "real_reranker": true,
+  "rerank_candidates": 5,
+  "timings_ms": [
+    6864.060041960329,
+    3.3897089306265116
+  ],
+  "responses": [
+    {
+      "index_snapshot": "1315253cb529e64bcd1670dc",
+      "fresh": true,
+      "complete": true,
+      "items": [
+        {
+          "rerank_score": 2.0711517333984375,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "lexical_supported",
+          "requires_source_verification": true,
+          "chunk": {
+            "static_facts": "field write: Rate (confirmed); field write: Term (confirmed); signature includes pointer types",
+            "chunk_id": "e9786ae9c12ed71ea9fce821",
+            "symbol_id": "example.com/strategy/education#function::StudyGrace",
+            "package_path": "example.com/strategy/education",
+            "file_path": "education/education.go",
+            "start_line": 6,
+            "end_line": 6,
+            "content_hash": "56fe3148bebb16d3767576c3b805b3aa0bb667b53a2b830b10a3909e4a3fca65",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "func StudyGrace(a *state.Application, years int) { a.Term = years*12 + 9; a.Rate = 3.0 }",
+            "test": false
+          },
+          "rrf_score": 0.03225806451612903,
+          "channels": [
+            "text",
+            "vector"
+          ],
+          "ranks": {
+            "text": 2,
+            "vector": 2
+          }
+        },
+        {
+          "rerank_score": 1.8541254997253418,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "lexical_supported",
+          "requires_source_verification": true,
+          "chunk": {
+            "chunk_id": "5976c6b050485647bc6904ec",
+            "symbol_id": "example.com/strategy/education#file:education/education.go",
+            "package_path": "example.com/strategy/education",
+            "file_path": "education/education.go",
+            "start_line": 1,
+            "end_line": 6,
+            "content_hash": "d84e6c36bfcfdfb7bdfd6199c0b74694c2d53a2adeae70f758990ff0f4892df8",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "package education\n\nimport \"example.com/strategy/state\"\n\n// StudyGrace sets a study repayment grace period. Образовательный кредит: льготный период и срок обучения.\n",
+            "test": false
+          },
+          "rrf_score": 0.03278688524590164,
+          "channels": [
+            "text",
+            "vector"
+          ],
+          "ranks": {
+            "text": 1,
+            "vector": 1
+          }
+        },
+        {
+          "rerank_score": -10.946552276611328,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "chunk": {
+            "static_facts": "field read: Codes (confirmed); field read: Debt (confirmed); field read: Income (confirmed); field write: Codes (confirmed); field write: Limit (confirmed); lexical call site: example.com/strategy/state.ApplyIncomeCap (not execution order); signature includes pointer types",
+            "chunk_id": "44a62666499cc912902ae532",
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "package_path": "example.com/strategy/consumer",
+            "file_path": "consumer/consumer.go",
+            "start_line": 10,
+            "end_line": 17,
+            "content_hash": "cacb1f2679362490031a9fcd945e45da550e720ab9747574038d45aad7aeb3c5",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+            "test": false
+          },
+          "rrf_score": 0.015384615384615385,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 5
+          }
+        },
+        {
+          "rerank_score": -11.000638008117676,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "other_matching_chunks": 3,
+          "chunk": {
+            "chunk_id": "d98f9e7df537313049a3cccb",
+            "symbol_id": "example.com/strategy/state#file:state/state.go",
+            "package_path": "example.com/strategy/state",
+            "file_path": "state/state.go",
+            "start_line": 15,
+            "end_line": 18,
+            "content_hash": "f0f647a39219a8ef7e444fc588b1ec2d8d7eaf04e4ac2d6ade143e83c4289b9b",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "\n\n// ApplyIncomeCap is shared by products. Ограничение лимита по доходу клиента.\n",
+            "test": false
+          },
+          "rrf_score": 0.015873015873015872,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 3
+          }
+        },
+        {
+          "rerank_score": -11.032472610473633,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "other_matching_chunks": 3,
+          "chunk": {
+            "chunk_id": "e92724ff8a97f844f3c8a40f",
+            "symbol_id": "example.com/strategy/consumer#file:consumer/consumer.go",
+            "package_path": "example.com/strategy/consumer",
+            "file_path": "consumer/consumer.go",
+            "start_line": 7,
+            "end_line": 10,
+            "content_hash": "a79918e39ef56210d49013b574dd0bedc262bf28309c11a240e757396d1245a9",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "\n\n// Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n",
+            "test": false
+          },
+          "rrf_score": 0.015625,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 4
+          }
+        }
+      ],
+      "truncated": true,
+      "next_cursor": "eyJzbmFwc2hvdCI6IjEzMTUyNTNjYjUyOWU2NGJjZDE2NzBkYyIsInF1ZXJ5IjoiNTA3MTRlZDg4YzZmYjNhYTI2NDY5MDBiOWFhZmU0YzJmNjVkZDQwMDY3MWI3N2NmMjYwMDBiNTgyNTE2Njk0MiIsIm9mZnNldCI6NX0",
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ],
+      "meta": {
+        "continuation": "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page.",
+        "effective_limit": 5,
+        "freshness_file_reads": 20,
+        "freshness_scans": 2,
+        "freshness_source_bytes": 17478,
+        "has_more": true,
+        "offset": 0,
+        "query_embedding_cache": {
+          "executed": true,
+          "hit": false,
+          "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2"
+        },
+        "reranker": {
+          "attempted": true,
+          "cache_hits": 0,
+          "candidate_items": 5,
+          "configured": true,
+          "executed": true,
+          "explicitly_requested": false,
+          "model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "requested": true,
+          "reranked_items": 5,
+          "scored_items": 5,
+          "status": "completed"
+        },
+        "results_complete": false,
+        "returned_results": 5,
+        "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+        "timings_ms": {
+          "freshness": 2.345166,
+          "freshness_read_hash": 0.803626,
+          "freshness_walk_metadata": 1.314499,
+          "fusion": 0.495667,
+          "query_embedding": 1530.47925,
+          "rerank": 5329.083125,
+          "symbol_text": 0.076875,
+          "total": 6862.743458,
+          "vector_scan_sort": 0.091875
+        },
+        "total_results": 32
+      }
+    },
+    {
+      "index_snapshot": "1315253cb529e64bcd1670dc",
+      "fresh": true,
+      "complete": true,
+      "items": [
+        {
+          "rerank_score": 2.0711517333984375,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "lexical_supported",
+          "requires_source_verification": true,
+          "chunk": {
+            "static_facts": "field write: Rate (confirmed); field write: Term (confirmed); signature includes pointer types",
+            "chunk_id": "e9786ae9c12ed71ea9fce821",
+            "symbol_id": "example.com/strategy/education#function::StudyGrace",
+            "package_path": "example.com/strategy/education",
+            "file_path": "education/education.go",
+            "start_line": 6,
+            "end_line": 6,
+            "content_hash": "56fe3148bebb16d3767576c3b805b3aa0bb667b53a2b830b10a3909e4a3fca65",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "func StudyGrace(a *state.Application, years int) { a.Term = years*12 + 9; a.Rate = 3.0 }",
+            "test": false
+          },
+          "rrf_score": 0.03225806451612903,
+          "channels": [
+            "text",
+            "vector"
+          ],
+          "ranks": {
+            "text": 2,
+            "vector": 2
+          }
+        },
+        {
+          "rerank_score": 1.8541254997253418,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "lexical_supported",
+          "requires_source_verification": true,
+          "chunk": {
+            "chunk_id": "5976c6b050485647bc6904ec",
+            "symbol_id": "example.com/strategy/education#file:education/education.go",
+            "package_path": "example.com/strategy/education",
+            "file_path": "education/education.go",
+            "start_line": 1,
+            "end_line": 6,
+            "content_hash": "d84e6c36bfcfdfb7bdfd6199c0b74694c2d53a2adeae70f758990ff0f4892df8",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "package education\n\nimport \"example.com/strategy/state\"\n\n// StudyGrace sets a study repayment grace period. Образовательный кредит: льготный период и срок обучения.\n",
+            "test": false
+          },
+          "rrf_score": 0.03278688524590164,
+          "channels": [
+            "text",
+            "vector"
+          ],
+          "ranks": {
+            "text": 1,
+            "vector": 1
+          }
+        },
+        {
+          "rerank_score": -10.946552276611328,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "chunk": {
+            "static_facts": "field read: Codes (confirmed); field read: Debt (confirmed); field read: Income (confirmed); field write: Codes (confirmed); field write: Limit (confirmed); lexical call site: example.com/strategy/state.ApplyIncomeCap (not execution order); signature includes pointer types",
+            "chunk_id": "44a62666499cc912902ae532",
+            "symbol_id": "example.com/strategy/consumer#function::Calculate",
+            "package_path": "example.com/strategy/consumer",
+            "file_path": "consumer/consumer.go",
+            "start_line": 10,
+            "end_line": 17,
+            "content_hash": "cacb1f2679362490031a9fcd945e45da550e720ab9747574038d45aad7aeb3c5",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "func Calculate(a *state.Application) {\n\ta.Limit = a.Income * 6\n\tif a.Debt*100 > a.Income*40 {\n\t\ta.Limit = 0\n\t\ta.Codes = append(a.Codes, RuleDebt)\n\t}\n\tstate.ApplyIncomeCap(a)\n}",
+            "test": false
+          },
+          "rrf_score": 0.015384615384615385,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 5
+          }
+        },
+        {
+          "rerank_score": -11.000638008117676,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "other_matching_chunks": 3,
+          "chunk": {
+            "chunk_id": "d98f9e7df537313049a3cccb",
+            "symbol_id": "example.com/strategy/state#file:state/state.go",
+            "package_path": "example.com/strategy/state",
+            "file_path": "state/state.go",
+            "start_line": 15,
+            "end_line": 18,
+            "content_hash": "f0f647a39219a8ef7e444fc588b1ec2d8d7eaf04e4ac2d6ade143e83c4289b9b",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "\n\n// ApplyIncomeCap is shared by products. Ограничение лимита по доходу клиента.\n",
+            "test": false
+          },
+          "rrf_score": 0.015873015873015872,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 3
+          }
+        },
+        {
+          "rerank_score": -11.032472610473633,
+          "reranker_model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "evidence": "semantic_only",
+          "requires_source_verification": true,
+          "other_matching_chunks": 3,
+          "chunk": {
+            "chunk_id": "e92724ff8a97f844f3c8a40f",
+            "symbol_id": "example.com/strategy/consumer#file:consumer/consumer.go",
+            "package_path": "example.com/strategy/consumer",
+            "file_path": "consumer/consumer.go",
+            "start_line": 7,
+            "end_line": 10,
+            "content_hash": "a79918e39ef56210d49013b574dd0bedc262bf28309c11a240e757396d1245a9",
+            "index_snapshot": "1315253cb529e64bcd1670dc",
+            "embedding_model_revision": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2",
+            "code": "\n\n// Calculate sets a consumer loan limit. Потребительский кредит: лимит зависит от дохода и долговой нагрузки.\n",
+            "test": false
+          },
+          "rrf_score": 0.015625,
+          "channels": [
+            "vector"
+          ],
+          "ranks": {
+            "vector": 4
+          }
+        }
+      ],
+      "truncated": true,
+      "next_cursor": "eyJzbmFwc2hvdCI6IjEzMTUyNTNjYjUyOWU2NGJjZDE2NzBkYyIsInF1ZXJ5IjoiNTA3MTRlZDg4YzZmYjNhYTI2NDY5MDBiOWFhZmU0YzJmNjVkZDQwMDY3MWI3N2NmMjYwMDBiNTgyNTE2Njk0MiIsIm9mZnNldCI6NX0",
+      "limitations": [
+        "Static relationships are not execution order or proof of business correctness.",
+        "Interface/function-variable targets are unresolved or candidates; graph is incomplete.",
+        "Bounded SSA may recover some pointer/parameter/return aliases as candidate field accesses. This is not complete object/value history; whole-struct, reflection, container-element and external effects may be absent.",
+        "Embedding similarity is retrieval relevance, not confidence in behavior. Freshness covers indexed Go files, not documentation claims or the execution order of product stages."
+      ],
+      "meta": {
+        "continuation": "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page.",
+        "effective_limit": 5,
+        "freshness_file_reads": 20,
+        "freshness_scans": 2,
+        "freshness_source_bytes": 17478,
+        "has_more": true,
+        "offset": 0,
+        "query_embedding_cache": {
+          "executed": false,
+          "hit": true,
+          "model_key": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:fp32:384:mask-mean:l2:e5-prefix:window510:v2"
+        },
+        "reranker": {
+          "attempted": false,
+          "cache_hits": 5,
+          "candidate_items": 5,
+          "configured": true,
+          "executed": false,
+          "explicitly_requested": false,
+          "model_key": "onnx-community/bge-reranker-v2-m3-ONNX@6f5ff65298512715a1e669753bc754d2bc8f367b:q8:pair:max2048:logit:v1",
+          "requested": true,
+          "reranked_items": 5,
+          "scored_items": 0,
+          "status": "cache_hit"
+        },
+        "results_complete": false,
+        "returned_results": 5,
+        "timing_scope": "server processing before JSON serialization; freshness is aggregate full-file scans; phases may overlap; excludes client queue/startup",
+        "timings_ms": {
+          "freshness": 1.7280419999999999,
+          "freshness_read_hash": 0.584125,
+          "freshness_walk_metadata": 0.949625,
+          "fusion": 0.094584,
+          "query_embedding": 0.007542,
+          "rerank": 0.011375,
+          "symbol_text": 0.2035,
+          "total": 2.258625,
+          "vector_scan_sort": 0.164792
+        },
+        "total_results": 32
+      }
+    }
+  ]
+}

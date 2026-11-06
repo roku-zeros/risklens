@@ -57,8 +57,9 @@ class Memory:
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('--binary',required=True);p.add_argument('--config',required=True);p.add_argument('--queries',required=True);p.add_argument('--output',required=True);p.add_argument('--repeats',type=int,default=3)
+    p.add_argument('--binary',required=True);p.add_argument('--config',required=True);p.add_argument('--queries',required=True);p.add_argument('--output',required=True);p.add_argument('--repeats',type=int,default=3);p.add_argument('--require-reranker',action='store_true')
     a=p.parse_args();binary=pathlib.Path(a.binary).resolve();cfg=json.loads(pathlib.Path(a.config).read_text());queries=json.loads(pathlib.Path(a.queries).read_text());out=pathlib.Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
+    if a.require_reranker and not cfg.get('reranker_command'):p.error('--require-reranker needs a configured local reranker')
     with tempfile.TemporaryDirectory(prefix='risklens-eval-') as td:
         td=pathlib.Path(td);source=pathlib.Path(cfg['root']);root=td/'module';shutil.copytree(source,root,ignore=shutil.ignore_patterns('.git','.risklens','node_modules','.venv','models','bin'))
         cfg['root']=str(root);cfg['cache']=str(td/'cache');config=td/'config.json';config.write_text(json.dumps(cfg))
@@ -69,9 +70,12 @@ def main():
             for q in queries:
                 durations=[];result=None
                 for _ in range(a.repeats):
-                    start=time.perf_counter();result=client.call('search_code',query=q['query'],mode=mode,limit=10);durations.append((time.perf_counter()-start)*1000)
+                    start=time.perf_counter();result=client.call('search_code',query=q['query'],mode=mode,limit=10,**({'rerank':True} if mode=='hybrid' and a.require_reranker else {}));durations.append((time.perf_counter()-start)*1000)
+                stage=result.get('meta',{}).get('reranker',{})
+                if a.require_reranker and mode=='hybrid' and stage.get('status') not in ['completed','cache_hit']:
+                    mem.close();client.close();raise RuntimeError('reranker experiment not executed: '+json.dumps(stage))
                 ids=[x['chunk']['symbol_id'] for x in result['items']]
-                rows.append({'mode':mode,'query':q['query'],'expected':q['expected'],'top10':ids,'hit5':bool(set(ids[:5])&set(q['expected'])),'hit10':bool(set(ids[:10])&set(q['expected'])),'cold_query_ms':durations[0],'warm_median_ms':statistics.median(durations[1:] or durations),'durations_ms':durations,'reranked_items':sum('rerank_score' in hit for hit in result['items']),'limitations':result.get('limitations',[])})
+                rows.append({'mode':mode,'query':q['query'],'expected':q['expected'],'top10':ids,'hit5':bool(set(ids[:5])&set(q['expected'])),'hit10':bool(set(ids[:10])&set(q['expected'])),'cold_query_ms':durations[0],'warm_median_ms':statistics.median(durations[1:] or durations),'durations_ms':durations,'reranker_stage':stage,'reranked_items':sum('rerank_score' in hit for hit in result['items']),'limitations':result.get('limitations',[])})
                 out.with_suffix('.partial.json').write_text(json.dumps({'complete':False,'rows':rows},indent=2,ensure_ascii=False)+'\n')
                 print(f"{mode}: {q['query']} ({durations[0]:.1f} ms)",flush=True)
         cache_bytes=sum(x.stat().st_size for x in pathlib.Path(cfg['cache']).rglob('*') if x.is_file())
