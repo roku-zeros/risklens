@@ -3,11 +3,9 @@ package mcp
 
 import (
 	"bufio"
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"sync"
 	"time"
@@ -39,7 +37,8 @@ func Tools() []Tool {
 		{"get_callers", "Find confirmed callers and possible interface callers; inspect resolution.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callees", "List calls in a function; function variables may be unresolved; graph is incomplete.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"find_field_accesses", "Find typed field accesses and bounded SSA alias candidates. Inspect resolution/analysis; not complete object or value history.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"get_source", "Read indexed source with 1-based inclusive lines, UTF-8 byte columns. Source comes from the same snapshot.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot"}},
+		{"list_files", "List indexed root-relative file paths, total_lines, bytes and hashes. Paginated: always follow next_cursor if truncated; use for inventory before get_source.", nil, []string{"path", "paths", "exclude_paths", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"get_source", "Read indexed source. Default 40 lines; end_line=-1 reads to EOF within byte budget. Returns total_lines/eof/next_line; ranges past EOF are clamped.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot"}},
 		{"search_code", "Hybrid RRF of symbol/text/vector channels, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "rerank", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"build_context", "Bounded relationship expansion. Returns reasons, sources and omitted IDs for continuation. UTF-8 byte budget, not Qwen tokens.", nil, []string{"query", "symbol_ids", "chunk_ids", "mode", "rerank", "distinct_symbols", "depth", "budget_bytes", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "index_snapshot"}},
 	}
@@ -62,6 +61,18 @@ func Tools() []Tool {
 				v["items"] = map[string]any{"type": "string"}
 				v["maxItems"] = 100
 			}
+			switch k {
+			case "end_line":
+				v["minimum"] = -1
+				v["description"] = "1-based inclusive; -1 means EOF; 0/omitted means at most 40 lines. Past EOF is clamped; byte limit still applies."
+			case "start_line":
+				v["minimum"] = 0
+				v["description"] = "1-based; 0/omitted defaults to 1. Use list_files for total_lines."
+			case "limit":
+				v["minimum"] = 0
+				v["maximum"] = 1000
+				v["description"] = "Page size, not total results. 0/omitted uses default; server max_results defaults to 100. Follow next_cursor."
+			}
 			if k == "mode" {
 				v["enum"] = []string{"hybrid", "lexical", "vector"}
 			}
@@ -78,50 +89,6 @@ func Tools() []Tool {
 	}
 	return out
 }
-func Validate(name string, raw json.RawMessage) (lens.Args, error) {
-	var a lens.Args
-	var spec *Tool
-	for _, t := range Tools() {
-		if t.Name == name {
-			copy := t
-			spec = &copy
-			break
-		}
-	}
-	if spec == nil {
-		return a, fmt.Errorf("unknown tool %s", name)
-	}
-	if len(raw) == 0 {
-		raw = json.RawMessage(`{}`)
-	}
-	var values map[string]json.RawMessage
-	if json.Unmarshal(raw, &values) != nil || values == nil {
-		return a, fmt.Errorf("arguments must be an object")
-	}
-	props := spec.InputSchema["properties"].(map[string]any)
-	for k, v := range values {
-		if _, ok := props[k]; !ok {
-			return a, fmt.Errorf("unknown argument %s", k)
-		}
-		if bytes.Equal(bytes.TrimSpace(v), []byte("null")) {
-			return a, fmt.Errorf("argument %s must not be null", k)
-		}
-	}
-	for _, k := range spec.InputSchema["required"].([]string) {
-		if _, ok := values[k]; !ok {
-			return a, fmt.Errorf("required argument %s", k)
-		}
-	}
-	d := json.NewDecoder(bytes.NewReader(raw))
-	d.DisallowUnknownFields()
-	if e := d.Decode(&a); e != nil {
-		return a, e
-	}
-	if len(a.Symbols) > 100 || len(a.Chunks) > 100 || len(a.Cursor) > 4096 || len(a.Paths) > 100 || len(a.ExcludePaths) > 100 || len(a.Claims) > 100 {
-		return a, fmt.Errorf("argument exceeds limit")
-	}
-	return a, nil
-}
 
 type request struct {
 	Version string          `json:"jsonrpc"`
@@ -137,12 +104,16 @@ type Server struct {
 	reqMu    sync.Mutex
 }
 
-func (s *Server) write(id json.RawMessage, result any, code int, msg string) {
+func (s *Server) write(id json.RawMessage, result any, code int, msg string, data ...any) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	m := map[string]any{"jsonrpc": "2.0", "id": id}
 	if code != 0 {
-		m["error"] = map[string]any{"code": code, "message": msg}
+		failure := map[string]any{"code": code, "message": msg}
+		if len(data) > 0 {
+			failure["data"] = data[0]
+		}
+		m["error"] = failure
 	} else {
 		m["result"] = result
 	}
@@ -274,7 +245,7 @@ func (s *Server) handle(ctx context.Context, r request) {
 		}
 		a, err := Validate(p.Name, p.Args)
 		if err != nil {
-			s.write(r.ID, nil, -32602, err.Error())
+			s.write(r.ID, nil, -32602, err.Error(), err)
 			return
 		}
 		var result any
@@ -288,8 +259,18 @@ func (s *Server) handle(ctx context.Context, r request) {
 			result, err = s.Engine.Call(ctx, p.Name, a)
 		}
 		if err != nil {
-			st := s.Engine.Status(ctx)
-			payload := map[string]any{"error": err.Error(), "index_snapshot": st.Snapshot, "fresh": st.Fresh}
+			st := s.Engine.CachedStatus()
+			payload := map[string]any{"error": err.Error(), "index_snapshot": st.Snapshot, "fresh": false, "freshness_checked": false}
+			if response, ok := result.(lens.Response); ok {
+				payload["meta"] = response.Meta
+				if response.Snapshot != "" {
+					payload["index_snapshot"] = response.Snapshot
+				}
+			}
+			var input interface{ ErrorDetails() map[string]any }
+			if errors.As(err, &input) {
+				payload["details"] = input.ErrorDetails()
+			}
 			var lookup *lens.LookupError
 			if errors.As(err, &lookup) {
 				payload["details"] = lookup

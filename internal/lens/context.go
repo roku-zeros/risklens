@@ -206,7 +206,7 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 	r.Items = items
 	r.Truncated = len(omitted) > 0
 	r.Meta = map[string]any{"budget_bytes": budget, "accounted_bytes": used, "budget_unit": "serialized JSON items array in UTF-8 bytes (envelope excluded); not Qwen tokens", "omitted": omitted[:min(len(omitted), e.C.MaxResults)], "omitted_count": len(omitted), "continuation": "build_context with omitted chunk_ids or symbol_ids and index_snapshot"}
-	if _, fp, err := readFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
+	if fp, err := fingerprintFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
 		return r, fmt.Errorf("files changed during context assembly; refresh and retry")
 	}
 	return r, nil

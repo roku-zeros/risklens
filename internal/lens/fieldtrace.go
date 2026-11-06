@@ -136,7 +136,7 @@ func (e *Engine) traceField(ctx context.Context, s *Snapshot, a Args, r Response
 	r.Items = items
 	r.Truncated = truncated
 	r.Meta = map[string]any{"entry_symbol_id": entry.ID, "field_symbol_id": field.ID, "visited_functions": len(seen), "budget_bytes": budget, "accounted_bytes": used, "unresolved_or_external_calls": unresolved, "frontier": frontier[:min(len(frontier), e.C.MaxResults)], "call_analysis": s.Calls, "limitation": "Accesses to the same field declaration, not proof of the same runtime object. Paths are possible call relationships, not execution order or full value history. At most one discovered path per function is shown. Dynamic/external/alias/whole-struct effects may be absent."}
-	if _, fp, err := readFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
+	if fp, err := fingerprintFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
 		return r, fmt.Errorf("files changed during field trace; refresh and retry")
 	}
 	return r, nil

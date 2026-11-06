@@ -1,0 +1,8 @@
+goos: darwin
+goarch: arm64
+pkg: risklens/internal/lens
+cpu: Apple M1
+BenchmarkFreshnessScanAllocation/retain_source_contents-8         	       5	   9177300 ns/op	 9108328 B/op	     945 allocs/op
+BenchmarkFreshnessScanAllocation/stream_fingerprint_only-8        	       5	   8267358 ns/op	  170926 B/op	     987 allocs/op
+PASS
+ok  	risklens/internal/lens	0.467s

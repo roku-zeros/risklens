@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const Version = "0.3.0"
+const Version = "0.4.0"
 const ModelRevision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
 const ModelKey = "intfloat/multilingual-e5-small@" + ModelRevision + ":fp32:384:mask-mean:l2:e5-prefix:window510:v2"
 
@@ -185,6 +185,8 @@ type Snapshot struct {
 	Text        *TextIndex             `json:"-"`
 }
 type Status struct {
+	LastRefresh         map[string]any    `json:"last_refresh,omitempty"`
+	Meta                map[string]any    `json:"meta,omitempty"`
 	Calls               CallAnalysis      `json:"call_analysis"`
 	Version             string            `json:"version"`
 	GoHeapReservedBytes uint64            `json:"go_heap_reserved_bytes"`

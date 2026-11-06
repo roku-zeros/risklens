@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -65,7 +66,7 @@ func TestStdioLifecycleAndResponsiveStatus(t *testing.T) {
 	}
 	fmt.Fprintln(inw, `{"jsonrpc":"2.0","method":"notifications/initialized"}`)
 	ls := call(2, "tools/list", map[string]any{})
-	if len(ls["tools"].([]any)) != 15 {
+	if len(ls["tools"].([]any)) != 16 {
 		t.Fatal(ls)
 	}
 	call(3, "tools/call", map[string]any{"name": "refresh_index", "arguments": map[string]any{}})
@@ -97,6 +98,25 @@ func TestStdioLifecycleAndResponsiveStatus(t *testing.T) {
 	if details["code"] != "unknown_symbol_id" {
 		t.Fatal(details)
 	}
+	badData := bad["structuredContent"].(map[string]any)
+	if badData["meta"].(map[string]any)["freshness_scans"] != float64(1) || badData["freshness_checked"] != false {
+		t.Fatal("error caused an additional freshness scan", badData)
+	}
+	fmt.Fprintln(inw, `{"jsonrpc":"2.0","id":302,"method":"tools/call","params":{"name":"audit_document","arguments":{"file":"x.md"}}}`)
+	line, err := reader.ReadBytes('\n')
+	if err != nil {
+		t.Fatal(err)
+	}
+	var invalid map[string]any
+	if err = json.Unmarshal(line, &invalid); err != nil {
+		t.Fatal(err)
+	}
+	failure := invalid["error"].(map[string]any)
+	dataError := failure["data"].(map[string]any)
+	if failure["code"] != float64(-32602) || dataError["field"] != "file" || dataError["example_arguments"].(map[string]any)["document"] == nil {
+		t.Fatal("missing machine recovery", invalid)
+	}
+
 	inw.Close()
 	if err = <-done; err != nil {
 		t.Fatal(err)
@@ -112,5 +132,25 @@ func TestNavigationArgumentsAndStructuredLookupError(t *testing.T) {
 		if _, err := Validate(name, json.RawMessage(raw)); err != nil {
 			t.Fatal(err)
 		}
+	}
+}
+
+func TestActionableArgumentErrors(t *testing.T) {
+	cases := []struct{ name, raw, code, field string }{
+		{"audit_document", `{"file":"x.md"}`, "unknown_argument", "file"},
+		{"verify_evidence", `{"claims":["x"]}`, "invalid_argument_type", "claims[0]"},
+		{"verify_evidence", `{"claims":[{"symbol":"x"}]}`, "unknown_argument", "claims[0].symbol"},
+		{"get_source", `{"file":"x.go","end_line":-2}`, "invalid_argument_value", "end_line"},
+		{"search_code", `{"query":"x","mode":"wrong"}`, "invalid_argument_value", "mode"},
+	}
+	for _, c := range cases {
+		_, err := Validate(c.name, json.RawMessage(c.raw))
+		var detail *ArgumentError
+		if !errors.As(err, &detail) || detail.Code != c.code || detail.Field != c.field || len(detail.Example) == 0 || detail.Hint == "" {
+			t.Fatal(c, err)
+		}
+	}
+	if _, err := Validate("get_source", json.RawMessage(`{"file":"x.go","end_line":-1}`)); err != nil {
+		t.Fatal(err)
 	}
 }

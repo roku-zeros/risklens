@@ -1,0 +1,3 @@
+?   	risklens/cmd/risklens-mcp	[no test files]
+ok  	risklens/internal/lens	48.295s
+ok  	risklens/internal/mcp	1.604s

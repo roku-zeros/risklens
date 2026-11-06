@@ -15,13 +15,20 @@ async def run(a):
         async with ClientSession(read,write) as session:
             init=await session.initialize()
             tools=await session.list_tools()
-            assert len(tools.tools)==15
+            assert len(tools.tools)==16
             for _ in range(600):
                 result=await session.call_tool('index_status',{})
                 st=result.structuredContent
                 if st['state']=='failed':raise RuntimeError(st)
                 if st['fresh'] and not st['loading']:break
                 await asyncio.sleep(.05)
+            inventory=await session.call_tool('list_files',{'limit':2})
+            inv=inventory.structuredContent
+            assert inv['truncated'] and inv['next_cursor'] and inv['meta']['total_results']>2
+            source=await session.call_tool('get_source',{'file':'main.go','end_line':-1})
+            src=source.structuredContent
+            assert src['items']['eof'] and src['items']['total_lines']>0
+            assert src['meta']['freshness_scans']==2 and src['meta']['timings_ms']['freshness']>=0
             result=await session.call_tool('search_symbols',{'query':'Calculate','limit':5})
             assert not result.isError and result.structuredContent['items']
             result=await session.call_tool('search_code',{'query':'льготный период обучения','mode':'hybrid','limit':5})

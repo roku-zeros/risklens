@@ -76,6 +76,9 @@ func (e *Engine) Close() {
 	os.Remove(e.lockfile)
 }
 func (e *Engine) Refresh(ctx context.Context) error {
+	start := time.Now()
+	ctx, timings := startTimings(ctx)
+	defer func() { e.mu.Lock(); e.status.LastRefresh = timings.metadata(start); e.mu.Unlock() }()
 	e.refreshMu.Lock()
 	defer e.refreshMu.Unlock()
 	if err := ctx.Err(); err != nil {
@@ -98,11 +101,13 @@ func (e *Engine) Refresh(ctx context.Context) error {
 		if err != nil {
 			break
 		}
+		phase := time.Now()
 		s, err = analyze(ctx, e.C, files, fp)
+		recordTime(ctx, "load_analysis", phase)
 		if err != nil {
 			break
 		}
-		_, after, err = readFiles(ctx, e.C)
+		after, err = fingerprintFiles(ctx, e.C)
 		if err != nil {
 			break
 		}
@@ -167,7 +172,7 @@ func (e *Engine) StartRefresh() bool {
 	}()
 	return true
 }
-func (e *Engine) Status(ctx context.Context) Status {
+func (e *Engine) CachedStatus() Status {
 	e.mu.RLock()
 	st := e.status
 	st.Version = Version
@@ -178,10 +183,20 @@ func (e *Engine) Status(ctx context.Context) Status {
 	st.GoTotalAllocBytes = mem.TotalAlloc
 	st.GoGCCycles = mem.NumGC
 	st.FreshnessScope = "Saved Go sources/go.mod/go.sum in this module and load configuration; not documentation claims or business correctness."
+	e.mu.RUnlock()
+	st.Fresh = false
+	return st
+}
+func (e *Engine) Status(ctx context.Context) (st Status) {
+	start := time.Now()
+	ctx, timings := startTimings(ctx)
+	defer func() { st.Meta = timings.metadata(start) }()
+	st = e.CachedStatus()
+	e.mu.RLock()
 	s := e.snap
 	e.mu.RUnlock()
 	if s != nil {
-		_, fp, err := readFiles(ctx, e.C)
+		fp, err := fingerprintFiles(ctx, e.C)
 		st.Fresh = err == nil && fp == s.Fingerprint && st.State == "ready"
 		if err != nil {
 			st.LastError = err.Error()
@@ -197,7 +212,7 @@ func (e *Engine) Current(ctx context.Context) (*Snapshot, error) {
 	if s == nil || state != "ready" {
 		return nil, fmt.Errorf("index is %s; call refresh_index then poll index_status", state)
 	}
-	_, fp, err := readFiles(ctx, e.C)
+	fp, err := fingerprintFiles(ctx, e.C)
 	if err != nil {
 		return nil, err
 	}
@@ -338,8 +353,10 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 	warnings := []string{}
 	switch a.Mode {
 	case "lexical", "hybrid":
+		phase := time.Now()
 		lists["symbol"] = symbolRanks(s, a.Query)
 		lists["text"] = s.Text.Search(a.Query)
+		recordTime(ctx, "symbol_text", phase)
 	case "vector":
 	default:
 		return nil, nil, fmt.Errorf("mode must be lexical, vector or hybrid")
@@ -353,13 +370,16 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 			warnings = append(warnings, "vectors not ready for this snapshot; symbol/text only")
 		} else {
 			bctx, cancel := context.WithTimeout(ctx, time.Duration(e.C.OperationSeconds)*time.Second)
+			phase := time.Now()
 			r, err := e.embed.Embed(bctx, "query", []string{a.Query})
+			recordTime(ctx, "query_embedding", phase)
 			cancel()
 			if err != nil {
 				warnings = append(warnings, "embedding runtime unavailable: "+err.Error())
 			} else if len(r.Vectors) != 1 {
 				warnings = append(warnings, "invalid query vector count")
 			} else {
+				phase := time.Now()
 				scores := map[int]float64{}
 				q := r.Vectors[0]
 				if err = validVector(q, e.C.Dimension); err != nil {
@@ -379,22 +399,49 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 					}
 				}
 				lists["vector"] = sortedRanks(scores)
+				recordTime(ctx, "vector_scan_sort", phase)
 			}
 		}
 	}
 	if a.Mode == "vector" && lists["vector"] == nil {
 		return nil, warnings, fmt.Errorf("vector search unavailable: %s", strings.Join(warnings, "; "))
 	}
+	phase := time.Now()
 	hits := fuse(s, a, lists)
+	recordTime(ctx, "fusion", phase)
+	phase = time.Now()
 	hits, warning := e.rerankHits(ctx, a, hits)
+	recordTime(ctx, "rerank", phase)
 	if warning != "" {
 		warnings = append(warnings, warning)
 	}
 	return hits, warnings, nil
 }
-func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error) {
+func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err error) {
+	started := time.Now()
+	ctx, timings := startTimings(ctx)
+	defer func() {
+		if r.Meta == nil {
+			r.Meta = map[string]any{}
+		}
+		for k, v := range timings.metadata(started) {
+			r.Meta[k] = v
+		}
+		r.Meta["results_complete"] = err == nil && !r.Truncated
+		r.Meta["effective_limit"] = a.Limit
+		if r.Next != "" {
+			r.Meta["has_more"] = true
+			r.Meta["continuation"] = "Repeat the same tool and arguments with cursor=next_cursor and index_snapshot; this is a partial result page."
+		}
+		if err != nil {
+			r.Fresh = false
+		}
+	}()
+	if name == "get_source" && !validSourcePath(a.File) {
+		return r, inputError("invalid_file_path", "file", "file must be root-relative; use list_files and copy file_path", map[string]any{"hint": "Use forward slashes and a path relative to config.root, not an absolute path."})
+	}
 	if a.Limit < 0 || a.Limit > e.C.MaxResults {
-		return Response{}, fmt.Errorf("limit must be 1..%d (or 0 for default)", e.C.MaxResults)
+		return r, inputError("invalid_limit", "limit", fmt.Sprintf("limit must be 1..%d (or 0 for default); paginate with next_cursor", e.C.MaxResults), map[string]any{"minimum": 1, "maximum": e.C.MaxResults, "default": min(20, e.C.MaxResults), "hint": "Use the returned next_cursor to read additional results."})
 	}
 	if a.Limit == 0 {
 		a.Limit = min(20, e.C.MaxResults)
@@ -403,7 +450,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 	if err != nil {
 		return Response{}, err
 	}
-	r := Response{Snapshot: s.ID, Fresh: true, Complete: s.Complete, Limitations: append([]string{}, Limitations...), Diagnostics: s.Diagnostics}
+	r = Response{Snapshot: s.ID, Fresh: true, Complete: s.Complete, Limitations: append([]string{}, Limitations...), Diagnostics: s.Diagnostics}
 	if a.Snapshot != "" && a.Snapshot != s.ID {
 		return r, fmt.Errorf("snapshot changed: requested %s, current %s; repeat discovery and use returned IDs", a.Snapshot, s.ID)
 	}
@@ -477,6 +524,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			r.Meta["fields"] = fields[:min(a.Limit, len(fields))]
 			r.Meta["field_count"] = len(fields)
 			r.Meta["fields_truncated"] = len(fields) > a.Limit
+			r.Truncated = r.Truncated || len(fields) > a.Limit
 			r.Meta["field_continuation"] = "search_symbols with owner_id equal to this returned type ID, kind=field, and optional query/cursor"
 		}
 		if r.Meta == nil {
@@ -507,40 +555,24 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 				list = append(list, rel)
 			}
 		}
-	case "get_source":
-		file := filepath.ToSlash(a.File)
-		b, ok := s.Files[file]
-		if !ok || filepath.IsAbs(file) || strings.Contains(file, "../") {
-			return r, fmt.Errorf("file must be an indexed root-relative path")
+	case "list_files":
+		names := make([]string, 0, len(s.Files))
+		for file := range s.Files {
+			names = append(names, file)
 		}
-		lines := strings.Split(string(b), "\n")
-		start := a.Start
-		if start == 0 {
-			start = 1
-		}
-		end := a.End
-		if end == 0 {
-			end = min(start+39, len(lines))
-		}
-		if start < 1 || end < start || start > len(lines) || end > len(lines) {
-			return r, fmt.Errorf("invalid 1-based line range")
-		}
-		used := 0
-		last := start - 1
-		out := []string{}
-		for i := start - 1; i < end; i++ {
-			if used+len(lines[i])+1 > e.C.MaxSourceBytes {
-				break
+		sort.Strings(names)
+		for _, file := range names {
+			if !matchPath(file, a) || (a.IncludeTests != nil && !*a.IncludeTests && strings.HasSuffix(file, "_test.go")) {
+				continue
 			}
-			out = append(out, lines[i])
-			used += len(lines[i]) + 1
-			last = i + 1
+			b := s.Files[file]
+			list = append(list, map[string]any{"file_path": file, "total_lines": sourceLineCount(b), "bytes": len(b), "source_hash": hash(b)})
 		}
-		if last < end {
-			r.Truncated = true
-			r.Meta = map[string]any{"next_line": last + 1, "requested_end": end, "continuation": "get_source; a line exceeding max_source_bytes needs a larger server limit"}
+	case "get_source":
+		r, err = e.source(s, a, r)
+		if err != nil {
+			return r, err
 		}
-		r.Items = map[string]any{"file": file, "start_line": start, "end_line": last, "code": strings.Join(out, "\n"), "source_hash": hash(b)}
 	case "search_code":
 		hits, warnings, e2 := e.Search(ctx, s, a)
 		if e2 != nil {
@@ -562,7 +594,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 	default:
 		return r, fmt.Errorf("unknown tool: %s", name)
 	}
-	if list != nil || name == "search_symbols" || name == "search_code" || strings.HasPrefix(name, "get_call") || name == "find_references" || name == "find_field_accesses" {
+	if list != nil || name == "list_files" || name == "search_symbols" || name == "search_code" || strings.HasPrefix(name, "get_call") || name == "find_references" || name == "find_field_accesses" {
 		if list == nil {
 			list = []any{}
 		}
@@ -574,6 +606,13 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 			return r, fmt.Errorf("cursor offset outside results")
 		}
 		end := min(start+a.Limit, len(list))
+		if r.Meta == nil {
+			r.Meta = map[string]any{}
+		}
+		r.Meta["total_results"] = len(list)
+		r.Meta["returned_results"] = end - start
+		r.Meta["offset"] = start
+		r.Meta["has_more"] = end < len(list)
 		r.Items = list[start:end]
 		if r.Items == nil {
 			r.Items = []any{}
@@ -584,7 +623,7 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (Response, error
 		}
 	}
 	// Revalidate after slower inference/context work. Positions and source always come from s.
-	if _, fp, e2 := readFiles(ctx, e.C); e2 != nil || fp != s.Fingerprint {
+	if fp, e2 := fingerprintFiles(ctx, e.C); e2 != nil || fp != s.Fingerprint {
 		return r, fmt.Errorf("files changed during query; refresh and retry")
 	}
 	return r, nil
@@ -627,7 +666,12 @@ type cursor struct {
 	Offset   int    `json:"offset"`
 }
 
-func queryKey(name string, a Args) string { a.Cursor = ""; a.Limit = 0; return digest([]any{name, a}) }
+func queryKey(name string, a Args) string {
+	a.Cursor = ""
+	a.Limit = 0
+	a.Snapshot = ""
+	return digest([]any{name, a})
+}
 func encodeCursor(s, name string, a Args, offset int) string {
 	b, _ := json.Marshal(cursor{s, queryKey(name, a), offset})
 	return base64.RawURLEncoding.EncodeToString(b)

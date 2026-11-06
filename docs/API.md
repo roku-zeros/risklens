@@ -2,7 +2,7 @@
 
 Транспорт: newline-delimited JSON-RPC 2.0 на stdin/stdout. Логи только stderr. Production-интерфейс: initialize, notifications/initialized, ping, tools/list, tools/call, notifications/cancelled. Без HTTP, sampling, ресурсов и prompts. До 16 одновременно выполняемых обычных запросов; статусы и запуск refresh обходят этот лимит. Долгие запросы имеют timeout. EOF/interrupt/terminate завершают сервер и принадлежащий ему worker.
 
-Полные схемы аргументов: [mcp-tools.json](mcp-tools.json), выгружаются `risklens-mcp --schema`. Неизвестные аргументы, null и несовместимые типы отвергаются. `mode` проверяется семантическим обработчиком; запросы с неверным значением не выполняются.
+Полные схемы аргументов: [mcp-tools.json](mcp-tools.json), выгружаются `risklens-mcp --schema`. Неизвестные аргументы, null и несовместимые типы отвергаются. `mode` проверяется валидатором схемы; запросы с неверным значением не выполняются.
 
 | Tool | Основные аргументы | Результат |
 |---|---|---|
@@ -94,3 +94,18 @@ EvidenceClaim: symbol_id?, file?, start_line?, end_line?, expected_text? (до 4
 Relation дополнена analysis (ssa_static/vta_module/ssa_alias), flow_candidates, unknown_targets_possible и conditions. Conditions — исходные лексические guards, не вычисленные условия достижимости. У SSA alias доступа resolution=candidates: это возможная привязка к объявлению поля, не доказательство объекта.
 
 Status.call_analysis описывает готовность и бюджеты. Search_code/build_context принимают rerank?; Hit содержит rerank_score/reranker_model_key, если стадия включена. Static_facts в Chunk — извлечённые факты синтаксиса/типов. Они не являются LLM-резюме или доказательством поведения.
+
+
+## Исправления 0.4.0
+
+Всего **16 tools**, включая `list_files`. Это пагинируемый список наблюдаемых исходников/config-файлов (Go/go.mod/go.sum), а не всех файлов репозитория. Поля items: file_path, total_lines, bytes, source_hash. Аргументы: path/paths/exclude_paths/include_tests/limit/cursor/index_snapshot.
+
+`get_source`: end_line=-1 читает до EOF в пределах max_source_bytes; 0/omitted оставляет максимум 40 строк. Диапазон за EOF обрезается, items возвращает total_lines, returned_lines, eof, range_clamped. Завершающий перевод строки не добавляет фиктивную строку; пустой файл имеет total_lines=0 и ответ start_line=1/end_line=0/code="". Неверный start_line и обратный диапазон остаются ошибками с total_lines в details. При byte truncation используйте meta.next_line; если целая строка не помещается, нужно увеличить лимит, а не повторять тот же запрос.
+
+У списковых ответов: meta.total_results/returned_results/offset/has_more; truncated и next_cursor. Meta.results_complete относится к выдаче, complete — к диагностике загрузки/типизации. Не делайте вывод о полноте по items.length=100. В следующем вызове можно добавить index_snapshot, возвращённый первой страницей; cursor всё равно проверяет снимок и остальные параметры запроса.
+
+JSON-RPC -32602 содержит error.data: code/tool/field/allowed_fields/expected/example_arguments/hint. Вложенные аргументы валидируются с путём, например claims[0].symbol. Строгие имена полей сохранены. Runtime InputError содержит details с code/field и сведениями о диапазоне/лимите/пути. Ошибка инструмента не запускает отдельное чтение всего модуля ради статуса; fresh=false/freshness_checked=false означает, что актуальность после ошибки не подтверждена, а не автоматически доказанную устарелость индекса. Сначала исправьте конкретную ошибку, не запускайте refresh на любую неудачу.
+
+В Response.meta и Status.meta: timings_ms (total, freshness, freshness_read_hash, freshness_walk_metadata; у search_code дополнительно symbol_text/query_embedding/vector_scan_sort/fusion/rerank при выполнении этапа), freshness_scans, freshness_file_reads, freshness_source_bytes. Последние два — суммарное число чтений/размер наблюдаемых файлов за все проходы, а не уникальный размер модуля. Freshness включает вложенные этапы, поэтому их нельзя складывать с родительским. Total исключает сериализацию ответа, очередь клиента и запуск процесса. Пустая/нулевая фаза не подтверждает выполненную inference. Status.last_refresh содержит отдельные timings последнего завершённого refresh, включая load_analysis (типизация, SSA, chunking вместе); это не нагрузка текущего поискового запроса и не время фоновой векторизации.
+
+Проверки freshness по-прежнему читают полное содержимое файлов. Они потоково хешируют данные без сохранения временной копии исходников. Ослабленного режима с доверием только mtime нет.

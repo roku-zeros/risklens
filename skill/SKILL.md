@@ -36,3 +36,14 @@ description: Исследование и доработка Go-кода с ло�
 - Для перезаписей поля используй trace_field от конкретной точки входа продукта. При include_candidates=true явно разделяй возможные пути. Смотри conditions и непройденные внешние/динамические вызовы. Это связи поля-объявления, не полная история одного объекта.
 - Перед исправлением документа прогони audit_document по всему файлу с пагинацией. Свяжи каждое значимое утверждение с точным ID/файлом/диапазоном и expected_text через verify_evidence. Range_exists_unbound не считать проверенной цитатой. Для moved_text/moved_symbol изучи actual и только затем меняй ссылку штатным редактором GigaCode. Missing/ambiguous не исправлять угадыванием имени.
 - Reranker и другой embedding-профиль не заменяют проверку исходников. Если качество на рабочих запросах не измерено, прямо укажи это. Для быстрого exact/text поиска embeddings и reranker не требуются.
+
+
+## Ловушки API и короткий маршрут (0.4.0)
+
+- Для inventory сначала list_files: file_path/total_lines/bytes. Это индексируемые файлы модуля; не полный список всех документов и ресурсов.
+- Get_source по умолчанию читает до 40 строк. Для остального файла передавай end_line=-1, проверяй eof/total_lines/truncated/meta.next_line. Byte-limit действует и при EOF-запросе; строка, не помещающаяся целиком, требует большего серверного лимита.
+- Все file/document paths относительны config.root, с прямыми слешами. Абсолютный путь не исправляй угадыванием: найди file_path через inventory.
+- limit — размер страницы (по умолчанию до 20, max_results обычно 100), не размер проекта. При next_cursor продолжай тот же запрос; можно добавить возвращённый index_snapshot. meta.total_results и meta.results_complete описывают выдачу; complete не означает отсутствие обрезки.
+- audit_document принимает document, не file. verify_evidence принимает claims: [{file, start_line, end_line, expected_text, source_hash?, symbol_id?}], а не строки и не поля symbol/line/text. ID копировать из инструментов. Ошибки схемы содержат error.data с правильными полями и примером; runtime details могут указывать total_lines или maximum limit.
+- Ошибка аргумента не повод перестраивать индекс. Fresh=false в error при freshness_checked=false означает отсутствие повторной проверки после ошибки. Исправь поле по details/error.data. При явной ошибке stale/snapshot changed дождись refresh и повтори discovery.
+- Для медленного запроса сохраняй meta.timings_ms и freshness_scans. Не складывай freshness с его вложенными read_hash/walk_metadata; не выдавай байты за токены и серверный total за время всей агентной задачи.

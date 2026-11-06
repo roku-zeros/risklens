@@ -8,7 +8,7 @@ before=hashes();c=Client(pathlib.Path(a.binary).resolve(),pathlib.Path(a.config)
 def call(name,**args):
     r=c.call(name,**args);transcript.append({'tool':name,'arguments':args,'result':r});return r
 try:
-    c.ready();call('project_status');call('index_status')
+    c.ready();call('project_status');call('index_status');call('list_files',limit=3)
     funcs=call('search_symbols',query='Calculate',kind='function',package='example.com/strategy/consumer')['items'];fn=funcs[0]['id']
     field=call('search_symbols',query='Limit',kind='field',package='example.com/strategy/state')['items'][0]['id']
     final=call('search_symbols',query='Finalize',kind='function',package='example.com/strategy/state')['items'][0]['id']

@@ -145,10 +145,14 @@ func (e *Engine) evidencePage(ctx context.Context, s *Snapshot, a Args, r Respon
 		counts[c.Status]++
 	}
 	meta["total_checks"] = len(items)
+	meta["total_results"] = len(items)
+	meta["returned_results"] = end - start
+	meta["offset"] = start
+	meta["has_more"] = end < len(items)
 	meta["status_counts"] = counts
 	meta["semantic_verification"] = false
 	r.Meta = meta
-	if _, fp, err := readFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
+	if fp, err := fingerprintFiles(ctx, e.C); err != nil || fp != s.Fingerprint {
 		return r, fmt.Errorf("Go files changed during verification; refresh and retry")
 	}
 	return r, nil
