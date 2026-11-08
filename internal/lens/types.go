@@ -169,21 +169,25 @@ type Chunk struct {
 	start, end int
 }
 type Snapshot struct {
-	FieldScopeTruncated bool                   `json:"-"`
-	Calls               CallAnalysis           `json:"call_analysis"`
-	TypeFields          map[string][]FieldInfo `json:"-"`
-	ID                  string                 `json:"index_snapshot"`
-	Fingerprint         string                 `json:"-"`
-	Symbols             map[string]*Symbol     `json:"-"`
-	Relations           []Relation             `json:"-"`
-	Chunks              []*Chunk               `json:"-"`
-	Files               map[string][]byte      `json:"-"`
-	Diagnostics         []string               `json:"diagnostics"`
-	Complete            bool                   `json:"complete"`
-	Environment         map[string]string      `json:"environment"`
-	Module              string                 `json:"module"`
-	Created             string                 `json:"created"`
-	Text                *TextIndex             `json:"-"`
+	ContextIndex        *contextIndex              `json:"-"`
+	Membership          map[string]membershipFacts `json:"-"`
+	PackageSearch       *packageSearch             `json:"-"`
+	ProjectMap          *projectMap                `json:"-"`
+	FieldScopeTruncated bool                       `json:"-"`
+	Calls               CallAnalysis               `json:"call_analysis"`
+	TypeFields          map[string][]FieldInfo     `json:"-"`
+	ID                  string                     `json:"index_snapshot"`
+	Fingerprint         string                     `json:"-"`
+	Symbols             map[string]*Symbol         `json:"-"`
+	Relations           []Relation                 `json:"-"`
+	Chunks              []*Chunk                   `json:"-"`
+	Files               map[string][]byte          `json:"-"`
+	Diagnostics         []string                   `json:"diagnostics"`
+	Complete            bool                       `json:"complete"`
+	Environment         map[string]string          `json:"environment"`
+	Module              string                     `json:"module"`
+	Created             string                     `json:"created"`
+	Text                *TextIndex                 `json:"-"`
 }
 type Status struct {
 	LastRefresh         map[string]any    `json:"last_refresh,omitempty"`
@@ -214,6 +218,11 @@ type Status struct {
 	Module              string            `json:"module"`
 }
 type Args struct {
+	PackageContext    *bool           `json:"package_context,omitempty"`
+	NodeID            string          `json:"node_id,omitempty"`
+	Direction         string          `json:"direction,omitempty"`
+	EdgeKind          string          `json:"edge_kind,omitempty"`
+	Freshness         string          `json:"freshness,omitempty"`
 	Namespace         string          `json:"namespace"`
 	Calls             []BatchCall     `json:"calls"`
 	Rerank            *bool           `json:"rerank"`

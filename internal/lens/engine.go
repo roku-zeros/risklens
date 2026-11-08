@@ -217,12 +217,9 @@ func (e *Engine) Current(ctx context.Context) (*Snapshot, error) {
 	if s := pinnedSnapshot(ctx); s != nil {
 		return s, nil
 	}
-	e.mu.RLock()
-	s := e.snap
-	state := e.status.State
-	e.mu.RUnlock()
-	if s == nil || state != "ready" {
-		return nil, fmt.Errorf("index is %s; call refresh_index then poll index_status", state)
+	s, err := e.readySnapshot()
+	if err != nil {
+		return nil, err
 	}
 	fp, err := fingerprintFiles(ctx, e.C)
 	if err != nil {
@@ -231,6 +228,16 @@ func (e *Engine) Current(ctx context.Context) (*Snapshot, error) {
 	if fp != s.Fingerprint {
 		e.StartRefresh()
 		return nil, fmt.Errorf("index stale; automatic refresh started; poll index_status and retry")
+	}
+	return s, nil
+}
+func (e *Engine) readySnapshot() (*Snapshot, error) {
+	e.mu.RLock()
+	s := e.snap
+	state := e.status.State
+	e.mu.RUnlock()
+	if s == nil || state != "ready" {
+		return nil, fmt.Errorf("index is %s; call refresh_index then poll index_status", state)
 	}
 	return s, nil
 }
@@ -362,12 +369,17 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 		a.Mode = "hybrid"
 	}
 	lists := map[string][]rank{}
+	candidates := s.searchChunks(a.Package)
+	recordStage(ctx, "search_scope", map[string]any{"package": a.Package, "candidate_chunks": len(candidates), "index_chunks": len(s.Chunks)})
 	warnings := []string{}
 	switch a.Mode {
 	case "lexical", "hybrid":
 		phase := time.Now()
-		lists["symbol"] = symbolRanks(s, a.Query)
-		lists["text"] = s.Text.Search(a.Query)
+		lists["symbol"] = symbolRanks(s, a.Query, candidates)
+		lists["text"] = s.Text.search(a.Query, s, a.Package, candidates)
+		if s.PackageSearch != nil && (a.PackageContext == nil || *a.PackageContext) {
+			lists["package_context"] = s.PackageSearch.rank(s, a, lists["symbol"], lists["text"])
+		}
 		recordTime(ctx, "symbol_text", phase)
 	case "vector":
 	default:
@@ -379,7 +391,7 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 		ready := d.Snapshot == s.ID && e.status.Vectors == "ready"
 		e.mu.RUnlock()
 		if !ready {
-			warnings = append(warnings, "vectors not ready for this snapshot; symbol/text only")
+			warnings = append(warnings, "vectors not ready for this snapshot; using available lexical channels")
 		} else {
 			bctx, cancel := context.WithTimeout(ctx, time.Duration(e.C.OperationSeconds)*time.Second)
 			phase := time.Now()
@@ -397,7 +409,11 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 				if err = validVector(q, e.C.Dimension); err != nil {
 					return nil, nil, err
 				}
-				for i, c := range s.Chunks {
+				for _, i := range candidates {
+					c := s.Chunks[i]
+					if !match(s.Symbols[c.Symbol], a) {
+						continue
+					}
 					record, ok := d.Records[c.Hash]
 					if !ok {
 						continue
@@ -412,6 +428,7 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 				}
 				lists["vector"] = sortedRanks(scores)
 				recordTime(ctx, "vector_scan_sort", phase)
+				recordStage(ctx, "vector_candidates", len(scores))
 			}
 		}
 	}
@@ -432,12 +449,17 @@ func (e *Engine) Search(ctx context.Context, s *Snapshot, a Args) ([]Hit, []stri
 func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err error) {
 	started := time.Now()
 	ctx, timings := startTimings(ctx)
+	fast := false
 	defer func() {
 		if r.Meta == nil {
 			r.Meta = map[string]any{}
 		}
 		for k, v := range timings.metadata(started) {
 			r.Meta[k] = v
+		}
+		if fast {
+			r.Fresh = false
+			r.Meta["freshness_policy"] = "snapshot; saved files were not checked. Use freshness=strict or batch_tools to validate against disk."
 		}
 		r.Meta["results_complete"] = err == nil && !r.Truncated
 		r.Meta["effective_limit"] = a.Limit
@@ -461,13 +483,46 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 	if a.Limit == 0 {
 		a.Limit = min(20, e.C.MaxResults)
 	}
-	s, err := e.Current(ctx)
+	if a.Freshness != "" && a.Freshness != "snapshot" && a.Freshness != "strict" {
+		return r, inputError("invalid_freshness", "freshness", "freshness must be snapshot or strict", nil)
+	}
+	if a.Freshness != "" && name != "project_map" && name != "get_source" && name != "get_symbol" && name != "search_code" && name != "build_context" {
+		return r, inputError("invalid_freshness", "freshness", "this tool does not support freshness selection", nil)
+	}
+	if a.Freshness == "snapshot" && name != "project_map" && a.Snapshot == "" && pinnedSnapshot(ctx) == nil {
+		return r, inputError("snapshot_required", "index_snapshot", "copy index_snapshot from project_map for snapshot reads", nil)
+	}
+	if name == "project_map" {
+		if err := validateMapArgs(&a); err != nil {
+			return r, err
+		}
+	}
+	fast = pinnedSnapshot(ctx) == nil && (a.Freshness == "snapshot" || (name == "project_map" && a.Freshness == ""))
+	var s *Snapshot
+	if fast {
+		s, err = e.readySnapshot()
+	} else {
+		s, err = e.Current(ctx)
+	}
 	if err != nil {
-		return Response{}, err
+		return r, err
 	}
 	r = Response{Snapshot: s.ID, Fresh: true, Complete: s.Complete, Limitations: append([]string{}, Limitations...), Diagnostics: s.Diagnostics}
 	if a.Snapshot != "" && a.Snapshot != s.ID {
 		return r, fmt.Errorf("snapshot changed: requested %s, current %s; repeat discovery and use returned IDs", a.Snapshot, s.ID)
+	}
+	if fast {
+		ctx = context.WithValue(ctx, pinnedSnapshotKey{}, s)
+	}
+	if name == "project_map" {
+		if r.Meta == nil {
+			r.Meta = map[string]any{}
+		}
+		r, err = mapPage(ctx, s, a, r)
+		if err != nil {
+			return r, err
+		}
+		return r, validateSnapshot(ctx, e.C, s)
 	}
 	pageName := name
 	if name == "search_code" && a.Mode != "lexical" {
@@ -576,6 +631,38 @@ func (e *Engine) Call(ctx context.Context, name string, a Args) (r Response, err
 				list = append(list, rel)
 			}
 		}
+	case "rule_membership":
+		if s.Symbols[a.Symbol] == nil {
+			return r, unknownSymbol(s, a.Symbol, "")
+		}
+		facts, supported := s.Membership[a.Symbol]
+		list = make([]any, 0, len(facts.Rows))
+		for _, fact := range facts.Rows {
+			list = append(list, fact)
+		}
+		r.Meta = map[string]any{
+			"adapter":            "explicit_go_slice_return",
+			"source_binding":     "indexed_declaration",
+			"source_hash":        hash(s.Files[s.Symbols[a.Symbol].Position.File]),
+			"execution":          "unverified",
+			"requirement":        "unreviewed",
+			"coverage":           "unknown",
+			"analysis_truncated": facts.Truncated,
+		}
+		if supported && len(facts.Rows) > 0 {
+			r.Meta["coverage"] = "observed_return_expressions"
+			for _, fact := range facts.Rows {
+				if fact.Status == "unknown" {
+					r.Meta["coverage"] = "partial"
+					break
+				}
+			}
+		}
+		if facts.Truncated {
+			r.Meta["coverage"] = "partial"
+			r.Complete = false
+		}
+		r.Limitations = append(r.Limitations, "Explicit return expressions only. Lexical guards omit implicit path predicates, reachability and inner rule conditions. Unknown results cannot establish absence.")
 	case "resolve_reference":
 		if strings.TrimSpace(a.Query) == "" {
 			return r, fmt.Errorf("query is required")

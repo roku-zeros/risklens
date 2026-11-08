@@ -15,13 +15,25 @@ async def run(a):
         async with ClientSession(read,write) as session:
             init=await session.initialize()
             tools=await session.list_tools()
-            assert len(tools.tools)==18
+            assert len(tools.tools)==20
             for _ in range(600):
                 result=await session.call_tool('index_status',{})
                 st=result.structuredContent
                 if st['state']=='failed':raise RuntimeError(st)
                 if st['fresh'] and not st['loading']:break
                 await asyncio.sleep(.05)
+            packages=await session.call_tool('project_map',{'limit':2})
+            page=packages.structuredContent
+            assert not packages.isError and not page['fresh'] and page['meta']['freshness_scans']==0
+            subgraph=await session.call_tool('project_map',{'node_id':page['items'][0]['id'],'edge_kind':'imports','index_snapshot':page['index_snapshot']})
+            assert not subgraph.isError and subgraph.structuredContent['meta']['edges']
+            cached=await session.call_tool('get_source',{'file':'main.go','index_snapshot':page['index_snapshot'],'freshness':'snapshot'})
+            assert not cached.isError and not cached.structuredContent['fresh'] and cached.structuredContent['meta']['freshness_scans']==0
+            package_search=await session.call_tool('search_code',{'query':'shared mutable Application','package':'example.com/strategy/state','mode':'lexical','index_snapshot':page['index_snapshot'],'freshness':'snapshot'})
+            scoped=package_search.structuredContent
+            assert not package_search.isError and scoped['meta']['freshness_scans']==0
+            assert scoped['meta']['search_scope']['candidate_chunks'] < scoped['meta']['search_scope']['index_chunks']
+            assert any('package_context' in item['channels'] for item in scoped['items'])
             inventory=await session.call_tool('list_files',{'limit':2})
             inv=inventory.structuredContent
             assert inv['truncated'] and inv['next_cursor'] and inv['meta']['total_results']>2

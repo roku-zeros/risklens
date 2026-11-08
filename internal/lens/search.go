@@ -249,27 +249,41 @@ func sortedRanks(m map[int]float64) []rank {
 	})
 	return out
 }
-func (t *TextIndex) Search(q string) []rank {
+func (t *TextIndex) search(q string, s *Snapshot, pkg string, candidates []int) []rank {
 	scores := map[int]float64{}
+	avg := math.Max(t.Average, 1)
 	for _, w := range queryTerms(q) {
 		p := t.Postings[w]
 		idf := math.Log(1 + (float64(len(t.Length)-len(p))+.5)/(float64(len(p))+.5))
-		for i, tf := range p {
+		add := func(i, tf int) {
 			f := float64(tf)
-			avg := math.Max(t.Average, 1)
 			scores[i] += idf * (f * 2.2) / (f + 1.2*(.25+.75*float64(t.Length[i])/avg))
+		}
+		if pkg != "" && len(candidates) < len(p) {
+			for _, i := range candidates {
+				if tf, ok := p[i]; ok {
+					add(i, tf)
+				}
+			}
+		} else {
+			for i, tf := range p {
+				if pkg == "" || s.Chunks[i].Package == pkg {
+					add(i, tf)
+				}
+			}
 		}
 	}
 	return sortedRanks(scores)
 }
-func symbolRanks(s *Snapshot, q string) []rank {
+func symbolRanks(s *Snapshot, q string, candidates []int) []rank {
 	m := map[int]float64{}
 	q = strings.ToLower(strings.TrimSpace(q))
 	if q == "" {
 		return nil
 	}
 	ts := queryTerms(q)
-	for i, c := range s.Chunks {
+	for _, i := range candidates {
+		c := s.Chunks[i]
 		sym := s.Symbols[c.Symbol]
 		score := 0.
 		if strings.EqualFold(sym.Name, q) {
@@ -358,7 +372,7 @@ type Hit struct {
 
 func fuse(s *Snapshot, a Args, lists map[string][]rank) []Hit {
 	hits := map[int]*Hit{}
-	for _, name := range []string{"symbol", "text", "vector"} {
+	for _, name := range []string{"symbol", "text", "vector", "package_context"} {
 		list := lists[name]
 		r := 0
 		for _, v := range list {
@@ -375,7 +389,11 @@ func fuse(s *Snapshot, a Args, lists map[string][]rank) []Hit {
 				h = &Hit{Chunk: c, Ranks: map[string]int{}}
 				hits[v.I] = h
 			}
-			h.Score += 1 / (60 + float64(r))
+			weight := 1.
+			if name == "package_context" {
+				weight = .5
+			}
+			h.Score += weight / (60 + float64(r))
 			h.Channels = append(h.Channels, name)
 			h.Ranks[name] = r
 		}
@@ -406,8 +424,13 @@ func fuse(s *Snapshot, a Args, lists map[string][]rank) []Hit {
 	for i := range out {
 		out[i].VerifySource = true
 		out[i].Evidence = "lexical_supported"
-		if len(out[i].Channels) == 1 && out[i].Channels[0] == "vector" {
+		_, symbol := out[i].Ranks["symbol"]
+		_, text := out[i].Ranks["text"]
+		if !symbol && !text {
 			out[i].Evidence = "semantic_only"
+			if _, pkg := out[i].Ranks["package_context"]; pkg {
+				out[i].Evidence = "package_context"
+			}
 		}
 	}
 	return out

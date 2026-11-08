@@ -41,6 +41,18 @@ class Client:
         except subprocess.TimeoutExpired:self.proc.kill();self.proc.wait()
         if self.proc.returncode:raise RuntimeError(self.errors)
 
+def evidence_metrics(ids, required):
+    if not required:
+        return {}
+    expected = set(required)
+    found = set(ids[:10])
+    return {
+        'evidence_recall5': len(expected.intersection(ids[:5])) / len(expected),
+        'evidence_recall10': len(expected.intersection(found)) / len(expected),
+        'evidence_complete10': expected <= found,
+        'missing_evidence10': sorted(expected - found),
+    }
+
 class Memory:
     def __init__(self,pid):self.pid=pid;self.peak=None;self.stop=False;self.thread=threading.Thread(target=self.run,daemon=True);self.thread.start()
     def run(self):
@@ -59,6 +71,11 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--binary',required=True);p.add_argument('--config',required=True);p.add_argument('--queries',required=True);p.add_argument('--output',required=True);p.add_argument('--repeats',type=int,default=3);p.add_argument('--require-reranker',action='store_true')
     a=p.parse_args();binary=pathlib.Path(a.binary).resolve();cfg=json.loads(pathlib.Path(a.config).read_text());queries=json.loads(pathlib.Path(a.queries).read_text());out=pathlib.Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
+    for q in queries:
+        if 'required_evidence' in q:
+            required = q['required_evidence']
+            if not isinstance(required, list) or not required or any(not isinstance(v, str) or not v for v in required):
+                p.error('required_evidence must be a non-empty list of canonical symbol IDs')
     if a.require_reranker and not cfg.get('reranker_command'):p.error('--require-reranker needs a configured local reranker')
     with tempfile.TemporaryDirectory(prefix='risklens-eval-') as td:
         td=pathlib.Path(td);source=pathlib.Path(cfg['root']);root=td/'module';shutil.copytree(source,root,ignore=shutil.ignore_patterns('.git','.risklens','node_modules','.venv','models','bin'))
@@ -76,6 +93,7 @@ def main():
                     mem.close();client.close();raise RuntimeError('reranker experiment not executed: '+json.dumps(stage))
                 ids=[x['chunk']['symbol_id'] for x in result['items']]
                 rows.append({'mode':mode,'query':q['query'],'expected':q['expected'],'top10':ids,'hit5':bool(set(ids[:5])&set(q['expected'])),'hit10':bool(set(ids[:10])&set(q['expected'])),'cold_query_ms':durations[0],'warm_median_ms':statistics.median(durations[1:] or durations),'durations_ms':durations,'reranker_stage':stage,'reranked_items':sum('rerank_score' in hit for hit in result['items']),'limitations':result.get('limitations',[])})
+                rows[-1].update(evidence_metrics(ids, q.get('required_evidence')))
                 out.with_suffix('.partial.json').write_text(json.dumps({'complete':False,'rows':rows},indent=2,ensure_ascii=False)+'\n')
                 print(f"{mode}: {q['query']} ({durations[0]:.1f} ms)",flush=True)
         cache_bytes=sum(x.stat().st_size for x in pathlib.Path(cfg['cache']).rglob('*') if x.is_file())
@@ -95,6 +113,14 @@ def main():
         summary={}
         for mode in ['lexical','vector','hybrid']:
             rs=[r for r in rows if r['mode']==mode];summary[mode]={'queries':len(rs),'hit5':sum(r['hit5'] for r in rs),'hit10':sum(r['hit10'] for r in rs),'median_warm_ms':statistics.median(r['warm_median_ms'] for r in rs),'median_first_ms':statistics.median(r['cold_query_ms'] for r in rs)}
+            evidence = [r for r in rs if 'evidence_recall10' in r]
+            if evidence:
+                summary[mode].update({
+                    'evidence_queries': len(evidence),
+                    'mean_evidence_recall5': statistics.mean(r['evidence_recall5'] for r in evidence),
+                    'mean_evidence_recall10': statistics.mean(r['evidence_recall10'] for r in evidence),
+                    'complete_evidence10': sum(r['evidence_complete10'] for r in evidence),
+                })
         hardware={'platform':platform.platform(),'machine':platform.machine(),'python':platform.python_version()}
         for k,command in [('cpu',['sysctl','-n','machdep.cpu.brand_string']),('ram_bytes',['sysctl','-n','hw.memsize'])]:
             try:hardware[k]=subprocess.check_output(command,text=True,stderr=subprocess.DEVNULL).strip()

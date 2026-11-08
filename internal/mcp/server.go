@@ -33,16 +33,18 @@ func Tools() []Tool {
 		{"index_status", "RiskLens: snapshot, lexical/vector readiness, progress, cache hits and errors.", nil, nil},
 		{"refresh_index", "RiskLens: start asynchronous disk refresh; poll index_status. Rebuilds semantic analysis and reuses content-addressed embeddings.", nil, nil},
 		{"search_symbols", "Find definitions. Use owner_id=<returned type ID>, kind=field for direct/promoted fields with canonical IDs. Never construct symbol IDs; independent of embeddings.", nil, []string{"query", "owner_id", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"get_symbol", "Read an exact definition. Struct types also return canonical direct/promoted fields in meta.fields. Copy these field IDs for find_field_accesses.", []string{"symbol_id"}, []string{"index_snapshot", "limit"}},
+		{"get_symbol", "Read an exact definition. Struct types also return canonical direct/promoted fields in meta.fields. Copy these field IDs for find_field_accesses.", []string{"symbol_id"}, []string{"index_snapshot", "limit", "freshness"}},
 		{"find_references", "Find typed uses, with root-relative 1-based positions.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callers", "Find confirmed callers and possible interface callers; inspect resolution.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"get_callees", "List calls in a function; function variables may be unresolved; graph is incomplete.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
 		{"find_field_accesses", "Find typed field accesses and bounded SSA alias candidates. Inspect resolution/analysis; not complete object or value history.", []string{"symbol_id"}, []string{"path", "package", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"rule_membership", "Inspect direct slice return expressions of a named Go function or method. Reports explicit named elements, empty returns and unknowns with lexical guards; does not infer execution or business approval.", []string{"symbol_id"}, []string{"index_snapshot", "limit", "cursor"}},
 		{"resolve_reference", "Resolve exact Go field names/typed paths or JSON declaration aliases. Scope with returned owner_id; preserves ambiguity/case. Not runtime object or JSON serialization path proof.", []string{"query"}, []string{"namespace", "owner_id", "package", "path", "paths", "exclude_paths", "limit", "cursor", "index_snapshot"}},
+		{"project_map", "Discover packages, or traverse a bounded subgraph by node_id. Includes in-module imports, main/init, interfaces and typed implementations. Defaults to fast snapshot reads (fresh=false); use freshness=strict for disk validation.", nil, []string{"query", "node_id", "direction", "edge_kind", "depth", "limit", "cursor", "index_snapshot", "freshness"}},
 		{"list_files", "List indexed root-relative file paths, total_lines, bytes and hashes. Paginated: always follow next_cursor if truncated; use for inventory before get_source.", nil, []string{"path", "paths", "exclude_paths", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"get_source", "Read indexed source. Default 40 lines; end_line=-1 reads to EOF within byte budget. Returns total_lines/eof/next_line; ranges past EOF are clamped.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot"}},
-		{"search_code", "Hybrid RRF of symbol/text/vector channels, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "rerank", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
-		{"build_context", "Bounded relationship expansion. Returns reasons, sources and omitted IDs for continuation. UTF-8 byte budget, not Qwen tokens.", nil, []string{"query", "symbol_ids", "chunk_ids", "mode", "rerank", "distinct_symbols", "depth", "budget_bytes", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "index_snapshot"}},
+		{"get_source", "Read indexed source. Default 40 lines; end_line=-1 reads to EOF within byte budget. Returns total_lines/eof/next_line; ranges past EOF are clamped.", []string{"file"}, []string{"start_line", "end_line", "index_snapshot", "freshness"}},
+		{"search_code", "Hybrid RRF of symbol/text/vector and package context, or lexical/vector mode. Similarity is not business confidence.", []string{"query"}, []string{"mode", "rerank", "package_context", "freshness", "kind", "package", "path", "paths", "exclude_paths", "distinct_symbols", "include_tests", "limit", "cursor", "index_snapshot"}},
+		{"build_context", "Bounded relationship expansion. Returns reasons, sources and omitted IDs for continuation. UTF-8 byte budget, not Qwen tokens.", nil, []string{"query", "symbol_ids", "chunk_ids", "mode", "rerank", "package_context", "freshness", "distinct_symbols", "depth", "budget_bytes", "kind", "package", "path", "paths", "exclude_paths", "include_tests", "limit", "index_snapshot"}},
 	}
 	out := []Tool{}
 	for _, s := range specs {
@@ -53,7 +55,7 @@ func Tools() []Tool {
 			switch k {
 			case "limit", "start_line", "end_line", "depth", "budget_bytes":
 				t = "integer"
-			case "include_tests", "distinct_symbols", "include_candidates", "rerank":
+			case "include_tests", "distinct_symbols", "include_candidates", "rerank", "package_context":
 				t = "boolean"
 			case "symbol_ids", "chunk_ids", "paths", "exclude_paths":
 				t = "array"
@@ -74,6 +76,27 @@ func Tools() []Tool {
 				v["minimum"] = 0
 				v["maximum"] = 1000
 				v["description"] = "Page size, not total results. 0/omitted uses default; server max_results defaults to 100. Follow next_cursor."
+			}
+			switch k {
+			case "freshness":
+				v["enum"] = []string{"snapshot", "strict"}
+				v["description"] = "Snapshot skips disk checks and returns fresh=false. Outside project_map supply index_snapshot. Strict verifies saved files."
+			case "package_context":
+				v["description"] = "Default true. Use matching package GoDoc as a bounded ranking signal in lexical/hybrid search."
+			case "node_id":
+				v["description"] = "Copy a node ID returned by project_map. Omit for paginated package discovery."
+			case "query":
+				if s.name == "project_map" {
+					v["description"] = "Case-insensitive substring of package path; use only for package discovery."
+				}
+			case "direction":
+				v["enum"] = []string{"in", "out", "both"}
+			case "edge_kind":
+				v["enum"] = []string{"imports", "contains", "implements"}
+			case "depth":
+				if s.name == "project_map" {
+					v["minimum"], v["maximum"] = 0, 3
+				}
 			}
 			if k == "namespace" {
 				v["enum"] = []string{"auto", "go", "json"}

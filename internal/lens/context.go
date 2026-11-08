@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"sort"
 	"strings"
 )
 
@@ -42,20 +41,15 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 		}
 		queue = append(queue, node{id, "selected symbol", 0, nil})
 	}
+	index := s.ContextIndex
 	selectedChunks := map[string]bool{}
 	for _, id := range a.Chunks {
-		found := false
-		for _, c := range s.Chunks {
-			if c.ID == id {
-				selectedChunks[id] = true
-				queue = append(queue, node{c.Symbol, "selected chunk", 0, nil})
-				found = true
-				break
-			}
-		}
-		if !found {
+		c := index.byChunk[id]
+		if c == nil {
 			return r, fmt.Errorf("unknown chunk_id: %s", id)
 		}
+		selectedChunks[id] = true
+		queue = append(queue, node{c.Symbol, "selected chunk", 0, nil})
 	}
 	if a.Query != "" {
 		hits, warnings, err := e.Search(ctx, s, a)
@@ -108,13 +102,7 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 		if sym == nil {
 			continue
 		}
-		cs := []*Chunk{}
-		for _, c := range s.Chunks {
-			if c.Symbol == n.id {
-				cs = append(cs, c)
-			}
-		}
-		sort.Slice(cs, func(i, j int) bool { return cs[i].start < cs[j].start })
+		cs := index.bySymbol[n.id]
 		for _, c := range cs {
 			if seenChunk[c.ID] {
 				continue
@@ -156,10 +144,8 @@ func (e *Engine) buildContext(ctx context.Context, s *Snapshot, a Args, r Respon
 		if n.depth >= a.Depth {
 			continue
 		}
-		for _, rel := range s.Relations {
-			if rel.Kind == "reference" && rel.Symbol != n.id {
-				continue
-			}
+		for _, i := range index.adjacent[n.id] {
+			rel := s.Relations[i]
 			if rel.From == n.id && rel.Kind == "call" && rel.Resolution == "candidates" {
 				for _, candidate := range rel.Candidates {
 					if seen[candidate] || queued[candidate] || s.Symbols[candidate] == nil {

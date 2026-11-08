@@ -233,7 +233,8 @@
         "evidence": {
           "enum": [
             "semantic_only",
-            "lexical_supported"
+            "lexical_supported",
+            "package_context"
           ]
         },
         "requires_source_verification": {
@@ -377,6 +378,12 @@
                   },
                   {
                     "$ref": "#/$defs/BatchItem"
+                  },
+                  {
+                    "$ref": "#/$defs/MapNode"
+                  },
+                  {
+                    "$ref": "#/$defs/MembershipFact"
                   }
                 ]
               }
@@ -408,7 +415,21 @@
           }
         },
         "meta": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "edges": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MapEdge"
+              }
+            },
+            "map_scope": {
+              "type": "string"
+            },
+            "implementation_scan_truncated": {
+              "type": "boolean"
+            }
+          }
         }
       },
       "required": [
@@ -834,6 +855,136 @@
         },
         "error": {
           "type": "object"
+        }
+      }
+    },
+    "MapNode": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "package"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "package",
+            "entry_point",
+            "interface",
+            "type"
+          ]
+        },
+        "package": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        },
+        "summary": {
+          "$ref": "#/$defs/PackageSummary"
+        }
+      }
+    },
+    "MapEdge": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "kind"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "imports",
+            "contains",
+            "implements"
+          ]
+        },
+        "form": {
+          "enum": [
+            "pointer",
+            "value_and_pointer"
+          ]
+        }
+      }
+    },
+    "PackageSummary": {
+      "type": "object",
+      "required": [
+        "name",
+        "files"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "go_doc": {
+          "type": "string"
+        },
+        "doc_position": {
+          "$ref": "#/$defs/Position"
+        },
+        "exports": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "MembershipFact": {
+      "type": "object",
+      "required": [
+        "return_position",
+        "position",
+        "membership"
+      ],
+      "properties": {
+        "return_position": {
+          "$ref": "#/$defs/Position"
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        },
+        "lexical_guards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "membership": {
+          "enum": [
+            "explicit_element",
+            "explicit_empty",
+            "unknown"
+          ]
+        },
+        "element_symbol_id": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
         }
       }
     }

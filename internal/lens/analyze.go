@@ -12,6 +12,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -116,6 +117,39 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 	if len(units) == 0 {
 		s.Complete = false
 		s.Diagnostics = append(s.Diagnostics, "No buildable Go sources; prepare dependencies with go mod download online, then retry offline.")
+	}
+	pkgImports := map[string]map[string]bool{}
+	profiles := map[string]*PackageSummary{}
+	var declarations []types.Object
+	for _, p := range ps {
+		if p.ID != p.PkgPath {
+			continue
+		}
+		for _, f := range p.Syntax {
+			file := a.position(f.Pos()).File
+			if _, ok := files[file]; !ok || strings.HasSuffix(file, "_test.go") {
+				continue
+			}
+			a.pkg = p
+			pkg := a.pkgPath()
+			if pkgImports[pkg] == nil {
+				pkgImports[pkg] = map[string]bool{}
+				profiles[pkg] = &PackageSummary{Name: f.Name.Name}
+			}
+			profiles[pkg].addFile(a, f)
+			for _, spec := range f.Imports {
+				if target, err := strconv.Unquote(spec.Path.Value); err == nil {
+					pkgImports[pkg][target] = true
+				}
+			}
+			if p.TypesInfo != nil {
+				declarations = append(declarations, mapDeclarations(f, p.TypesInfo)...)
+			}
+		}
+	}
+	s.ProjectMap, err = a.buildProjectMap(ctx, pkgImports, declarations)
+	if err != nil {
+		return s, err
 	}
 	for name, b := range files {
 		starts := []int{0}
@@ -256,10 +290,13 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 			return true
 		})
 	}
+	s.Membership = map[string]membershipFacts{}
 	for _, u := range units {
 		a.pkg = u.p
 		a.file = u.f
-		a.relations(parentMap(u.f))
+		parents := parentMap(u.f)
+		a.relations(parents)
+		a.collectMembership(parents)
 	}
 	a.refineCalls(ctx, ps, c)
 	// Stable source order without repeatedly serializing relations inside a sort comparator.
@@ -306,6 +343,8 @@ func analyze(ctx context.Context, c Config, files map[string][]byte, fp string) 
 
 	makeChunks(s, c.ChunkBytes, c.ModelKey)
 	s.Text = NewTextIndex(s.Chunks)
+	s.PackageSearch = newPackageSearch(s, profiles)
+	s.ContextIndex = newContextIndex(s)
 	return s, nil
 }
 func inside(n ast.Node, f *ast.File) bool { return n.Pos() >= f.Pos() && n.End() <= f.End() }

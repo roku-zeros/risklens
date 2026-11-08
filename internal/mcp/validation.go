@@ -37,7 +37,7 @@ func argumentExample(name string) map[string]any {
 		return map[string]any{"file": "main.go", "start_line": 1, "end_line": -1}
 	case "search_code":
 		return map[string]any{"query": "limit", "mode": "hybrid", "limit": 20}
-	case "list_files", "search_symbols":
+	case "list_files", "search_symbols", "project_map":
 		return map[string]any{"limit": 20}
 	default:
 		return map[string]any{"symbol_id": "copy canonical ID from search_symbols"}
