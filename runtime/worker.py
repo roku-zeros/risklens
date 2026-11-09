@@ -39,8 +39,13 @@ def main():
       width=profile['max_tokens']-len(lead);piece=ids[offset:offset+width];pieces.append(piece);jobs.append((index,lead+piece or [151643],max(1,len(piece))));offset+=max(1,len(piece))
     windows.append(len(pieces))
    pooled=[[] for _ in texts];weights=[[] for _ in texts];batch_size=1 if profile["pooling"]=="last" else max(1,min(a.batch_size,16))
+   # Pack similar token lengths together and keep original window order for pooling.
+   order=list(range(len(jobs)))
+   if batch_size>1:
+    order.sort(key=lambda i:len(jobs[i][1]))
+   window_vectors=[None]*len(jobs)
    for offset in range(0,len(jobs),batch_size):
-    group=jobs[offset:offset+batch_size];length=max(len(ids) for _,ids,_ in group);pad=1 if profile['pooling']=='mean' else 151643
+    indices=order[offset:offset+batch_size];group=[jobs[i] for i in indices];length=max(len(ids) for _,ids,_ in group);pad=1 if profile['pooling']=='mean' else 151643
     token_ids=np.full((len(group),length),pad,dtype=np.int64);mask=np.zeros_like(token_ids)
     for row,(_,ids,_) in enumerate(group):
      start=0 if profile['pooling']=='mean' else length-len(ids);token_ids[row,start:start+len(ids)]=ids;mask[row,start:start+len(ids)]=1
@@ -57,7 +62,9 @@ def main():
     if hidden.ndim!=3:raise ValueError('expected token embeddings')
     if profile['pooling']=='mean':vectors=(hidden*mask[:,:,None]).sum(axis=1)/mask.sum(axis=1)[:,None]
     else:vectors=hidden[:,-1,:]
-    for row,(index,_,weight) in enumerate(group):pooled[index].append(vectors[row]);weights[index].append(weight)
+    for row,i in enumerate(indices):window_vectors[i]=vectors[row]
+   for (index,_,weight),vector in zip(jobs,window_vectors):
+    pooled[index].append(vector);weights[index].append(weight)
    vectors=[]
    for rows,ws in zip(pooled,weights):
     v=np.average(rows,axis=0,weights=ws);v=v/max(float(np.linalg.norm(v)),1e-12)

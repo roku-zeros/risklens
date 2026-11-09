@@ -247,15 +247,24 @@ func (e *Engine) updateVectors(ctx context.Context, s *Snapshot) {
 	e.mu.RUnlock()
 	d := vectorDisk{Version: 1, Model: e.C.ModelKey, Dimension: e.C.Dimension, Snapshot: s.ID, Records: map[string]VectorRecord{}, Chunks: map[string]string{}}
 	missing := []*Chunk{}
+	pending := map[string]int{}
+	done := 0
 	for _, c := range s.Chunks {
 		d.Chunks[c.ID] = c.Hash
 		if r, ok := old.Records[c.Hash]; ok {
 			d.Records[c.Hash] = r
-		} else {
+			done++
+			continue
+		}
+		if pending[c.Hash] == 0 {
 			missing = append(missing, c)
 		}
+		pending[c.Hash]++
 	}
-	done := len(s.Chunks) - len(missing)
+	// Group similarly sized inputs so inference batches need less padding.
+	sort.SliceStable(missing, func(i, j int) bool {
+		return len(missing[i].Input) < len(missing[j].Input)
+	})
 	e.mu.Lock()
 	if e.snap == s {
 		e.status.VectorDone = done
@@ -302,8 +311,8 @@ func (e *Engine) updateVectors(ctx context.Context, s *Snapshot) {
 				return
 			}
 			d.Records[c.Hash] = VectorRecord{r.Vectors[j], r.Tokens[j], r.Windows[j]}
+			done += pending[c.Hash]
 		}
-		done += end - i
 		e.mu.Lock()
 		if e.snap == s {
 			e.status.VectorDone = done
