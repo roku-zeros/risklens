@@ -97,8 +97,6 @@ go -C /absolute/path/to/risklens run ./cmd/risklens-mcp --config /absolute/path/
 
 Установите [skill/SKILL.md](skill/SKILL.md) способом, поддерживаемым вашей версией GigaCode. Подключение Qwen остаётся на стороне GigaCode.
 
-Для подготовки SDD подключите [risklens-architecture](skills/risklens-architecture/SKILL.md) и [risklens-sdd](skills/risklens-sdd/SKILL.md) тем же способом. Первый навык восстанавливает границы модулей и собирает доказательства. Второй готовит дизайн изменения и связывает требования с проверками. Для запуска передайте формулировку задачи и укажите, какое поведение должно сохраниться.
-
 ## Обратная связь по рабочим прогонам
 
 [Подробный разбор полного отчёта 0.3.0](docs/FIELD-REPORT-ANALYSIS-2026-11-06.md) · [Разбор внешнего прогона и backlog](docs/RUN-REVIEW-2026-11-06.md) · [Что собрать для следующей проверки](docs/RUN-FEEDBACK-REQUEST.md). Это план дальнейшей доработки, а не список уже выпущенных функций.
