@@ -22,6 +22,7 @@ func main() {
 	}
 }
 func run() error {
+	benchmark := flag.Int("benchmark-embeddings", 0, "compare local embedding settings on N indexed chunks (8..256), then exit")
 	clearCache := flag.Bool("clear-cache", false, "remove owned vector files while holding the cache OS lock; then exit")
 	config := flag.String("config", "", "JSON configuration file")
 	root := flag.String("root", "", "Go module root")
@@ -59,6 +60,20 @@ func run() error {
 	}
 	if *cache != "" {
 		c.Cache = *cache
+	}
+	if *benchmark != 0 {
+		if *clearCache || *tool != "" || *wait {
+			return fmt.Errorf("--benchmark-embeddings cannot be combined with --clear-cache, --tool or --wait-vectors")
+		}
+		ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer cancel()
+		report, err := lens.BenchmarkEmbeddings(ctx, c, *benchmark)
+		if err != nil {
+			return err
+		}
+		enc := json.NewEncoder(os.Stdout)
+		enc.SetIndent("", "  ")
+		return enc.Encode(report)
 	}
 	if *clearCache {
 		removed, err := lens.ClearCache(c)
